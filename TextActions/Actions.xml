@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<action-recipes>
+	<action id="com.macrabbit.TextActions.ExampleSugar.MRExampleSugarTagUppercaser" category="actions.text.ExampleSugar">
+	
+		<class>MRExampleSugarTagCaseChanger</class>
+		<title>Uppercase Tag Names</title>
+		<setup>
+			<change-to>uppercase</change-to>
+		</setup>
+		
+	</action>
+	<action id="com.macrabbit.TextActions.ExampleSugar.MRExampleSugarTagLowercaser" category="actions.text.ExampleSugar">
+	
+		<class>MRExampleSugarTagCaseChanger</class>
+		<title>Lowercase Tag Names</title>
+		<setup>
+			<change-to>lowercase</change-to>
+		</setup>
+		
+	</action>
+</action-recipes>

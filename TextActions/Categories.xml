@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<action-categories>
+	<category id="actions.text.HTML" show="sub">
+		<title>HTML</title>
+	</category>
+</action-categories>
