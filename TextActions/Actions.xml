@@ -1,21 +1,10 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<action id="com.macrabbit.TextActions.ExampleSugar.MRExampleSugarTagUppercaser" category="actions.text.ExampleSugar">
-	
-		<class>MRExampleSugarTagCaseChanger</class>
-		<title>Uppercase Tag Names</title>
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selection In Tag</title>
 		<setup>
-			<change-to>uppercase</change-to>
+			<target_action>wrap_selection_in_tag</target_action>
 		</setup>
-		
-	</action>
-	<action id="com.macrabbit.TextActions.ExampleSugar.MRExampleSugarTagLowercaser" category="actions.text.ExampleSugar">
-	
-		<class>MRExampleSugarTagCaseChanger</class>
-		<title>Lowercase Tag Names</title>
-		<setup>
-			<change-to>lowercase</change-to>
-		</setup>
-		
 	</action>
 </action-recipes>

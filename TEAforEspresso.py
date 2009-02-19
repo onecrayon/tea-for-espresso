@@ -19,8 +19,7 @@ class TEAforEspresso(NSObject):
         '''Required by Espresso; initializes the plugin settings'''
         self = super(TEAforEspresso, self).init()
         if self is None: return None
-        #self.changesToUppercase = dictionary.objectForKey_("change-to").\
-        #                          isEqualToString_("uppercase")
+        self.target_action = dictionary.valueForKey_("target_action")
         return self
     
     # Signature is necessary for Objective-C to be able to find the method
