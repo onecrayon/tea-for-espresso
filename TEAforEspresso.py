@@ -30,5 +30,7 @@ class TEAforEspresso(NSObject):
     
     def performActionWithContext_error_(self, context):
         '''This function defines the primary class action logic'''
-        
+        # example:   `exec "import " + self.target_action`
+        # example 2: `globals()[self.target_action](arguments)`
+        #            `locals()[self.target_action](arguments)`
         return False
