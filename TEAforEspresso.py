@@ -19,7 +19,10 @@ class TEAforEspresso(NSObject):
         '''Required by Espresso; initializes the plugin settings'''
         self = super(TEAforEspresso, self).init()
         if self is None: return None
+        
+        # Set object's internal variables
         self.target_action = dictionary.valueForKey_("target_action")
+        
         return self
     
     # Signature is necessary for Objective-C to be able to find the method
