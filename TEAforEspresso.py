@@ -11,7 +11,10 @@ import objc
 NSObject = objc.lookUpClass('NSObject')
 
 class TEAforEspresso(NSObject):
-    '''Docstring here'''
+    '''
+    Performs initialization and is responsible for loading and calling
+    the various external actions when the plugin is invoked
+    '''
     
     # Don't need a signature definition if we return an object and all
     # arguments are objects
