@@ -20,8 +20,6 @@ class TEAforEspresso(NSObject):
     the various external actions when the plugin is invoked
     '''
     
-    # Don't need a signature definition if we return an object and all
-    # arguments are objects
     def initWithDictionary_bundlePath_(self, dictionary, bundlePath):
         '''Required by Espresso; initializes the plugin settings'''
         self = super(TEAforEspresso, self).init()
@@ -49,9 +47,15 @@ class TEAforEspresso(NSObject):
             # Couldn't find the module, throw an error of some sort
             print('Could not find the module')
             return False
-        return self.target_module.act()
+        return self.target_module.act(context)
     
     def import_action(self):
+        '''
+        Imports a given action file and returns it as a module
+        
+        Searches user override directory first, and then the default
+        TEA scripts directory
+        '''
         user_modules = os.path.expanduser(
             '~/Library/Application Support/Espresso/TEA/'
         )
