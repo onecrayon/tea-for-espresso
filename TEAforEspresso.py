@@ -29,6 +29,10 @@ class TEAforEspresso(NSObject):
         
         # Set object's internal variables
         self.target_action = dictionary.valueForKey_("target_action")
+        self.path = bundlePath
+        
+        # Append the bundle's resource path so that we can use common libraries
+        sys.path.append(self.path + '/Contents/Resources/')
         
         return self
     
@@ -51,9 +55,7 @@ class TEAforEspresso(NSObject):
         user_modules = os.path.expanduser(
             '~/Library/Application Support/Espresso/TEA/'
         )
-        default_modules = os.path.expanduser(
-            '~/Library/Application Support/Espresso/Sugars/TEA for Espresso.sugar/TEA/'
-        )
+        default_modules = os.path.expanduser(self.path + '/TEA/')
         try:
             # Is the action already loaded?
             module = sys.modules[self.target_action]
