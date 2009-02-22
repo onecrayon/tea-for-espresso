@@ -22,7 +22,6 @@ def include_files(path):
                 # Don't include hidden files
                 if (file[0] != '.'):
                     files.append(os.path.join(root, file))
-    print(files)
     return files
 
 
