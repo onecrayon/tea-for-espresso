@@ -10,7 +10,9 @@ setup(
     name='TEA for Espresso',
     plugin = ['TEAforEspresso.py'],
     data_files = [('../../TextActions', ['TextActions/Actions.xml',
-                   'TextActions/Categories.xml'])],
+                   'TextActions/Categories.xml']),
+                  ('../../TEA', ['TEA/wrap_selection_in_tag.py'])
+                 ],
     options=dict(py2app=dict(
         extension='.sugar',
         semi_standalone = True,
