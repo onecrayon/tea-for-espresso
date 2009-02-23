@@ -9,7 +9,7 @@ If you are interested in extending or modifying the TEA for Espresso Sugar
 for your own use, then you've come to the right place.
 
    [1]: http://macrabbit.com/espresso/
-   [2]: http://onecrayon.com/tea-for-espresso/
+   [2]: http://onecrayon.com/tea/espresso/
 
 Extending TEA for Espresso
 ==========================
