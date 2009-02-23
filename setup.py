@@ -16,7 +16,6 @@ def include_files(path):
     '''
     files = []
     for root, dirs, filenames in os.walk(path):
-        list_fragment = []
         if filenames:
             for file in filenames:
                 # Don't include hidden files
