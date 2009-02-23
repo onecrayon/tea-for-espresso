@@ -1,8 +1,5 @@
 '''
-Wrap Selection in Tag
-A Default Action
-
-Wraps the currently selected text in a tag supplied by the user
+Wraps the currently selected text in a tag snippet
 '''
 
 import tea_utils as tea
