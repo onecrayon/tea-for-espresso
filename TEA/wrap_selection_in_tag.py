@@ -5,7 +5,7 @@ A Default Action
 Wraps the currently selected text in a tag supplied by the user
 '''
 
-import tea_util as tea
+import tea_utils as tea
 
 def act(context):
     '''Required method; performs the action'''
