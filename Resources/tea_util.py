@@ -1,7 +1,6 @@
 '''Utility functions for working with TEA for Espresso'''
 
 from Foundation import *
-import objc
 
 from espresso import *
 
@@ -32,9 +31,14 @@ def say(context, title, message,
 # Interact with the text window
 # ===============================================================
 
-def get_range_set(context):
+def get_selection(context, range):
+    '''Convenience function; returns selected text within a given range'''
+    return context.string().substringWithRange_(range)
+
+def new_range_set(context):
     '''
-    Returns the MRRangeSet for the selection in the current context
+    Convenience function; returns the MRRangeSet for the selection in
+    the current context
     
     For range set methods, see Espresso.app/Contents/Headers/MRRangeSet.h
     '''
@@ -42,12 +46,17 @@ def get_range_set(context):
 
 def new_recipe():
     '''
-    Shortcut to create a new text recipe
+    Convenience function to create a new text recipe
     
     For recipe methods, see Espresso.app/Contents/Headers/EspressoTextCore.h
     '''
     return CETextRecipe.textRecipe()
 
-def snippet(snippet):
-    '''Shortcut to create a new text snippet'''
-    return CETextSnippet.snippetWithString_(snippet)
+def insert_snippet(context, snippet):
+    '''Convenience function to insert a text snippet'''
+    snippet = CETextSnippet.snippetWithString_(snippet)
+    return context.insertTextSnippet_(snippet)
+
+def sanitize_for_snippet(text):
+    '''Escapes special characters used by snippet syntax'''
+    return text.replace('#', '\#')
