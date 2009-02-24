@@ -35,6 +35,35 @@ def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
 
+def get_single_selection(context, with_errors=True):
+    '''
+    If there's a single selection, returns the selected text,
+    otherwise throws optional descriptive errors
+    
+    Returns a tuple with the selected text first and its range second
+    '''
+    ranges = context.selectedRanges()
+    # Since there aren't good ways to deal with discontiguous selections
+    # verify that we're only working with a single selection
+    if len(ranges) != 1:
+        if with_errors:
+            say(
+                context, "Error: multiple selections detected",
+                "You must have a single selection in order to use this action."
+            )
+        return None, None
+    # For some reason, range is not an NSRange; it's an NSConcreteValue
+    # This converts it to an NSRange which we can work with
+    range = ranges[0].rangeValue()
+    if range.length is 0:
+        if with_errors:
+            say(
+                context, "Error: selection required",
+                "You must select some text in order to use this action."
+            )
+        return None, range
+    return get_selection(context, range), range
+
 def new_range_set(context):
     '''
     Convenience function; returns the MRRangeSet for the selection in
@@ -77,3 +106,12 @@ def insert_snippet(context, snippet):
     '''Convenience function to insert a text snippet'''
     snippet = CETextSnippet.snippetWithString_(snippet)
     return context.insertTextSnippet_(snippet)
+
+def insert_snippet_over_selection(context, snippet, range):
+    '''Replaces text at range with a text snippet'''
+    deletions = new_recipe()
+    deletions.addDeletedRange_(range)
+    # Apply the deletions
+    context.applyTextRecipe_(deletions)
+    # Insert the snippet
+    return insert_snippet(context, snippet)
