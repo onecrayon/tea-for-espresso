@@ -5,7 +5,7 @@ Wraps the currently selected text in a tag snippet
 import tea_utils as tea
 
 def act(context):
-    '''Required method; performs the action'''
+    '''Required action method'''
     deletions = tea.new_recipe()
     ranges = context.selectedRanges()
     # Since there aren't good ways to deal with discontiguous selections
@@ -16,6 +16,7 @@ def act(context):
             "You must have a single selection in order to use Wrap Selection in Tag."
         )
         return False
+    count = 1
     for range in ranges:
         # For some reason, range is not an NSRange; it's an NSConcreteValue
         # This converts it to an NSRange which we can work with
@@ -27,12 +28,11 @@ def act(context):
             )
             return False
         text = tea.get_selection(context, range)
-        # Currently meaningless, since there are no escape capabilities
-        text = tea.sanitize_for_snippet(text)
-        snippet = '<#{1:p}>' + text + '</#{1/\s.*//}>#0'
+        snippet = tea.construct_tag_snippet(text, count)
         deletions.addDeletedRange_(range)
-        # We break because we only can handle the first
+        # We break because we can only currently handle the first
         break
+        count = count + 1
     # Apply the deletions
     context.applyTextRecipe_(deletions)
     # Insert the snippet

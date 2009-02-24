@@ -52,11 +52,28 @@ def new_recipe():
     '''
     return CETextRecipe.textRecipe()
 
-def insert_snippet(context, snippet):
-    '''Convenience function to insert a text snippet'''
-    snippet = CETextSnippet.snippetWithString_(snippet)
-    return context.insertTextSnippet_(snippet)
+# ===============================================================
+# Snippet utilities
+# ===============================================================
 
 def sanitize_for_snippet(text):
     '''Escapes special characters used by snippet syntax'''
     return text.replace('#', '\#')
+
+def construct_tag_snippet(text, number=1, default_tag='p'):
+    '''
+    Sets up the standard single-tag snippet; can be repeated
+    for a string of mirrored tags
+    '''
+    # Currently meaningless, since there are no escape capabilities
+    text = sanitize_for_snippet(text)
+    if number > 1:
+        first_segment = '#1'
+    else:
+        first_segment = '#{1:' + default_tag + '}'
+    return '<' + first_segment + '>' + text + '</#{1/\s.*//}>#0'
+
+def insert_snippet(context, snippet):
+    '''Convenience function to insert a text snippet'''
+    snippet = CETextSnippet.snippetWithString_(snippet)
+    return context.insertTextSnippet_(snippet)
