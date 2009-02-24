@@ -107,10 +107,12 @@ def insert_snippet(context, snippet):
     snippet = CETextSnippet.snippetWithString_(snippet)
     return context.insertTextSnippet_(snippet)
 
-def insert_snippet_over_selection(context, snippet, range):
+def insert_snippet_over_selection(context, snippet, range, undo_name=None):
     '''Replaces text at range with a text snippet'''
     deletions = new_recipe()
     deletions.addDeletedRange_(range)
+    if undo_name != None:
+        deletions.setUndoActionName_(undo_name) 
     # Apply the deletions
     context.applyTextRecipe_(deletions)
     # Insert the snippet

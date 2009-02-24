@@ -15,4 +15,5 @@ def act(context):
     if text == None:
         return False
     snippet = tea.construct_tag_snippet(text)
-    return tea.insert_snippet_over_selection(context, snippet, range)
+    return tea.insert_snippet_over_selection(context, snippet, range,
+                                             'Wrap Selection in Tag')
