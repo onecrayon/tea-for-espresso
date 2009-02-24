@@ -5,7 +5,7 @@ from Foundation import *
 from espresso import *
 
 # ===============================================================
-# Interact with the user
+# Interact with the user and output information
 # ===============================================================
 
 def ask(context, question, default=''):
@@ -26,6 +26,10 @@ def say(context, title, message,
     return alert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_(
         context.windowForSheet(), None, None, None
     )
+
+def log(message):
+    '''Convenience function for logging messages to console'''
+    NSLog(message)
 
 # ===============================================================
 # Preference lookup shortcuts
