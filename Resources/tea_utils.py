@@ -96,6 +96,14 @@ def new_recipe():
     '''
     return CETextRecipe.textRecipe()
 
+def insert_text_over_selection(context, text, range, undo_name=None):
+    '''Immediately replaces the text at range with passed in text'''
+    insertions = new_recipe()
+    insertions.addReplacementString_forRange_(text, range)
+    if undo_name != None:
+        insertions.setUndoActionName_(undo_name)
+    return context.applyTextRecipe_(insertions)
+
 # ===============================================================
 # Snippet utilities
 # ===============================================================

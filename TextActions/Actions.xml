@@ -14,4 +14,12 @@
 			<target_action>wrap_selected_lines_in_tag</target_action>
 		</setup>
 	</action>
+	
+	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Format with Strong</title>
+		<setup>
+			<target_action>format_with_tag</target_action>
+		</setup>
+	</action>
 </action-recipes>
