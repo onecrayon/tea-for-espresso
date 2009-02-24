@@ -28,6 +28,21 @@ def say(context, title, message,
     )
 
 # ===============================================================
+# Preference lookup shortcuts
+# ===============================================================
+
+def get_prefs(context):
+    '''
+    Convenience function; returns a CETextPreferences object with
+    current preferences
+    '''
+    return context.textPreferences()
+
+def get_line_ending(context):
+    prefs = get_prefs(context)
+    return prefs.lineEndingString()
+
+# ===============================================================
 # Interact with the text window
 # ===============================================================
 

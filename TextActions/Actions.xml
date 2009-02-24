@@ -7,4 +7,11 @@
 			<target_action>wrap_selection_in_tag</target_action>
 		</setup>
 	</action>
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selected Lines In Tag</title>
+		<setup>
+			<target_action>wrap_selected_lines_in_tag</target_action>
+		</setup>
+	</action>
 </action-recipes>
