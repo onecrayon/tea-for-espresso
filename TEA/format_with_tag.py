@@ -14,10 +14,11 @@ def act(context, tag='p', tagname=None):
     text, range = tea.get_single_selection(context)
     if text == None:
         return False
-    text = '<' + tag + '>' + text + '</' + tag + '>'
+    snippet = '#{1:<' + tag + '>#{2:' + text + '}</' + tag + '>}#0'
+    tea.log(snippet)
     # Set the legible tag name
     if tagname == None:
         tagname = tag.capitalize()
     # Insert the text via recipe
-    return tea.insert_text_over_selection(context, text, range,
-                                          'Format with ' + tagname)
+    return tea.insert_snippet_over_selection(context, snippet, range,
+                                             'Format with ' + tagname)
