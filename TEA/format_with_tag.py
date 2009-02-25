@@ -15,7 +15,6 @@ def act(context, tag='p', tagname=None):
     if text == None:
         return False
     snippet = '#{1:<' + tag + '>#{2:' + text + '}</' + tag + '>}#0'
-    tea.log(snippet)
     # Set the legible tag name
     if tagname == None:
         tagname = tag.capitalize()

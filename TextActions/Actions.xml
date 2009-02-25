@@ -20,6 +20,12 @@
 		<title>Format with Strong</title>
 		<setup>
 			<target_action>format_with_tag</target_action>
+			<arguments>
+				<dict>
+					<key>tag</key>
+					<string>strong</string>
+				</dict>
+			</arguments>
 		</setup>
 	</action>
 </action-recipes>
