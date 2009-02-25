@@ -19,7 +19,7 @@ def act(context, tag='p', tagname=None):
     # Set the legible tag name
     if tagname == None:
         tagname = tag.capitalize()
-    ranges = tea.get_ranges()
+    ranges = tea.get_ranges(context)
     if len(ranges) <= 1:
         # If we're working with a single selection, we can use a snippet
         text, range = tea.get_single_selection(context)
