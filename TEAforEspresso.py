@@ -8,7 +8,7 @@ from Textmate into Espresso
 from Foundation import *
 import objc
 
-from tea_actions import *
+from tea_utils import *
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it

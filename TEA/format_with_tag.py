@@ -5,7 +5,7 @@ When called without the second argument, the text will be wrapped in
 paragraph tags
 '''
 
-import tea_utils as tea
+import tea_actions as tea
 
 def act(context, tag='p', tagname=None):
     '''

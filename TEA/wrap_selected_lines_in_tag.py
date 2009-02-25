@@ -4,7 +4,7 @@ Wraps currently selected lines in a text snippet
 
 import re
 
-import tea_utils as tea
+import tea_actions as tea
 
 def act(context):
     '''

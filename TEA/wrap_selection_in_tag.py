@@ -2,7 +2,7 @@
 Wraps the currently selected text in a tag snippet
 '''
 
-import tea_utils as tea
+import tea_actions as tea
 
 def act(context):
     '''
