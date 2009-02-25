@@ -22,12 +22,13 @@ def load_action(target):
         '~/Library/Application Support/Espresso/TEA/'
     )
     default_modules = os.path.expanduser(
-        '~/Library/Application Support/Sugars/TEA for Espresso.sugar/TEA/'
+        '~/Library/Application Support/Espresso/Sugars/'
+        'TEA for Espresso.sugar/TEA/'
     )
     try:
         # Is the action already loaded?
         module = sys.modules[target]
-    except KeyError:
+    except (KeyError, ImportError):
         # Find the action (searches user overrides first)
         file, pathname, description = imp.find_module(
             target,

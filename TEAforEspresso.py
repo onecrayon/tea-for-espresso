@@ -8,7 +8,7 @@ from Textmate into Espresso
 from Foundation import *
 import objc
 
-from tea_actions import load_action
+from tea_actions import *
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
@@ -49,9 +49,12 @@ class TEAforEspresso(NSObject):
     
     def performActionWithContext_error_(self, context):
         '''Imports and calls the target_action's act() method'''
-        target_module = load_action()
+        target_module = load_action(self.target_action)
         if target_module is None:
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + self.target_action)
             return False
+        if self.arguments != None:
+            # We've got arguments, pass them as keyword arguments
+            return target_module.act(context, **self.arguments)
         return target_module.act(context)
