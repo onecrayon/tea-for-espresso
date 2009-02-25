@@ -28,4 +28,17 @@
 			</arguments>
 		</setup>
 	</action>
+	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Em" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Format with Em</title>
+		<setup>
+			<target_action>format_with_tag</target_action>
+			<arguments>
+				<dict>
+					<key>tag</key>
+					<string>em</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
 </action-recipes>
