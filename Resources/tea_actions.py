@@ -50,6 +50,15 @@ def get_line_ending(context):
 # Interact with the text window
 # ===============================================================
 
+def get_ranges(context):
+    '''
+    Convenience function to get a list of all ranges in the document
+    
+    Automatically cleans them up into NSRanges from NSConcreateValues
+    '''
+    ranges = context.selectedRanges()
+    return [range.rangeValue() for range in ranges]
+
 def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)

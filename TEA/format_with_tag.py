@@ -19,7 +19,7 @@ def act(context, tag='p', tagname=None):
     # Set the legible tag name
     if tagname == None:
         tagname = tag.capitalize()
-    ranges = context.selectedRanges()
+    ranges = tea.get_ranges()
     if len(ranges) <= 1:
         # If we're working with a single selection, we can use a snippet
         text, range = tea.get_single_selection(context)
@@ -33,8 +33,6 @@ def act(context, tag='p', tagname=None):
     # with the tag
     insertions = tea.new_recipe()
     for range in ranges:
-        # Convert NSConcreteValue to NSRange
-        range = range.rangeValue()
         text = tea.get_selection(context, range)
         text = '<' + tag + '>' + text + '</' + tag + '>'
         insertions.addReplacementString_forRange_(text, range)
