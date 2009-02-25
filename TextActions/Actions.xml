@@ -3,9 +3,9 @@
 	<!-- Format with Tag accepts two extra arguments: tag and tagname (for the undo menu; defaults to capitalized tag)
 	You can include attributes in `tag` and the tag will be constructed intelligently
 	You can add other HTML elements to wrap the text in simply by adding XML definitions for them below and calling format_with_tag -->
-	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML.formatting">
+	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML/actions.text.HTML.formatting">
 		<class>TEAforEspresso</class>
-		<title>Format with Strong</title>
+		<title>Strong</title>
 		<setup>
 			<target_action>format_with_tag</target_action>
 			<arguments>
@@ -16,15 +16,17 @@
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Em" category="actions.text.HTML.formatting">
+	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Em" category="actions.text.HTML/actions.text.HTML.formatting">
 		<class>TEAforEspresso</class>
-		<title>Format with Em</title>
+		<title>Emphasize</title>
 		<setup>
 			<target_action>format_with_tag</target_action>
 			<arguments>
 				<dict>
 					<key>tag</key>
 					<string>em</string>
+					<key>tagname</key>
+					<string>Emphasis</string>
 				</dict>
 			</arguments>
 		</setup>
