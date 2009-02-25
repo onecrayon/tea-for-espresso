@@ -10,6 +10,11 @@ import tea_utils as tea
 def act(context, tag='p', tagname=None):
     '''
     Required action method
+    
+    Note the use of extra keyword arguments; if you wish to use extra
+    arguments they must be defined as keyword arguments with a 
+    sensible default.  See TextActions/Actions.xml for an example of
+    how to construct those arguments in XML definition.
     '''
     text, range = tea.get_single_selection(context)
     if text == None:
