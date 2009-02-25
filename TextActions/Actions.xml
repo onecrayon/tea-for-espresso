@@ -1,20 +1,5 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
-		<class>TEAforEspresso</class>
-		<title>Wrap Selection In Tag</title>
-		<setup>
-			<target_action>wrap_selection_in_tag</target_action>
-		</setup>
-	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
-		<class>TEAforEspresso</class>
-		<title>Wrap Selected Lines In Tag</title>
-		<setup>
-			<target_action>wrap_selected_lines_in_tag</target_action>
-		</setup>
-	</action>
-	
 	<!-- Format with Tag accepts two extra arguments: tag and tagname (for the undo menu; defaults to capitalized tag)
 	You can add other HTML elements to wrap the text in simply by adding XML definitions for them below and calling format_with_tag -->
 	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML">
@@ -41,6 +26,22 @@
 					<string>em</string>
 				</dict>
 			</arguments>
+		</setup>
+	</action>
+	
+	<!-- Begin TEA for Espresso standard suite -->
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selection In Tag</title>
+		<setup>
+			<target_action>wrap_selection_in_tag</target_action>
+		</setup>
+	</action>
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selected Lines In Tag</title>
+		<setup>
+			<target_action>wrap_selected_lines_in_tag</target_action>
 		</setup>
 	</action>
 </action-recipes>
