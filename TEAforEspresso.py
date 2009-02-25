@@ -28,6 +28,7 @@ class TEAforEspresso(NSObject):
         # Set object's internal variables
         # target_action is required; name of a Python TEA module
         self.target_action = dictionary["target_action"]
+        
         # arguments is an optional dictionary with named extra arguments
         # for the act() call
         if "arguments" in dictionary:
@@ -43,8 +44,7 @@ class TEAforEspresso(NSObject):
             self.arguments = None
         
         # Append the bundle's resource path so that we can use common libraries
-        self.path = bundlePath
-        sys.path.append(self.path + '/Contents/Resources/')
+        sys.path.append(bundlePath + '/Contents/Resources/')
         
         return self
     
