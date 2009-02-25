@@ -31,7 +31,14 @@ class TEAforEspresso(NSObject):
         # arguments is an optional dictionary with named extra arguments
         # for the act() call
         if "arguments" in dictionary:
-            self.arguments = dictionary["arguments"]
+            # In order to pass dictionary as keyword arguments it has to:
+            # 1) be a Python dictionary
+            # 2) have both the key and the value encoded as strings
+            # This dictionary comprehension takes care of both issues
+            self.arguments = dict(
+                [str(arg), str(value)] \
+                for arg, value in dictionary["arguments"].iteritems()
+            )
         else:
             self.arguments = None
         
