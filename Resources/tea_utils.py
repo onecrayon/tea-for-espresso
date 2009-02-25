@@ -1,8 +1,8 @@
 '''
-This module enables on-the-fly loading of other TEA actions
-(which are not, by default, in the system path)
+This module includes common utility functions for working with
+TEA actions
 
-Used by the main plugin initializer to find and load actions
+Most common usage is to find and load TEA actions
 '''
 
 import imp
@@ -11,10 +11,11 @@ import os.path
 
 def load_action(target):
     '''
-    Imports target action file and returns it as a module
+    Imports target TEA action file and returns it as a module
+    (TEA modules are likely not, by default, in the system path)
     
     Searches user override directory first, and then the default
-    TEA scripts directory
+    TEA scripts directory in the Sugar bundle
     
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
