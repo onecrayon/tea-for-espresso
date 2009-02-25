@@ -5,13 +5,13 @@ A collection of Python scripts that enable useful actions
 from Textmate into Espresso
 '''
 
-import imp
-import sys
-import os.path
-
 from Foundation import *
 import objc
 
+from tea_actions import load_action
+
+# This really shouldn't be necessary thanks to the Foundation import
+# but for some reason the plugin dies without it
 NSObject = objc.lookUpClass('NSObject')
 
 class TEAforEspresso(NSObject):
@@ -26,10 +26,17 @@ class TEAforEspresso(NSObject):
         if self is None: return None
         
         # Set object's internal variables
-        self.target_action = dictionary.valueForKey_("target_action")
-        self.path = bundlePath
+        # target_action is required; name of a Python TEA module
+        self.target_action = dictionary["target_action"]
+        # arguments is an optional dictionary with named extra arguments
+        # for the act() call
+        if "arguments" in dictionary:
+            self.arguments = dictionary["arguments"]
+        else:
+            self.arguments = None
         
         # Append the bundle's resource path so that we can use common libraries
+        self.path = bundlePath
         sys.path.append(self.path + '/Contents/Resources/')
         
         return self
@@ -42,38 +49,9 @@ class TEAforEspresso(NSObject):
     
     def performActionWithContext_error_(self, context):
         '''Imports and calls the target_action's act() method'''
-        self.target_module = self.import_action()
-        if self.target_module is None:
-            # Couldn't find the module, throw an error of some sort
-            print('Could not find the module')
+        target_module = load_action()
+        if target_module is None:
+            # Couldn't find the module, log the error
+            NSLog('TEA: Could not find the module ' + self.target_action)
             return False
-        return self.target_module.act(context)
-    
-    def import_action(self):
-        '''
-        Imports a given action file and returns it as a module
-        
-        Searches user override directory first, and then the default
-        TEA scripts directory
-        '''
-        user_modules = os.path.expanduser(
-            '~/Library/Application Support/Espresso/TEA/'
-        )
-        default_modules = os.path.expanduser(self.path + '/TEA/')
-        try:
-            # Is the action already loaded?
-            module = sys.modules[self.target_action]
-        except KeyError:
-            # Find the action (searches user overrides first)
-            file, pathname, description = imp.find_module(
-                self.target_action,
-                [user_modules, default_modules]
-            )
-            if file is None:
-                # Action doesn't exist
-                return None
-            # File exists, load the action
-            module = imp.load_module(
-                self.target_action, file, pathname, description
-            )
-        return module
+        return target_module.act(context)
