@@ -2,7 +2,7 @@
 <action-recipes>
 	<!-- Format with Tag accepts two extra arguments: tag and tagname (for the undo menu; defaults to capitalized tag)
 	You can include attributes in `tag` and the tag will be constructed intelligently
-	You can add other HTML elements to wrap the text in simply by adding XML definitions for them below and calling format_with_tag -->
+	Duplicate the actions below with different info in the tag argument to format with arbitrary HTML elements -->
 	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML/actions.text.HTML.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
