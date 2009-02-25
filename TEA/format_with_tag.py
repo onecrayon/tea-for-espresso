@@ -19,13 +19,24 @@ def act(context, tag='p', tagname=None):
     # Set the legible tag name
     if tagname == None:
         tagname = tag.capitalize()
+    # In case the tag has attributes, parse it
+    opentag, closetag = tea.parse_tag(tag)
+    if opentag == None:
+        # Total regex failure, abort, abort!
+        return False
     ranges = tea.get_ranges(context)
-    if len(ranges) <= 1:
+    if len(ranges) == 1:
         # If we're working with a single selection, we can use a snippet
-        text, range = tea.get_single_selection(context)
-        if text == None:
+        range = ranges[0]
+        # Make sure the range is actually a selection
+        if range.length == 0:
+            tea.say(
+                context, "Error: selection required",
+                "You must select some text in order to use this action."
+            )
             return False
-        snippet = '#{1:<' + tag + '>#{2:' + text + '}</' + tag + '>}#0'
+        text = tea.get_selection(context, range)
+        snippet = '#{1:<' + opentag + '>#{2:' + text + '}</' + closetag + '>}#0'
         # Insert the text via recipe
         return tea.insert_snippet_over_selection(context, snippet, range,
                                                  'Format with ' + tagname)

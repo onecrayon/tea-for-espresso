@@ -1,5 +1,7 @@
 '''Utility functions for working with TEA for Espresso'''
 
+import re
+
 from Foundation import *
 
 from espresso import *
@@ -153,3 +155,21 @@ def insert_snippet_over_selection(context, snippet, range, undo_name=None):
     context.applyTextRecipe_(deletions)
     # Insert the snippet
     return insert_snippet(context, snippet)
+
+# ===============================================================
+# Common text manipulations
+# ===============================================================
+
+def parse_tag(opentag):
+    '''
+    Convenience function to extract the tag from a string including
+    attributes
+    
+    Returns the opentag (in case it included carets) and the closetag
+    
+    If you pass anything outside of a tag, the regex will fail
+    '''
+    matches = re.search(r'^<?(([^\s]+)\s*.*)>?$', opentag)
+    if matches == None:
+        return None, None
+    return matches.group(1), matches.group(2)
