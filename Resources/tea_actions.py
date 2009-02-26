@@ -84,7 +84,7 @@ def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
 
-def get_single_range(content, with_errors=True):
+def get_single_range(context, with_errors=True):
     '''
     Returns the range of a single selection, or throws an optional
     error if there are multiple selections
