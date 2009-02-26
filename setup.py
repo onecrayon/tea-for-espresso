@@ -37,6 +37,6 @@ setup(
     data_files = includes,
     options=dict(py2app=dict(
         extension='.sugar',
-        semi_standalone = True,
+        #semi_standalone = True,
     )),
 )
