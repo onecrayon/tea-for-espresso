@@ -84,12 +84,10 @@ def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
 
-def get_single_selection(context, with_errors=True):
+def get_single_range(content, with_errors=True):
     '''
-    If there's a single selection, returns the selected text,
-    otherwise throws optional descriptive errors
-    
-    Returns a tuple with the selected text first and its range second
+    Returns the range of a single selection, or throws an optional
+    error if there are multiple selections
     '''
     ranges = context.selectedRanges()
     # Since there aren't good ways to deal with discontiguous selections
@@ -100,10 +98,22 @@ def get_single_selection(context, with_errors=True):
                 context, "Error: multiple selections detected",
                 "You must have a single selection in order to use this action."
             )
-        return None, None
+        return None
     # For some reason, range is not an NSRange; it's an NSConcreteValue
     # This converts it to an NSRange which we can work with
-    range = ranges[0].rangeValue()
+    return ranges[0].rangeValue()
+
+def get_single_selection(context, with_errors=True):
+    '''
+    If there's a single selection, returns the selected text,
+    otherwise throws optional descriptive errors
+    
+    Returns a tuple with the selected text first and its range second
+    '''
+    range = get_single_range(context, with_errors)
+    if range == None:
+        # More than one range, apparently
+        return False
     if range.length is 0:
         if with_errors:
             say(
