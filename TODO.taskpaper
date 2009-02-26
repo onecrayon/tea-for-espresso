@@ -1,8 +1,11 @@
 First public release:
+- Generalize "...in tag" actions to be "...in snippet" actions modifiable through XML
+
 - Code Wrap Selection In Link
 - Code Insert BR
-- Code Indent New Line @possibility
-- Add Tidy HTML @possibility
+
 - Add some semblance of self-closing tag awareness to Insert Tag From Word
 	Could this wait until after the public release?  The main code is functioning just fine
 
+- Code Indent New Line @possibility
+- Add Tidy HTML @possibility
