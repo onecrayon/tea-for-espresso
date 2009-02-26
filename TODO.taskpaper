@@ -1,5 +1,6 @@
 First public release:
-- Generalize "...in tag" actions to be "...in snippet" actions modifiable through XML
+- Generalize "...in tag" actions to be "...in snippet" actions modifiable through XML @done(2009-02-26)
+- Evaluate Format With Tag for further possible generalization
 
 - Code Wrap Selection In Link
 - Code Insert BR
