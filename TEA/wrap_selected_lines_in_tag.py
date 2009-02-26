@@ -6,7 +6,7 @@ import re
 
 import tea_actions as tea
 
-def act(context):
+def act(context, tag='li'):
     '''
     Required action method
     
@@ -29,7 +29,7 @@ def act(context):
         content = parser.search(line)
         # Only wrap the line if there's some content
         if content.group(2) != '':
-            segment = tea.construct_tag_snippet(content.group(2), count, 'li')
+            segment = tea.construct_tag_snippet(content.group(2), count, tag)
             snippet += content.group(1) + segment + content.group(3)
             count += 1
         else:
