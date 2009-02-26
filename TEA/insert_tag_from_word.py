@@ -14,7 +14,7 @@ def act(context):
     If some text is selected, then it is turned into an open/close tag with
     attributes intelligently stripped from the closing tag.
     
-    Based heavily on Textmate's Insert Open/Close Tag (With Current Word)
+    Inspired by Textmate's Insert Open/Close Tag (With Current Word)
     '''
     range = tea.get_single_range(context)
     if range == None:
