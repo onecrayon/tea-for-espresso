@@ -34,6 +34,25 @@ def log(message):
     NSLog(message)
 
 # ===============================================================
+# Common text manipulations
+# ===============================================================
+
+def parse_tag(opentag):
+    '''
+    Convenience function to extract the tag from a string including
+    attributes
+    
+    Returns the opentag (in case it included carets) and the closetag:
+    parse_tag('p class="stuff"') => opentag = 'p class="stuff"', closetag = 'p'
+    
+    If you pass anything except an opening XML tag, the regex will fail
+    '''
+    matches = re.search(r'^<?(([^\s]+)\s*.*)>?$', opentag)
+    if matches == None:
+        return None, None
+    return matches.group(1), matches.group(2)
+
+# ===============================================================
 # Preference lookup shortcuts
 # ===============================================================
 
@@ -125,14 +144,15 @@ def insert_text_over_selection(context, text, range, undo_name=None):
 
 def sanitize_for_snippet(text):
     '''Escapes special characters used by snippet syntax'''
-    return text.replace('#', '\#')
+    text = text.replace('#', '\#')
+    return text.replace('`', '\`')
 
 def construct_tag_snippet(text, number=1, default_tag='p'):
     '''
     Sets up the standard single-tag snippet; can be repeated
     for a string of mirrored tags
     '''
-    # Currently meaningless, since there are no escape capabilities
+    # Escape special snippet characters in the text
     text = sanitize_for_snippet(text)
     if number > 1:
         first_segment = '#1'
@@ -155,21 +175,3 @@ def insert_snippet_over_selection(context, snippet, range, undo_name=None):
     context.applyTextRecipe_(deletions)
     # Insert the snippet
     return insert_snippet(context, snippet)
-
-# ===============================================================
-# Common text manipulations
-# ===============================================================
-
-def parse_tag(opentag):
-    '''
-    Convenience function to extract the tag from a string including
-    attributes
-    
-    Returns the opentag (in case it included carets) and the closetag
-    
-    If you pass anything outside of a tag, the regex will fail
-    '''
-    matches = re.search(r'^<?(([^\s]+)\s*.*)>?$', opentag)
-    if matches == None:
-        return None, None
-    return matches.group(1), matches.group(2)
