@@ -1,17 +1,25 @@
-'''Wraps the currently selected text in a tag snippet'''
+'''Wraps the currently selected text in a snippet'''
 
 import tea_actions as tea
 
-def act(context, tag='p'):
+def act(context, opensnippet='<#{1:p}>', closesnippet='</#{1/\s.*//}>#0',
+        multi_opensnippet='<#1>', multi_closesnippet='</#{1/\s.*//}>',
+        undo_name='Wrap Selection In Tag'):
     '''
     Required action method
     
-    This action is simple enough that it merely implements several
-    utility functions
+    Wraps the selected text in a snippet
+    
+    Support for discontiguous selections will be implemented when recipes
+    can support snippets; until then only opensnippet and closesnippet will
+    be used
     '''
+    # TODO: change to a loop once snippets in recipes are supported
+    # This function will handle the logic of when to use open vs. multi
     text, range = tea.get_single_selection(context)
     if text == None:
         return False
-    snippet = tea.construct_tag_snippet(text, default_tag=tag)
+    count = 1
+    snippet = tea.construct_snippet(text, opensnippet, closesnippet)
     return tea.insert_snippet_over_selection(context, snippet, range,
-                                             'Wrap Selection in Tag')
+                                             undo_name)
