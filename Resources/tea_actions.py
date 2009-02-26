@@ -167,21 +167,6 @@ def construct_snippet(text, opensnippet, closesnippet):
     text = sanitize_for_snippet(text)
     return opensnippet + text + closesnippet
 
-
-# THIS NEEDS TO GO
-def construct_tag_snippet(text, number=1, default_tag='p'):
-    '''
-    Sets up the standard single-tag snippet; can be repeated
-    for a string of mirrored tags
-    '''
-    # Escape special snippet characters in the text
-    text = sanitize_for_snippet(text)
-    if number > 1:
-        first_segment = '#1'
-    else:
-        first_segment = '#{1:' + default_tag + '}'
-    return '<' + first_segment + '>' + text + '</#{1/\s.*//}>#0'
-
 def insert_snippet(context, snippet):
     '''
     Convenience function to insert a text snippet

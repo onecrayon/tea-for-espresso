@@ -4,13 +4,17 @@ import re
 
 import tea_actions as tea
 
-def act(context, tag='li'):
+def act(context, opensnippet='<#{1:li}>', closesnippet='</#{1/\s.*//}>',
+        multi_opensnippet='<#1>', multi_closesnippet='</#{1/\s.*//}>',
+        final_append='#0', undo_name='Wrap Selected Lines In Tag'):
     '''
     Required action method
     
-    Much like Wrap Selection in Tag, this only allows a single selection
-    (enforced through the utility functions) then parses over the
-    lines and inserts a snippet to allow the user to define the tag
+    This only allows a single selection (enforced through the utility
+    functions) then parses over the lines and inserts a snippet
+    
+    Theoretically we could allow discontiguous selections; have to consider
+    it if recipes get snippet capabilities
     '''
     text, range = tea.get_single_selection(context)
     if text == None:
@@ -27,10 +31,17 @@ def act(context, tag='li'):
         content = parser.search(line)
         # Only wrap the line if there's some content
         if content.group(2) != '':
-            segment = tea.construct_tag_snippet(content.group(2), count, tag)
+            if count == 1:
+                segment = tea.construct_snippet(content.group(2),
+                                                opensnippet, closesnippet)
+            else:
+                segment = tea.construct_snippet(content.group(2),
+                                                multi_opensnippet,
+                                                multi_closesnippet)
             snippet += content.group(1) + segment + content.group(3)
             count += 1
         else:
             snippet += line
+    snippet += final_append
     return tea.insert_snippet_over_selection(context, snippet, range,
-                                             'Wrap Selected Lines in Tag')
+                                             undo_name)
