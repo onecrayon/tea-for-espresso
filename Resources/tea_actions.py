@@ -1,6 +1,7 @@
 '''Utility functions for working with TEA for Espresso'''
 
 import re
+from types import *
 
 from Foundation import *
 
@@ -157,6 +158,17 @@ def sanitize_for_snippet(text):
     text = text.replace('#', '\#')
     return text.replace('`', '\`')
 
+def init_snippet(snippet):
+    '''Initializes a string as a CETextSnippet object'''
+    return CETextSnippet.snippetWithString_(snippet)
+
+def construct_snippet(text, opensnippet, closesnippet):
+    '''Constructs and initializes a simple snippet'''
+    text = sanitize_for_snippet(text)
+    return opensnippet + text + closesnippet
+
+
+# THIS NEEDS TO GO
 def construct_tag_snippet(text, number=1, default_tag='p'):
     '''
     Sets up the standard single-tag snippet; can be repeated
@@ -171,8 +183,13 @@ def construct_tag_snippet(text, number=1, default_tag='p'):
     return '<' + first_segment + '>' + text + '</#{1/\s.*//}>#0'
 
 def insert_snippet(context, snippet):
-    '''Convenience function to insert a text snippet'''
-    snippet = CETextSnippet.snippetWithString_(snippet)
+    '''
+    Convenience function to insert a text snippet
+    
+    Make sure to set the selection intelligently before calling this
+    '''
+    if type(snippet) is not StringTypes:
+        snippet = init_snippet(snippet)
     return context.insertTextSnippet_(snippet)
 
 def insert_snippet_over_selection(context, snippet, range, undo_name=None):
