@@ -33,6 +33,13 @@
 	</action>
 	
 	<!-- Begin TEA for Espresso standard suite -->
+	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Insert Tag From Word</title>
+		<setup>
+			<target_action>insert_tag_from_word</target_action>
+		</setup>
+	</action>
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
