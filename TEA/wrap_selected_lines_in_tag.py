@@ -1,6 +1,4 @@
-'''
-Wraps currently selected lines in a text snippet
-'''
+'''Wraps currently selected lines in a text snippet'''
 
 import re
 

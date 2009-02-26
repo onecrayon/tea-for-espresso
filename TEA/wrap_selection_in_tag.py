@@ -1,6 +1,4 @@
-'''
-Wraps the currently selected text in a tag snippet
-'''
+'''Wraps the currently selected text in a tag snippet'''
 
 import tea_actions as tea
 
