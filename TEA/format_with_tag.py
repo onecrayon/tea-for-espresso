@@ -1,8 +1,10 @@
 '''
 Formats the selected text by wrapping it in the passed tag
 
-When called without the second argument, the text will be wrapped in
-paragraph tags
+Will use a snippet for a single selection, or a simple text replacement
+for multiple selections
+
+Specific to HTML/XML
 '''
 
 import tea_actions as tea

@@ -158,13 +158,25 @@ def sanitize_for_snippet(text):
     text = text.replace('#', '\#')
     return text.replace('`', '\`')
 
+def parse_snippet(snippet):
+    '''
+    Prepares a snippet for use with Espresso and returns the two portions
+    that wrap $SELECTED_TEXT (if it's there)
+    '''
+    index = snippet.find('$SELECTED_TEXT')
+    if index > -1:
+        return snippet[0:index], snippet[index+14:]
+    else:
+        return snippet, ''
+
 def init_snippet(snippet):
     '''Initializes a string as a CETextSnippet object'''
     return CETextSnippet.snippetWithString_(snippet)
 
-def construct_snippet(text, opensnippet, closesnippet):
+def construct_snippet(text, snippet):
     '''Constructs and initializes a simple snippet'''
     text = sanitize_for_snippet(text)
+    opensnippet, closesnippet = parse_snippet(snippet)
     return opensnippet + text + closesnippet
 
 def insert_snippet(context, snippet):

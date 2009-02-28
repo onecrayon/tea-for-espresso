@@ -4,8 +4,8 @@ import re
 
 import tea_actions as tea
 
-def act(context, opensnippet='<#{1:li}>', closesnippet='</#{1/\s.*//}>',
-        multi_opensnippet='<#1>', multi_closesnippet='</#{1/\s.*//}>',
+def act(context, first_snippet='<#{1:li}>$SELECTED_TEXT</#{1/\s.*//}>',
+        following_snippet='<#1>$SELECTED_TEXT</#{1/\s.*//}>',
         final_append='#0', undo_name='Wrap Selected Lines In Tag'):
     '''
     Required action method
@@ -33,11 +33,10 @@ def act(context, opensnippet='<#{1:li}>', closesnippet='</#{1/\s.*//}>',
         if content.group(2) != '':
             if count == 1:
                 segment = tea.construct_snippet(content.group(2),
-                                                opensnippet, closesnippet)
+                                                first_snippet)
             else:
                 segment = tea.construct_snippet(content.group(2),
-                                                multi_opensnippet,
-                                                multi_closesnippet)
+                                                following_snippet)
             snippet += content.group(1) + segment + content.group(3)
             count += 1
         else:

@@ -2,9 +2,9 @@
 
 import tea_actions as tea
 
-def act(context, opensnippet='<#{1:p}>', closesnippet='</#{1/\s.*//}>#0',
-        multi_opensnippet='<#1>', multi_closesnippet='</#{1/\s.*//}>',
-        undo_name='Wrap Selection In Tag'):
+def act(context, first_snippet='<#{1:p}>$SELECTED_TEXT</#{1/\s.*//}>#0',
+        following_snippet='<#1>$SELECTED_TEXT</#{1/\s.*//}>',
+        final_append='', undo_name='Wrap Selection In Tag'):
     '''
     Required action method
     
@@ -20,6 +20,7 @@ def act(context, opensnippet='<#{1:p}>', closesnippet='</#{1/\s.*//}>#0',
     if text == None:
         return False
     count = 1
-    snippet = tea.construct_snippet(text, opensnippet, closesnippet)
+    snippet = tea.construct_snippet(text, first_snippet)
+    snippet += final_append
     return tea.insert_snippet_over_selection(context, snippet, range,
                                              undo_name)
