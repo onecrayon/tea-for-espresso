@@ -9,7 +9,7 @@ Specific to HTML/XML
 
 import tea_actions as tea
 
-def act(context, tag='p', tagname=None):
+def act(context, tag='p', undo_name=None):
     '''
     Required action method
     
@@ -19,8 +19,12 @@ def act(context, tag='p', tagname=None):
     how to construct those arguments in XML definition.
     '''
     # Set the legible tag name
-    if tagname == None:
-        tagname = tag.capitalize()
+    if undo_name == None:
+        # Remember, setting a keyword argument changes its default for every
+        # call of the function
+        undo_final = 'Format With ' + tag.capitalize()
+    else:
+        undo_final = undo_name
     # In case the tag has attributes, parse it
     opentag, closetag = tea.parse_tag(tag)
     if opentag == None:
@@ -43,7 +47,7 @@ def act(context, tag='p', tagname=None):
         snippet = tea.construct_snippet(text, snippet)
         # Insert the text via recipe
         return tea.insert_snippet_over_selection(context, snippet, range,
-                                                 'Format with ' + tagname)
+                                                 undo_final)
     # We're handling multiple, discontiguous ranges; wrap all of them
     # with the tag
     insertions = tea.new_recipe()

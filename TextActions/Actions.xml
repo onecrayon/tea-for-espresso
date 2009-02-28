@@ -25,8 +25,8 @@
 				<dict>
 					<key>tag</key>
 					<string>em</string>
-					<key>tagname</key>
-					<string>Emphasis</string>
+					<key>undo_name</key>
+					<string>Emphasize</string>
 				</dict>
 			</arguments>
 		</setup>
@@ -45,6 +45,13 @@
 		<title>Wrap Selection In Tag</title>
 		<setup>
 			<target_action>wrap_selection_in_snippet</target_action>
+		</setup>
+	</action>
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selection In Link</title>
+		<setup>
+			<target_action>wrap_selection_in_link</target_action>
 		</setup>
 	</action>
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
