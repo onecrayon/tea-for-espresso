@@ -1,29 +1,37 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<action id="com.onecrayon.TextActions.FormatWithTag.Strong" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.HTML/actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
 		<setup>
-			<target_action>format_with_tag</target_action>
+			<target_action>format_text</target_action>
 			<arguments>
 				<dict>
-					<key>tag</key>
-					<string>strong</string>
+					<key>default</key>
+					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
+					<key>undo_name</key>
+					<string>Strong</string>
+					<!-- Syntax-specific overrides -->
+					<key>text.markdown</key>
+					<string>**$SELECTED_TEXT**</string>
 				</dict>
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.FormatWithTag.Em" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.HTML/actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
 		<setup>
-			<target_action>format_with_tag</target_action>
+			<target_action>format_text</target_action>
 			<arguments>
 				<dict>
-					<key>tag</key>
-					<string>em</string>
+					<key>default</key>
+					<string>&lt;em>$SELECTED_TEXT&lt;/em></string>
 					<key>undo_name</key>
 					<string>Emphasize</string>
+					<!-- Syntax-specific overrides -->
+					<key>text.markdown</key>
+					<string>*$SELECTED_TEXT*</string>
 				</dict>
 			</arguments>
 		</setup>
@@ -37,6 +45,7 @@
 			<target_action>wrap_selection_in_link</target_action>
 			<arguments>
 				<dict>
+					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 				</dict>
