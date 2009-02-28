@@ -3,7 +3,7 @@
 	<category id="actions.text.HTML" show="sub">
 		<title>HTML</title>
 	</category>
-	<category id="actions.text.HTML.formatting" show="sub">
+	<category id="actions.text.formatting" show="sub">
 		<title>Format</title>
 	</category>
 </action-categories>
