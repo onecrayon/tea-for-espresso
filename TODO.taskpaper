@@ -5,12 +5,12 @@ First public release:
 - Code Wrap Selection In Link @done(2009-02-27)
 - Code Insert BR
 
-- Test multiple-language awareness for Wrap Selection In Link @testing
+- Test multiple-language awareness for Wrap Selection In Link @testing @done(2009-02-28)
 
 - Add some semblance of self-closing tag awareness to Insert Tag From Word @refinement
 	Could this wait until after the public release?  The main code is functioning just fine
 
-- Evaluate Insert Tag From Word for generalization; being able to insert a function from a word or whatever could be really useful (and it should be XML-defined, not dependent on my action code) @refinement
+- Evaluate Insert Tag From Word for generalization; being able to insert a function from a word or whatever could be really useful (and it should be XML-defined, not dependent on my action code) @refinement @done(2009-02-28)
 
 - Final run-through of tea_actions to make sure there isn't any cruft and that it's all forward-looking
 - Check in with Jan to ensure that we will indeed be switching to $ in snippets; might be worth delaying until this happens and just testing internally through day-to-day use
