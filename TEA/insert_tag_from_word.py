@@ -17,13 +17,13 @@ def act(context):
     range = tea.get_single_range(context)
     if range == None:
         return False
-    tag = tea.get_word_or_selection(context, range)
-    if ' \t\n\r' in tag:
-        # There's a space character, so parse it as a tag
+    tag, new_range = tea.get_word_or_selection(context, range)
+    if not tag.isalpha():
+        # There's a non-alpha character, so parse it
         opentag, closetag = tea.parse_tag(tag)
     else:
         opentag = closetag = tag
     # Construct the snippet and insert it
     snippet = '<' + opentag + '>$1</' + closetag + '>$0'
-    return tea.insert_snippet_over_selection(context, snippet, range,
+    return tea.insert_snippet_over_selection(context, snippet, new_range,
                                              'Insert Tag From Word')
