@@ -74,7 +74,38 @@ def get_line_ending(context):
     return prefs.lineEndingString()
 
 # ===============================================================
-# Interact with the text window
+# Espresso object convenience methods
+# ===============================================================
+
+def new_range_set(context):
+    '''
+    Convenience function; returns the MRRangeSet for the selection in
+    the current context
+    
+    For range set methods, see Espresso.app/Contents/Headers/MRRangeSet.h
+    '''
+    return MRRangeSet.alloc().initWithRangeValues_(context.selectedRanges())
+
+def new_recipe():
+    '''
+    Convenience function to create a new text recipe
+    
+    For recipe methods, see Espresso.app/Contents/Headers/EspressoTextCore.h
+    '''
+    return CETextRecipe.textRecipe()
+
+def new_snippet(snippet):
+    '''
+    Initializes a string as a CETextSnippet object
+    
+    REPLACE: Note that this also replaces $ with #, allowing people to use
+    new-style snippets before the actual snippet engine is updated
+    '''
+    snippet = re.sub(r'(\$)((\{[0-9])|[0-9])', r'#\2', snippet)
+    return CETextSnippet.snippetWithString_(snippet)
+
+# ===============================================================
+# Working with ranges and selected text
 # ===============================================================
 
 def get_ranges(context):
@@ -129,44 +160,73 @@ def get_single_selection(context, with_errors=True):
         return None, range
     return get_selection(context, range), range
 
-def new_range_set(context):
+def get_word_or_selection(context, range, alpha_only=True):
     '''
-    Convenience function; returns the MRRangeSet for the selection in
-    the current context
+    Selects and returns the current word under the cursor for range,
+    or if there's already a selection returns the contents
     
-    For range set methods, see Espresso.app/Contents/Headers/MRRangeSet.h
+    By default it defines a word as a contiguous string of alphabetical
+    characters. Setting alpha_only to False will define a word as a
+    contiguous string of alpha-numeric characters, underscores, and dashes
     '''
-    return MRRangeSet.alloc().initWithRangeValues_(context.selectedRanges())
-
-def new_recipe():
-    '''
-    Convenience function to create a new text recipe
-    
-    For recipe methods, see Espresso.app/Contents/Headers/EspressoTextCore.h
-    '''
-    return CETextRecipe.textRecipe()
-
-def insert_text_over_selection(context, text, range, undo_name=None):
-    '''Immediately replaces the text at range with passed in text'''
-    insertions = new_recipe()
-    insertions.addReplacementString_forRange_(text, range)
-    if undo_name != None:
-        insertions.setUndoActionName_(undo_name)
-    return context.applyTextRecipe_(insertions)
+    if range.length == 0:
+        # Set up basic variables
+        index = range.location
+        word = ''
+        maxlength = context.string().length()
+        # Make sure the cursor isn't at the end of the document
+        if index != maxlength:
+            # Check if cursor is mid-word
+            char = get_selection(context, NSMakeRange(index, 1))
+            if char.isalpha():
+                inword = True
+                # Parse forward until we hit the end of word or document
+                while inword:
+                    char = get_selection(context, NSMakeRange(index, 1))
+                    if char.isalpha():
+                        word += char
+                    else:
+                        inword = False
+                    index += 1
+                    if index == maxlength:
+                        inword = False
+            else:
+                # lastindex logic assumes we've been incrementing as we go,
+                # so bump it up one to compensate
+                index += 1
+        lastindex = index - 1 if index < maxlength else index
+        # Reset index to one less than the cursor
+        index = range.location - 1
+        # Only walk backwards if we aren't at the beginning
+        if index > 0:
+            # Parse backward to get the word ahead of the cursor
+            inword = True
+            while inword:
+                char = get_selection(context, NSMakeRange(index, 1))
+                if char.isalpha():
+                    word = char + word
+                else:
+                    inword = False
+                index -= 1
+                if index < 0:
+                    inword = False
+        # Since index is left-aligned and we've overcompensated,
+        # need to increment +2
+        firstindex = index + 2 if index > 0 else 0
+        # Switch last index to length for use in range
+        lastindex = lastindex - firstindex
+        range = NSMakeRange(firstindex, lastindex)
+        # setSelectedRanges requires an array of ranges, which actually means
+        # an array of NSValue range objects
+        ranges = NSArray.arrayWithObjects_(NSValue.valueWithRange_(range))
+        context.setSelectedRanges_(ranges)
+        return word
+    else:
+        return get_selection(context, range)
 
 # ===============================================================
-# Snippet utilities
+# Snippet methods
 # ===============================================================
-
-def init_snippet(snippet):
-    '''
-    Initializes a string as a CETextSnippet object
-    
-    REPLACE: Note that this also replaces $ with #, allowing people to use
-    new-style snippets before the actual snippet engine is updated
-    '''
-    snippet = re.sub(r'(\$)((\{[0-9])|[0-9])', r'#\2', snippet)
-    return CETextSnippet.snippetWithString_(snippet)
 
 def sanitize_for_snippet(text):
     '''
@@ -195,6 +255,18 @@ def construct_snippet(text, snippet):
     opensnippet, closesnippet = parse_snippet(snippet)
     return opensnippet + text + closesnippet
 
+# ===============================================================
+# Insertion methods
+# ===============================================================
+
+def insert_text_over_selection(context, text, range, undo_name=None):
+    '''Immediately replaces the text at range with passed in text'''
+    insertions = new_recipe()
+    insertions.addReplacementString_forRange_(text, range)
+    if undo_name != None:
+        insertions.setUndoActionName_(undo_name)
+    return context.applyTextRecipe_(insertions)
+
 def insert_snippet(context, snippet):
     '''
     Convenience function to insert a text snippet
@@ -202,7 +274,7 @@ def insert_snippet(context, snippet):
     Make sure to set the selection intelligently before calling this
     '''
     if type(snippet) in StringTypes:
-        snippet = init_snippet(snippet)
+        snippet = new_snippet(snippet)
     return context.insertTextSnippet_(snippet)
 
 def insert_snippet_over_selection(context, snippet, range, undo_name=None):
