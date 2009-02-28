@@ -19,7 +19,7 @@ def act(context, first_snippet='<${1:p}>$SELECTED_TEXT</${1/\s.*//}>$0',
     text, range = tea.get_single_selection(context)
     if text == None:
         return False
-    count = 1
+    # count = 1
     snippet = tea.construct_snippet(text, first_snippet + final_append)
     return tea.insert_snippet_over_selection(context, snippet, range,
                                              undo_name)
