@@ -35,6 +35,7 @@
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
+		<key-equivalent>control L</key-equivalent>
 		<setup>
 			<target_action>wrap_selection_in_link</target_action>
 			<arguments>
@@ -50,6 +51,7 @@
 	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag From Word</title>
+		<key-equivalent>control ,</key-equivalent>
 		<setup>
 			<target_action>insert_tag_from_word</target_action>
 		</setup>
@@ -57,6 +59,7 @@
 	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Insert BR</title>
+		<key-equivalent>control enter</key-equivalent>
 		<setup>
 			<target_action>insert_text</target_action>
 			<arguments>
@@ -70,6 +73,7 @@
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
+		<key-equivalent>control W</key-equivalent>
 		<setup>
 			<target_action>wrap_selection_in_snippet</target_action>
 		</setup>
@@ -77,6 +81,7 @@
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selected Lines In Tag</title>
+		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
 			<target_action>wrap_selected_lines_in_snippet</target_action>
 		</setup>
