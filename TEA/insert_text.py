@@ -15,19 +15,18 @@ def act(context, default='<br />', prefix_selection=False,
     selected text; if both are true it will wrap the text
     '''
     # Fetch the root zone's insert text
-    # We'll check selection-specific zones later
+    # Selection-specific zones are checked later
     root_zone = tea.get_root_zone(context)
     if root_zone in syntaxes:
-        insert = syntaxes[zone]
+        insert = syntaxes[root_zone]
     else:
         insert = default
-    # Grab the ranges, loop over them
+    # Grab the ranges
     ranges = tea.get_ranges(context)
+    # Set up our text recipe
     insertions = tea.new_recipe()
     for range in ranges:
-        if not prefix_selection and not suffix_selection:
-            text = '$INSERT'
-        else:
+        if prefix_selection or suffix_selection:
             # Get the selected text
             text = tea.get_selection(context, range)
             if prefix_selection:
@@ -37,12 +36,19 @@ def act(context, default='<br />', prefix_selection=False,
             # If empty selection, only insert one
             if text == '$INSERT$INSERT':
                 text = '$INSERT'
+        else:
+            text = '$INSERT'
         # Check for zone-specific insertion
         zone = tea.get_active_zone(context, range)
         if zone in syntaxes:
             insert = syntaxes[zone]
         text = text.replace('$INSERT', insert)
-        insertions.addReplacementString_forRange_(text, range)
+        # Insert the text, or replace the selected text
+        if range.length is 0:
+            insertions.addInsertedString_forIndex_(text, range.location)
+        else:
+            insertions.addReplacementString_forRange_(text, range)
+    # Set undo name and run the recipe
     if undo_name != None:
         insertions.setUndoActionName_(undo_name)
     return context.applyTextRecipe_(insertions)

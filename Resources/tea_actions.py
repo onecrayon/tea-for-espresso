@@ -40,7 +40,7 @@ def log(message):
     NSLog(message)
 
 # ===============================================================
-# Common text manipulations
+# Text manipulations and helper functions
 # ===============================================================
 
 def parse_tag(opentag):
@@ -108,6 +108,10 @@ def new_snippet(snippet):
 # Working with ranges and selected text
 # ===============================================================
 
+def new_range(location, length):
+    '''Convenience function for creating an NSRange'''
+    return NSMakeRange(location, length)
+
 def get_ranges(context):
     '''
     Convenience function to get a list of all ranges in the document
@@ -120,6 +124,10 @@ def get_ranges(context):
 def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
+
+def set_selected_range(context, range):
+    '''Sets the selection to the single range passed as an argument'''
+    context.setSelectedRanges_([NSValue.valueWithRange_(range)])
 
 def get_single_range(context, with_errors=True):
     '''

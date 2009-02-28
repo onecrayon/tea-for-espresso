@@ -32,21 +32,6 @@
 		</setup>
 	</action>
 	
-	<!-- Begin TEA for Espresso standard suite -->
-	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
-		<class>TEAforEspresso</class>
-		<title>Insert Tag From Word</title>
-		<setup>
-			<target_action>insert_tag_from_word</target_action>
-		</setup>
-	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
-		<class>TEAforEspresso</class>
-		<title>Wrap Selection In Tag</title>
-		<setup>
-			<target_action>wrap_selection_in_snippet</target_action>
-		</setup>
-	</action>
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
@@ -58,6 +43,35 @@
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 				</dict>
 			</arguments>
+		</setup>
+	</action>
+	
+	<!-- Begin TEA for Espresso standard suite -->
+	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Insert Tag From Word</title>
+		<setup>
+			<target_action>insert_tag_from_word</target_action>
+		</setup>
+	</action>
+	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Insert BR</title>
+		<setup>
+			<target_action>insert_text</target_action>
+			<arguments>
+				<dict>
+					<key>undo_name</key>
+					<string>Insert BR</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selection In Tag</title>
+		<setup>
+			<target_action>wrap_selection_in_snippet</target_action>
 		</setup>
 	</action>
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
