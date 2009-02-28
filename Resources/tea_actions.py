@@ -1,7 +1,7 @@
 '''Utility functions for working with TEA for Espresso'''
 
 import re
-from types import *
+from types import StringTypes
 
 from Foundation import *
 
@@ -31,7 +31,12 @@ def say(context, title, message,
     )
 
 def log(message):
-    '''Convenience function for logging messages to console'''
+    '''
+    Convenience function for logging messages to console
+    
+    Please make sure they are strings before you try to log them; wrap
+    anything you aren't sure of in str()
+    '''
     NSLog(message)
 
 # ===============================================================
@@ -191,7 +196,7 @@ def insert_snippet(context, snippet):
     
     Make sure to set the selection intelligently before calling this
     '''
-    if type(snippet) is not StringTypes:
+    if type(snippet) in StringTypes:
         snippet = init_snippet(snippet)
     return context.insertTextSnippet_(snippet)
 
