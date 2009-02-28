@@ -58,6 +58,15 @@ def parse_tag(opentag):
         return None, None
     return matches.group(1), matches.group(2)
 
+def is_selfclosing(tag):
+    '''Checks a tag and returns bool whether its a self-closing XHTML tag'''
+    # For now, we're just checking off a list
+    selfclosing = ['img', 'input', 'br', 'hr', 'link', 'base', 'meta']
+    # Make sure we've just got the tag
+    if not tag.isalpha():
+        opentag, tag = parse_tag(tag)
+    return tag in selfclosing
+
 # ===============================================================
 # Preference lookup shortcuts
 # ===============================================================

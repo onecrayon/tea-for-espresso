@@ -2,7 +2,7 @@
 
 import tea_actions as tea
 
-def act(context):
+def act(context, check_selfclosing=True, close_string=' /'):
     '''
     Required action method
     
@@ -24,6 +24,12 @@ def act(context):
     else:
         opentag = closetag = tag
     # Construct the snippet and insert it
-    snippet = '<' + opentag + '>$1</' + closetag + '>$0'
+    if check_selfclosing and tea.is_selfclosing(closetag):
+        snippet = '<' + opentag
+        if opentag is closetag and not opentag in ['br', 'hr']:
+            snippet += ' $1'
+        snippet += close_string + '>$0'
+    else:
+        snippet = '<' + opentag + '>$1</' + closetag + '>$0'
     return tea.insert_snippet_over_selection(context, snippet, new_range,
                                              'Insert Tag From Word')
