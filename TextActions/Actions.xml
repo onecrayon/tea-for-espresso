@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<!-- Format with Tag accepts two extra arguments: tag and tagname (for the undo menu; defaults to capitalized tag)
-	You can include attributes in `tag` and the tag will be constructed intelligently
-	Duplicate the actions below with different info in the tag argument to format with arbitrary HTML elements -->
-	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Strong" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatWithTag.Strong" category="actions.text.HTML/actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
 		<setup>
@@ -16,7 +13,7 @@
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.FormatWithTag.Em" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatWithTag.Em" category="actions.text.HTML/actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
 		<setup>
@@ -32,7 +29,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
+	<action id="com.onecrayon.TextActions.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
 		<key-equivalent>control L</key-equivalent>
@@ -48,7 +45,7 @@
 	</action>
 	
 	<!-- Begin TEA for Espresso standard suite -->
-	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
+	<action id="com.onecrayon.TextActions.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
@@ -56,7 +53,7 @@
 			<target_action>insert_tag_from_word</target_action>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
+	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert BR</title>
 		<key-equivalent>control enter</key-equivalent>
@@ -70,7 +67,7 @@
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML/tea.wrapping">
+	<action id="com.onecrayon.TextActions.WrapInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
@@ -78,7 +75,7 @@
 			<target_action>wrap_selection_in_snippet</target_action>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML/tea.wrapping">
+	<action id="com.onecrayon.TextActions.WrapLinesInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selected Lines In Tag</title>
 		<key-equivalent>cmd control W</key-equivalent>
