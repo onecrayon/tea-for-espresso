@@ -7,8 +7,7 @@ First public release:
 
 - Test multiple-language awareness for Wrap Selection In Link @testing @done(2009-02-28)
 
-- Add some semblance of self-closing tag awareness to Insert Tag From Word @refinement
-	Could this wait until after the public release?  The main code is functioning just fine
+- Add some semblance of self-closing tag awareness to Insert Tag From Word @refinement @done(2009-02-28)
 
 - Evaluate Insert Tag From Word for generalization; being able to insert a function from a word or whatever could be really useful (and it should be XML-defined, not dependent on my action code) @refinement @done(2009-02-28)
 
@@ -16,10 +15,11 @@ First public release:
 - Check in with Jan to ensure that we will indeed be switching to $ in snippets; might be worth delaying until this happens and just testing internally through day-to-day use
 
 - Code Indent New Line? @feature
-- Add Tidy HTML? @feature
-
 Short term goals:
 - Improve Wrap Selection In Link's zone sniffing; currently only evaluates for the root zone of the document, which is less than useful
 - Evaluated whether to move Wrap Selection In Link's utility functions outside of the action; they might be useful to other people
 
 - Re-evaluate Format With Tag; what is it actually doing? How can I better generalize it for use in other languages? Is this even necessary?
+
+- Add Tidy HTML? @feature
+
