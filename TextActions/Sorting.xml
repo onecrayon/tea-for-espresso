@@ -2,6 +2,7 @@
 <action-sort-instructions>
 	<sort-template>
 		<selector>tea.insertion</selector>
+		<selector>actions.text.formatting</selector>
 		<selector>tea.wrapping</selector>
 	</sort-template>
 </action-sort-instructions>
