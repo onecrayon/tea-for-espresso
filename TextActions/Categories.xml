@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
 <action-categories>
+	<!-- Generic categories -->
 	<category id="actions.text.HTML" show="sub">
 		<title>HTML</title>
 	</category>
 	<category id="actions.text.formatting" show="sub">
 		<title>Format</title>
 	</category>
+	
+	<!-- TEA-specific categories -->
+	<category id="tea.wrapping" show="inline separated"></category>
+	<category id="tea.insertion" show="inline separated"></category>
 </action-categories>

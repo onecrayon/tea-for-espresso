@@ -32,7 +32,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
 		<key-equivalent>control L</key-equivalent>
@@ -48,7 +48,7 @@
 	</action>
 	
 	<!-- Begin TEA for Espresso standard suite -->
-	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
@@ -56,7 +56,7 @@
 			<target_action>insert_tag_from_word</target_action>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.TEA.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert BR</title>
 		<key-equivalent>control enter</key-equivalent>
@@ -70,7 +70,7 @@
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectionInTag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
@@ -78,7 +78,7 @@
 			<target_action>wrap_selection_in_snippet</target_action>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selected Lines In Tag</title>
 		<key-equivalent>cmd control W</key-equivalent>
