@@ -160,15 +160,23 @@ def get_single_selection(context, with_errors=True):
         return None, range
     return get_selection(context, range), range
 
-def get_word_or_selection(context, range, alpha_only=True):
+def get_word_or_selection(context, range, alpha_only=True,
+                          extra_characters='_-'):
     '''
-    Selects and returns the current word under the cursor for range,
-    or if there's already a selection returns the contents
+    Selects and returns the current word and its range from the passed range,
+    or if there's already a selection returns the contents and its range
     
     By default it defines a word as a contiguous string of alphabetical
     characters. Setting alpha_only to False will define a word as a
-    contiguous string of alpha-numeric characters, underscores, and dashes
+    contiguous string of alpha-numeric characters and extra_characters
     '''
+    def test_alpha():
+        # Mini-function to cut down on code bloat
+        if alpha_only:
+            return char.isalpha()
+        else:
+            return all(c.isalnum() or c in extra_characters for c in char)
+    
     if range.length == 0:
         # Set up basic variables
         index = range.location
@@ -178,12 +186,12 @@ def get_word_or_selection(context, range, alpha_only=True):
         if index != maxlength:
             # Check if cursor is mid-word
             char = get_selection(context, NSMakeRange(index, 1))
-            if char.isalpha():
+            if test_alpha():
                 inword = True
                 # Parse forward until we hit the end of word or document
                 while inword:
                     char = get_selection(context, NSMakeRange(index, 1))
-                    if char.isalpha():
+                    if test_alpha():
                         word += char
                     else:
                         inword = False
@@ -203,7 +211,7 @@ def get_word_or_selection(context, range, alpha_only=True):
             inword = True
             while inword:
                 char = get_selection(context, NSMakeRange(index, 1))
-                if char.isalpha():
+                if test_alpha():
                     word = char + word
                 else:
                     inword = False
@@ -216,13 +224,9 @@ def get_word_or_selection(context, range, alpha_only=True):
         # Switch last index to length for use in range
         lastindex = lastindex - firstindex
         range = NSMakeRange(firstindex, lastindex)
-        # setSelectedRanges requires an array of ranges, which actually means
-        # an array of NSValue range objects
-        ranges = NSArray.arrayWithObjects_(NSValue.valueWithRange_(range))
-        context.setSelectedRanges_(ranges)
-        return word
+        return word, range
     else:
-        return get_selection(context, range)
+        return get_selection(context, range), range
 
 # ===============================================================
 # Snippet methods
