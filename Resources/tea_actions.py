@@ -238,6 +238,12 @@ def get_root_zone(context):
     #       the most applicable root zone available
     return context.syntaxTree().root().typeIdentifier().stringValue()
 
+def get_active_zone(context, range):
+    '''Returns the zone under the cursor'''
+    zone = context.syntaxTree().zoneAtCharacterIndex_(range.location).\
+           typeIdentifier().stringValue()
+    return zone
+
 # ===============================================================
 # Snippet methods
 # ===============================================================
