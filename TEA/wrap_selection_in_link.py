@@ -57,7 +57,7 @@ def act(context, undo_name='Wrap Selection In Link',
     # Get the snippet based on the root zone
     # TODO: I need to implement better syntax zone sniffing to find
     #       the lowest nested zone available
-    zone = context.syntaxTree().root().typeIdentifier()
+    zone = context.syntaxTree().root().typeIdentifier().stringValue()
     if zone in syntaxes:
         snippet = syntaxes[zone]
     else:

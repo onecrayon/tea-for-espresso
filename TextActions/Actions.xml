@@ -52,6 +52,12 @@
 		<title>Wrap Selection In Link</title>
 		<setup>
 			<target_action>wrap_selection_in_link</target_action>
+			<arguments>
+				<dict>
+					<key>text.markdown</key>
+					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
+				</dict>
+			</arguments>
 		</setup>
 	</action>
 	<action id="com.onecrayon.TextActions.TEA.WrapSelectedLinesInTag" category="actions.text.HTML">
