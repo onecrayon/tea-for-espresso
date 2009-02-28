@@ -35,19 +35,18 @@ def act(context, tag='p', undo_name=None):
         # If we're working with a single selection, we can use a snippet
         range = ranges[0]
         # Make sure the range is actually a selection
-        if range.length == 0:
-            tea.say(
-                context, "Error: selection required",
-                "You must select some text in order to use this action."
-            )
-            return False
-        text = tea.get_selection(context, range)
-        snippet = '${1:<' + opentag + '>${2:$SELECTED_TEXT}</' + \
-                  closetag + '>}$0'
-        snippet = tea.construct_snippet(text, snippet)
-        # Insert the text via recipe
-        return tea.insert_snippet_over_selection(context, snippet, range,
-                                                 undo_final)
+        if range.length > 0:
+            text = tea.get_selection(context, range)
+            snippet = '${1:<' + opentag + '>${2:$SELECTED_TEXT}</' + \
+                      closetag + '>}$0'
+            snippet = tea.construct_snippet(text, snippet)
+            return tea.insert_snippet_over_selection(context, snippet, range,
+                                                     undo_final)
+        else:
+            # No selection, just insert the tags
+            snippet = '<' + opentag + '>$1</' + closetag + '>$0'
+            return tea.insert_snippet(context, snippet)
+    
     # We're handling multiple, discontiguous ranges; wrap all of them
     # with the tag
     insertions = tea.new_recipe()
