@@ -1,18 +1,5 @@
 First public release:
-- Generalize "...in tag" actions to be "...in snippet" actions modifiable through XML @done(2009-02-26)
-- Evaluate Format With Tag for further possible generalization @done(2009-02-27)
-
-- Code Wrap Selection In Link @done(2009-02-27)
-- Code Insert BR @done(2009-02-28)
-
-- Test multiple-language awareness for Wrap Selection In Link @testing @done(2009-02-28)
-
-- Add some semblance of self-closing tag awareness to Insert Tag From Word @refinement @done(2009-02-28)
-
-- Evaluate Insert Tag From Word for generalization; being able to insert a function from a word or whatever could be really useful (and it should be XML-defined, not dependent on my action code) @refinement @done(2009-02-28)
-
 - Final run-through of tea_actions to make sure there isn't any cruft and that it's all forward-looking
-- Check in with Jan to ensure that we will indeed be switching to $ in snippets; might be worth delaying until this happens and just testing internally through day-to-day use
 
 - Code Indent New Line? @feature
 Short term goals:
@@ -23,3 +10,12 @@ Short term goals:
 
 - Add Tidy HTML? @feature
 
+Archive:
+- Generalize "...in tag" actions to be "...in snippet" actions modifiable through XML @done(2009-02-26) @project(First public release)
+- Evaluate Format With Tag for further possible generalization @done(2009-02-27) @project(First public release)
+- Code Wrap Selection In Link @done(2009-02-27) @project(First public release)
+- Code Insert BR @done(2009-02-28) @project(First public release)
+- Test multiple-language awareness for Wrap Selection In Link @testing @done(2009-02-28) @project(First public release)
+- Add some semblance of self-closing tag awareness to Insert Tag From Word @refinement @done(2009-02-28) @project(First public release)
+- Evaluate Insert Tag From Word for generalization; being able to insert a function from a word or whatever could be really useful (and it should be XML-defined, not dependent on my action code) @refinement @done(2009-02-28) @project(First public release)
+- Check in with Jan to ensure that we will indeed be switching to $ in snippets; might be worth delaying until this happens and just testing internally through day-to-day use @done(2009-02-28) @project(First public release)
