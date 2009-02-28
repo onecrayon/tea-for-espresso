@@ -155,7 +155,7 @@ def insert_text_over_selection(context, text, range, undo_name=None):
 
 def sanitize_for_snippet(text):
     '''Escapes special characters used by snippet syntax'''
-    text = text.replace('#', '\#')
+    text = text.replace('$', '\$')
     return text.replace('`', '\`')
 
 def parse_snippet(snippet):
@@ -170,11 +170,17 @@ def parse_snippet(snippet):
         return snippet, ''
 
 def init_snippet(snippet):
-    '''Initializes a string as a CETextSnippet object'''
+    '''
+    Initializes a string as a CETextSnippet object
+    
+    REPLACE: Note that this also replaces $ with #, allowing people to use
+    new-style snippets before the actual snippet engine is updated
+    '''
+    snippet = snippet.replace('$', '#')
     return CETextSnippet.snippetWithString_(snippet)
 
 def construct_snippet(text, snippet):
-    '''Constructs and initializes a simple snippet'''
+    '''Constructs a simple snippet by replacing $SELECTED_TEXT with text'''
     text = sanitize_for_snippet(text)
     opensnippet, closesnippet = parse_snippet(snippet)
     return opensnippet + text + closesnippet

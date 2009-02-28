@@ -4,9 +4,9 @@ import re
 
 import tea_actions as tea
 
-def act(context, first_snippet='<#{1:li}>$SELECTED_TEXT</#{1/\s.*//}>',
-        following_snippet='<#1>$SELECTED_TEXT</#{1/\s.*//}>',
-        final_append='#0', undo_name='Wrap Selected Lines In Tag'):
+def act(context, first_snippet='<${1:li}>$SELECTED_TEXT</${1/\s.*//}>',
+        following_snippet='<$1>$SELECTED_TEXT</${1/\s.*//}>',
+        final_append='$0', undo_name='Wrap Selected Lines In Tag'):
     '''
     Required action method
     

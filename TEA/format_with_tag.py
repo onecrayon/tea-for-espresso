@@ -38,7 +38,9 @@ def act(context, tag='p', tagname=None):
             )
             return False
         text = tea.get_selection(context, range)
-        snippet = '#{1:<' + opentag + '>#{2:' + text + '}</' + closetag + '>}#0'
+        snippet = '${1:<' + opentag + '>${2:$SELECTED_TEXT}</' + \
+                  closetag + '>}$0'
+        snippet = tea.construct_snippet(text, snippet)
         # Insert the text via recipe
         return tea.insert_snippet_over_selection(context, snippet, range,
                                                  'Format with ' + tagname)
@@ -47,7 +49,7 @@ def act(context, tag='p', tagname=None):
     insertions = tea.new_recipe()
     for range in ranges:
         text = tea.get_selection(context, range)
-        text = '<' + tag + '>' + text + '</' + tag + '>'
+        text = '<' + opentag + '>' + text + '</' + closetag + '>'
         insertions.addReplacementString_forRange_(text, range)
     insertions.setUndoActionName_('Format with ' + tagname)
     return context.applyTextRecipe_(insertions)

@@ -76,6 +76,6 @@ def act(context):
         # Parse the tag since there's almost certainly attributes
         opentag, closetag = tea.parse_tag(tag)
     # Construct the snippet and insert it
-    snippet = '<' + opentag + '>#1</' + closetag + '>#0'
+    snippet = '<' + opentag + '>$1</' + closetag + '>$0'
     return tea.insert_snippet_over_selection(context, snippet, range,
                                              'Insert Tag From Word')
