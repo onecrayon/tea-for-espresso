@@ -275,22 +275,10 @@ def sanitize_for_snippet(text):
     text = text.replace('#', '\#')
     return text.replace('`', '\`')
 
-def parse_snippet(snippet):
-    '''
-    Prepares a snippet for use with Espresso and returns the two portions
-    that wrap $SELECTED_TEXT (if it's there)
-    '''
-    index = snippet.find('$SELECTED_TEXT')
-    if index > -1:
-        return snippet[0:index], snippet[index+14:]
-    else:
-        return snippet, ''
-
 def construct_snippet(text, snippet):
     '''Constructs a simple snippet by replacing $SELECTED_TEXT with text'''
     text = sanitize_for_snippet(text)
-    opensnippet, closesnippet = parse_snippet(snippet)
-    return opensnippet + text + closesnippet
+    return snippet.replace('$SELECTED_TEXT', text)
 
 # ===============================================================
 # Insertion methods
@@ -316,11 +304,13 @@ def insert_snippet(context, snippet):
 
 def insert_snippet_over_selection(context, snippet, range, undo_name=None):
     '''Replaces text at range with a text snippet'''
-    deletions = new_recipe()
-    deletions.addDeletedRange_(range)
-    if undo_name != None:
-        deletions.setUndoActionName_(undo_name) 
-    # Apply the deletions
-    context.applyTextRecipe_(deletions)
+    if range.length is not 0:
+        # Need to first delete the text under the range
+        deletions = new_recipe()
+        deletions.addDeletedRange_(range)
+        if undo_name != None:
+            deletions.setUndoActionName_(undo_name)
+        # Apply the deletions
+        context.applyTextRecipe_(deletions)
     # Insert the snippet
     return insert_snippet(context, snippet)
