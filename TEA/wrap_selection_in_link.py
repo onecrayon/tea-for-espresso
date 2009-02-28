@@ -55,9 +55,7 @@ def act(context, undo_name='Wrap Selection In Link',
     # Construct the default link
     url = format_hyperlink(clipboard, fallback='http://')
     # Get the snippet based on the root zone
-    # TODO: I need to implement better syntax zone sniffing to find
-    #       the lowest nested zone available
-    zone = context.syntaxTree().root().typeIdentifier().stringValue()
+    zone = tea.get_root_zone(context)
     if zone in syntaxes:
         snippet = syntaxes[zone]
     else:

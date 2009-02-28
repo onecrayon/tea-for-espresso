@@ -229,6 +229,16 @@ def get_word_or_selection(context, range, alpha_only=True,
         return get_selection(context, range), range
 
 # ===============================================================
+# Syntax zone methods
+# ===============================================================
+
+def get_root_zone(context):
+    '''Returns the string identifier of the current root zone'''
+    # TODO: I need to implement better syntax zone sniffing to find
+    #       the most applicable root zone available
+    return context.syntaxTree().root().typeIdentifier().stringValue()
+
+# ===============================================================
 # Snippet methods
 # ===============================================================
 
