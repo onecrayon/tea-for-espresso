@@ -1,33 +1,30 @@
 '''Wraps selected text in a link (what kind of link based on context)'''
 
 import subprocess
-import re
 
 import tea_actions as tea
+from persistent_re import *
 
 def encode_ampersands(text):
     '''Encodes ampersands for use in links'''
     return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', '&amp;', text)
 
 def format_hyperlink(text, fallback=''):
-    if re.match(r'(mailto:)?(.+?@.+\..+)$', text):
+    gre = persistent_re()
+    if gre.match(r'(mailto:)?(.+?@.+\..+)$', text):
         # Email; ensure it has a mailto prefix
-        return re.sub(r'(mailto:)?(.*?@.*\..*)$', r'mailto:\2', text)
-    elif re.search(r'http://(?:www\.)?(amazon\.(?:com|co\.uk|co\.jp|ca|fr|de))'\
-                   r'/.+?/([A-Z0-9]{10})/[-a-zA-Z0-9_./%?=&]+', text):
+        return 'mailto:' + gre.last.group(2)
+    elif gre.search(r'http://(?:www\.)?(amazon\.(?:com|co\.uk|co\.jp|ca|fr|de))'\
+                    r'/.+?/([A-Z0-9]{10})/[-a-zA-Z0-9_./%?=&]+', text):
         # Amazon URL; rewrite it with short version
-        return re.sub(r'http://(?:www\.)?'\
-                      r'(amazon\.(?:com|co\.uk|co\.jp|ca|fr|de))'\
-                      r'/.+?/([A-Z0-9]{10})/[-a-zA-Z0-9_./%?=&]+',
-                      r'http://\1/dp/\2',
-                      text)
-    elif re.match(r'[a-zA-Z][a-zA-Z0-9.+-]+?://.*$', text):
+        return 'http://' + gre.last.group(1) + '/dp/' + gre.last.group(2)
+    elif gre.match(r'[a-zA-Z][a-zA-Z0-9.+-]+?://.*$', text):
         # Unknown prefix
         return encode_ampersands(text)
-    elif re.match(r'.*\.(com|uk|net|org|info)(/.*)?$', text):
+    elif gre.match(r'.*\.(com|uk|net|org|info)(/.*)?$', text):
         # Recognizable URL without http:// prefix
         return 'http://' + encode_ampersands(text)
-    elif re.match(r'\S+$', text):
+    elif gre.match(r'\S+$', text):
         # No space characters, so could be a URL; toss 'er in there
         return encode_ampersands(text)
     else:
