@@ -1,24 +1,7 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.formatting">
-		<class>TEAforEspresso</class>
-		<title>Strong</title>
-		<key-equivalent>cmd b</key-equivalent>
-		<setup>
-			<target_action>format_text</target_action>
-			<arguments>
-				<dict>
-					<key>default</key>
-					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
-					<key>undo_name</key>
-					<string>Strong</string>
-					<!-- Syntax-specific overrides -->
-					<key>text.markdown</key>
-					<string>**$SELECTED_TEXT**</string>
-				</dict>
-			</arguments>
-		</setup>
-	</action>
+	<!-- Begin generic formatting commands -->
+	
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
@@ -39,6 +22,28 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.formatting">
+		<class>TEAforEspresso</class>
+		<title>Strong</title>
+		<key-equivalent>cmd b</key-equivalent>
+		<setup>
+			<target_action>format_text</target_action>
+			<arguments>
+				<dict>
+					<key>default</key>
+					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
+					<key>undo_name</key>
+					<string>Strong</string>
+					<!-- Syntax-specific overrides -->
+					<key>text.markdown</key>
+					<string>**$SELECTED_TEXT**</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
+	<!-- Begin commands with cross-syntax options -->
+	
 	<action id="com.onecrayon.TextActions.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
@@ -55,7 +60,29 @@
 		</setup>
 	</action>
 	
-	<!-- Begin TEA for Espresso standard suite -->
+	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Linebreak(s)</title>
+		<key-equivalent>control enter</key-equivalent>
+		<setup>
+			<target_action>insert_text</target_action>
+			<arguments>
+				<dict>
+					<key>default</key>
+					<string>&lt;br /></string>
+					<key>suffix_selection</key>
+					<true/>
+					<key>undo_name</key>
+					<string>Insert Linebreak(s)</string>
+					<!-- Syntax-specific overrides -->
+					
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
+	<!-- Begin HTML core suite -->
+	
 	<action id="com.onecrayon.TextActions.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag From Word</title>
@@ -64,20 +91,7 @@
 			<target_action>insert_tag_from_word</target_action>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Insert BR</title>
-		<key-equivalent>control enter</key-equivalent>
-		<setup>
-			<target_action>insert_text</target_action>
-			<arguments>
-				<dict>
-					<key>undo_name</key>
-					<string>Insert BR</string>
-				</dict>
-			</arguments>
-		</setup>
-	</action>
+	
 	<action id="com.onecrayon.TextActions.WrapInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
@@ -86,6 +100,7 @@
 			<target_action>wrap_selection_in_snippet</target_action>
 		</setup>
 	</action>
+	
 	<action id="com.onecrayon.TextActions.WrapLinesInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selected Lines In Tag</title>
@@ -94,4 +109,5 @@
 			<target_action>wrap_selected_lines_in_snippet</target_action>
 		</setup>
 	</action>
+	
 </action-recipes>
