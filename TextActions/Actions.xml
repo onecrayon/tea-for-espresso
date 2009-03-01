@@ -3,6 +3,7 @@
 	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
+		<key-equivalent>cmd b</key-equivalent>
 		<setup>
 			<target_action>format_text</target_action>
 			<arguments>
@@ -21,6 +22,7 @@
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
+		<key-equivalent>cmd I</key-equivalent>
 		<setup>
 			<target_action>format_text</target_action>
 			<arguments>
