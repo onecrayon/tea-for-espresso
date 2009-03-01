@@ -12,8 +12,10 @@
 				<dict>
 					<key>default</key>
 					<string>&lt;em>$SELECTED_TEXT&lt;/em></string>
+					
 					<key>undo_name</key>
 					<string>Emphasize</string>
+					
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>*$SELECTED_TEXT*</string>
@@ -32,8 +34,10 @@
 				<dict>
 					<key>default</key>
 					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
+					
 					<key>undo_name</key>
 					<string>Strong</string>
+					
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>**$SELECTED_TEXT**</string>
@@ -52,6 +56,12 @@
 			<target_action>wrap_selection_in_link</target_action>
 			<arguments>
 				<dict>
+					<key>default</key>
+					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
+					
+					<key>undo_name</key>
+					<string>Wrap Selection In Link</string>
+					
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
@@ -70,12 +80,14 @@
 				<dict>
 					<key>default</key>
 					<string>&lt;br /></string>
+					
 					<key>suffix_selection</key>
 					<true/>
+					
 					<key>undo_name</key>
 					<string>Insert Linebreak(s)</string>
-					<!-- Syntax-specific overrides -->
 					
+					<!-- Syntax-specific overrides -->
 				</dict>
 			</arguments>
 		</setup>
@@ -107,6 +119,21 @@
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
 			<target_action>wrap_selected_lines_in_snippet</target_action>
+			<arguments>
+				<dict>
+					<key>first_snippet</key>
+					<string>&lt;${1:li}>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
+					
+					<key>following_snippet</key>
+					<string>&lt;$1>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
+					
+					<key>final_append</key>
+					<string>$0</string>
+					
+					<key>undo_name</key>
+					<string>Wrap Selected Lines In Tag</string>
+				</dict>
+			</arguments>
 		</setup>
 	</action>
 	

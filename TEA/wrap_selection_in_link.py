@@ -31,9 +31,7 @@ def format_hyperlink(text, fallback=''):
         # Nothing that remotely looks URL-ish; give them the fallback
         return fallback
 
-def act(context, undo_name='Wrap Selection In Link',
-        default='<a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT</a>$0',
-        **syntaxes):
+def act(context, default='', undo_name=None, **syntaxes):
     '''
     Required action method
     

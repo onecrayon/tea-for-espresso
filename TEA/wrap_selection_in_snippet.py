@@ -2,9 +2,8 @@
 
 import tea_actions as tea
 
-def act(context, first_snippet='<${1:p}>$SELECTED_TEXT</${1/\s.*//}>$0',
-        following_snippet='<$1>$SELECTED_TEXT</${1/\s.*//}>',
-        final_append='', undo_name='Wrap Selection In Tag'):
+def act(context, first_snippet='', following_snippet='',
+        final_append='', undo_name=None):
     '''
     Required action method
     
