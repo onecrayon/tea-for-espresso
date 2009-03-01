@@ -1,4 +1,4 @@
-'''Converts word or selection into an open/close tag pair'''
+'''Converts word or selection under the cursor into an open/close tag pair'''
 
 import tea_actions as tea
 

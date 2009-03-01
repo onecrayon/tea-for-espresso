@@ -1,8 +1,8 @@
 '''
-Formats the selected text by wrapping it in the passed segments
+Formats the selected text by wrapping it in the passed segment
 
-Will use a snippet for a single selection, or a simple text replacement
-for multiple selections
+Will use an automatically formatted snippet for a single selection,
+or a simple text replacement for multiple selections
 '''
 
 import tea_actions as tea
