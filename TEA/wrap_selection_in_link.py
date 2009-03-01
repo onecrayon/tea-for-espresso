@@ -31,7 +31,7 @@ def format_hyperlink(text, fallback=''):
         # Nothing that remotely looks URL-ish; give them the fallback
         return fallback
 
-def act(context, default='', undo_name=None, **syntaxes):
+def act(context, default='', fallback_url='', undo_name=None, **syntaxes):
     '''
     Required action method
     
@@ -48,7 +48,7 @@ def act(context, default='', undo_name=None, **syntaxes):
     process = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
     clipboard, error = process.communicate(None)
     # Construct the default link
-    url = format_hyperlink(clipboard, fallback='http://')
+    url = format_hyperlink(clipboard, fallback_url)
     # Get the snippet based on the root zone
     zone = tea.get_root_zone(context)
     if zone in syntaxes:

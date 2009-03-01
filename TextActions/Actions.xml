@@ -59,6 +59,9 @@
 					<key>default</key>
 					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
 					
+					<key>fallback_url</key>
+					<string>http://</string>
+					
 					<key>undo_name</key>
 					<string>Wrap Selection In Link</string>
 					
