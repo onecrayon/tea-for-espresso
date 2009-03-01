@@ -10,13 +10,14 @@ it has since grown into a general use platform for extending the application
 in ways useful to my everyday work as a web developer.
 
 TEA for Espresso is currently in an early testing stage; please see the
-TEA for Espresso forum post for download information, known bugs,
+[TEA for Espresso forum post][2] for download information, known bugs,
 and more.
 
 If you are interested in extending or modifying TEA for Espresso
 for your own use, then you've come to the right place.
 
    [1]: http://macrabbit.com/espresso/
+   [2]: http://wiki.macrabbit.com/forums/viewthread/160/
 
 Extending TEA for Espresso
 ==========================
@@ -31,9 +32,9 @@ to your liking.  For more information, see the [wiki][4]:
 * [Adding or overriding Python scripts][6]
 
    [3]: http://python.org/
-   [4]: https://github.com/onecrayon/tea-for-espresso/wikis
-   [5]: https://github.com/onecrayon/tea-for-espresso/wikis/adding-your-own-actions
-   [6]: https://github.com/onecrayon/tea-for-espresso/wikis/adding-or-overriding-python-scripts
+   [4]: http://wiki.github.com/onecrayon/tea-for-espresso
+   [5]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
+   [6]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-or-overriding-python-scripts
 
 If you are instead interested in coding your own
 Sugar in Python, the TEA for Espresso project can also serve as an excellent
