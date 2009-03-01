@@ -8,6 +8,14 @@ import py2app
 import os
 
 
+# Update this info by hand; defines the required Info.plist elements
+# for Espresso
+info = dict(
+    CFBundleVersion = '1.0b1',
+    CFBundleIdentifier = 'com.onecrayon.tea.espresso',
+    NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
+)
+
 def include_files(path):
     '''
     Walks a given folder and returns a list of its contents
@@ -39,6 +47,7 @@ setup(
         extension='.sugar',
         semi_standalone = True,
         site_packages = True,
+        plist = info
     )),
 )
 
