@@ -41,3 +41,7 @@ setup(
         site_packages = True,
     )),
 )
+
+os.chdir('dist/TEA for Espresso.sugar/TextActions')
+os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
+os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
