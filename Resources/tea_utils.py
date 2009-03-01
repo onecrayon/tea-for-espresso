@@ -20,7 +20,7 @@ def load_action(target):
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
     user_modules = os.path.expanduser(
-        '~/Library/Application Support/Espresso/TEA/'
+        '~/Library/Application Support/Espresso/TEA/Scripts/'
     )
     default_modules = os.path.expanduser(
         '~/Library/Application Support/Espresso/Sugars/'
