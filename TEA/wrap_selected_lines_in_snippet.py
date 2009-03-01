@@ -41,5 +41,5 @@ def act(context, first_snippet='', following_snippet='',
         else:
             snippet += line
     snippet += final_append
-    return tea.insert_snippet_over_selection(context, snippet, range,
+    return tea.insert_snippet_over_range(context, snippet, range,
                                              undo_name)

@@ -11,10 +11,6 @@ from espresso import *
 # Interact with the user and output information
 # ===============================================================
 
-def ask(context, question, default=''):
-    '''Displays a dialog box asking for user input'''
-    return True
-
 def say(context, title, message,
         main_button=None, alt_button=None, other_button=None):
     '''Displays a dialog with a message for the user'''
@@ -45,21 +41,20 @@ def log(message):
 
 def parse_tag(opentag):
     '''
-    Convenience function to extract the tag from a string including
-    attributes
+    Extract the tag from a string including optional attributes
     
     Returns the opentag (in case it included carets) and the closetag:
     parse_tag('p class="stuff"') => opentag = 'p class="stuff"', closetag = 'p'
     
     If you pass anything except an opening XML tag, the regex will fail
     '''
-    matches = re.search(r'^<?(([^\s]+)\s*.*)>?$', opentag)
+    matches = re.match(r'<?(([^\s]+)\s*.*)>?$', opentag)
     if matches == None:
         return None, None
     return matches.group(1), matches.group(2)
 
 def is_selfclosing(tag):
-    '''Checks a tag and returns bool whether its a self-closing XHTML tag'''
+    '''Checks a tag and returns True if it's a self-closing XHTML tag'''
     # For now, we're just checking off a list
     selfclosing = ['img', 'input', 'br', 'hr', 'link', 'base', 'meta']
     # Make sure we've just got the tag
@@ -73,12 +68,13 @@ def is_selfclosing(tag):
 
 def get_prefs(context):
     '''
-    Convenience function; returns a CETextPreferences object with
+    Convenience function; returns the CETextPreferences object with
     current preferences
     '''
     return context.textPreferences()
 
 def get_line_ending(context):
+    '''Shortcut function to get the line-endings for the context'''
     prefs = get_prefs(context)
     return prefs.lineEndingString()
 
@@ -185,7 +181,7 @@ def get_word_or_selection(context, range, alpha_only=True,
     
     By default it defines a word as a contiguous string of alphabetical
     characters. Setting alpha_only to False will define a word as a
-    contiguous string of alpha-numeric characters and extra_characters
+    contiguous string of alpha-numeric characters plus extra_characters
     '''
     def test_alpha():
         # Mini-function to cut down on code bloat
@@ -251,15 +247,14 @@ def get_word_or_selection(context, range, alpha_only=True,
 
 def get_root_zone(context):
     '''Returns the string identifier of the current root zone'''
-    # TODO: I need to implement better syntax zone sniffing to find
-    #       the most applicable root zone available
     return context.syntaxTree().root().typeIdentifier().stringValue()
 
 def get_active_zone(context, range):
     '''Returns the zone under the cursor'''
-    zone = context.syntaxTree().zoneAtCharacterIndex_(range.location).\
+    # TODO: I need to implement better syntax zone sniffing to find
+    #       the most applicable root zone available
+    return context.syntaxTree().zoneAtCharacterIndex_(range.location).\
            typeIdentifier().stringValue()
-    return zone
 
 # ===============================================================
 # Snippet methods
@@ -276,7 +271,10 @@ def sanitize_for_snippet(text):
     return text.replace('`', '\`')
 
 def construct_snippet(text, snippet):
-    '''Constructs a simple snippet by replacing $SELECTED_TEXT with text'''
+    '''
+    Constructs a simple snippet by replacing $SELECTED_TEXT with
+    sanitized text
+    '''
     text = sanitize_for_snippet(text)
     return snippet.replace('$SELECTED_TEXT', text)
 
@@ -284,7 +282,7 @@ def construct_snippet(text, snippet):
 # Insertion methods
 # ===============================================================
 
-def insert_text_over_selection(context, text, range, undo_name=None):
+def insert_text_over_range(context, text, range, undo_name=None):
     '''Immediately replaces the text at range with passed in text'''
     insertions = new_recipe()
     insertions.addReplacementString_forRange_(text, range)
@@ -302,7 +300,7 @@ def insert_snippet(context, snippet):
         snippet = new_snippet(snippet)
     return context.insertTextSnippet_(snippet)
 
-def insert_snippet_over_selection(context, snippet, range, undo_name=None):
+def insert_snippet_over_range(context, snippet, range, undo_name=None):
     '''Replaces text at range with a text snippet'''
     if range.length is not 0:
         # Need to first delete the text under the range

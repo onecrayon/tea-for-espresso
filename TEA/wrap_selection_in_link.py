@@ -57,5 +57,5 @@ def act(context, default='', undo_name=None, **syntaxes):
         snippet = default
     snippet = tea.construct_snippet(text, snippet)
     snippet = snippet.replace('$URL', tea.sanitize_for_snippet(url))
-    return tea.insert_snippet_over_selection(context, snippet, range,
+    return tea.insert_snippet_over_range(context, snippet, range,
                                              undo_name)

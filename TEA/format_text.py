@@ -41,7 +41,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
             text = ''
             snippet = insertion.replace('$SELECTED_TEXT', '$1') + '$0'
         snippet = tea.construct_snippet(text, snippet)
-        return tea.insert_snippet_over_selection(context, snippet, range,
+        return tea.insert_snippet_over_range(context, snippet, range,
                                                  undo_name)
     # Since we're here, it must not have been a single selection
     insertions = tea.new_recipe()

@@ -31,5 +31,5 @@ def act(context, check_selfclosing=True, close_string=' /'):
         snippet += close_string + '>$0'
     else:
         snippet = '<' + opentag + '>$1</' + closetag + '>$0'
-    return tea.insert_snippet_over_selection(context, snippet, new_range,
+    return tea.insert_snippet_over_range(context, snippet, new_range,
                                              'Insert Tag From Word')
