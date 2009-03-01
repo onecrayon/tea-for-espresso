@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
 		<setup>
@@ -18,7 +18,7 @@
 			</arguments>
 		</setup>
 	</action>
-	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.HTML/actions.text.formatting">
+	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
 		<setup>

@@ -24,13 +24,13 @@ def act(context, default=None, undo_name=None, **syntaxes):
     ranges = tea.get_ranges(context)
     if len(ranges) is 1:
         # Since we've only got one selection we can use a snippet
+        range = ranges[0]
         # Check for specific zone override
         zone = tea.get_active_zone(context, range)
         if zone in syntaxes:
             insertion = syntaxes[zone]
         else:
             insertion = root_insertion
-        range = ranges[0]
         # Make sure the range is actually a selection
         if range.length > 0:
             text = tea.get_selection(context, range)
@@ -40,7 +40,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
             # Not a selection, just wrap the cursor
             text = ''
             snippet = insertion.replace('$SELECTED_TEXT', '$1') + '$0'
-        snippet = tea.construct_snippet(text, snippt)
+        snippet = tea.construct_snippet(text, snippet)
         return tea.insert_snippet_over_selection(context, snippet, range,
                                                  undo_name)
     # Since we're here, it must not have been a single selection
