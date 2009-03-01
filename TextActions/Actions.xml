@@ -101,6 +101,12 @@
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
 			<target_action>insert_tag_from_word</target_action>
+			<arguments>
+				<dict>
+					<key>close_string</key>
+					<string> /</string>
+				</dict>
+			</arguments>
 		</setup>
 	</action>
 	
@@ -110,6 +116,12 @@
 		<key-equivalent>control W</key-equivalent>
 		<setup>
 			<target_action>wrap_selection_in_snippet</target_action>
+			<arguments>
+				<dict>
+					<key>first_snippet</key>
+					<string>&lt;${1:p}>$SELECTED_TEXT&lt;/${1/\s.*//}>$0</string>
+				</dict>
+			</arguments>
 		</setup>
 	</action>
 	

@@ -2,7 +2,7 @@
 
 import tea_actions as tea
 
-def act(context, check_selfclosing=True, close_string=' /'):
+def act(context, check_selfclosing=True, close_string=''):
     '''
     Required action method
     
