@@ -17,7 +17,8 @@ def act(context, check_selfclosing=True, close_string=''):
     range = tea.get_single_range(context)
     if range == None:
         return False
-    tag, new_range = tea.get_word_or_selection(context, range)
+    tag, new_range = tea.get_word_or_selection(context, range, alpha_only=False,
+                                               extra_characters='')
     if not tag.isalpha():
         # There's a non-alpha character, so parse it
         opentag, closetag = tea.parse_tag(tag)
