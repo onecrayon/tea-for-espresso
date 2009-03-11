@@ -7,38 +7,42 @@ from distutils.core import setup
 import py2app
 import os
 
+# === CONFIG ===
 
 # Update this info by hand; defines the required Info.plist elements
-# for Espresso
 info = dict(
     CFBundleVersion = '1.0b1',
     CFBundleIdentifier = 'com.onecrayon.tea.espresso',
     NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
 )
 
-def include_files(path):
-    '''
-    Walks a given folder and returns a list of its contents
-    
-    List includes the folder's name (so that we can use it with data_files)
-    '''
+# Sets what directory to crawl for files to include
+# Relative to location of setup.py; leave off trailing slash
+includes_dir = 'src'
+
+# Set the root directory for included files
+# Relative to the bundle's Resources folder, so '../../' targets bundle root
+includes_target = '../../'
+
+# === END CONFIG ===
+
+
+# Initialize an empty list so we can use list.append()
+includes = []
+
+# Walk the includes directory and include all the files
+for root, dirs, filenames in os.walk(includes_dir):
+    if root is includes_dir:
+        final = includes_target
+    else:
+        final = includes_target + root[len(includes_dir)+1:] + '/'
     files = []
-    for root, dirs, filenames in os.walk(path):
-        if filenames:
-            for file in filenames:
-                # Don't include hidden files
-                if (file[0] != '.'):
-                    files.append(os.path.join(root, file))
-    return files
+    for file in filenames:
+        if (file[0] != '.'):
+            files.append(os.path.join(root, file))
+    includes.append((final, files))
 
-
-# Configure this by hand for any included directories
-includes = [
-    ('../../TextActions', include_files('./TextActions')),
-    ('../../TEA', include_files('./TEA')),
-    ('./', include_files('./Resources')),
-]
-
+# Here's where the magic happens
 setup(
     name='TEA for Espresso',
     plugin = ['TEAforEspresso.py'],
