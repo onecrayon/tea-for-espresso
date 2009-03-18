@@ -63,17 +63,19 @@ def is_selfclosing(tag):
         opentag, tag = parse_tag(tag)
     return tag in selfclosing
 
+def encode_ampersands(text, enc='&amp;'):
+    '''Encodes ampersands'''
+    return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', enc, text)
+
 def named_entities(text):
     '''Converts Unicode characters into named HTML entities'''
-    return text.encode('ascii', 'html_replace')
+    text = text.encode('ascii', 'html_replace')
+    return encode_ampersands(text)
 
 def numeric_entities(text):
     '''Converts Unicode characters into numeric HTML entities'''
-    return text.encode('ascii', 'xmlcharrefreplace')
-
-def encode_ampersands(text):
-    '''Encodes ampersands'''
-    return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', '&amp;', text)
+    text = text.encode('ascii', 'xmlcharrefreplace')
+    return encode_ampersands(text, '&#38;')
 
 # ===============================================================
 # Preference lookup shortcuts
