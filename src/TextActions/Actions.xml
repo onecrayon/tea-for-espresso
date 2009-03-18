@@ -108,6 +108,9 @@
 				<dict>
 					<key>type</key>
 					<string>named</string>
+					
+					<key>undo_name</key>
+					<string>Convert To Named Entities</string>
 				</dict>
 			</arguments>
 		</setup>
@@ -122,8 +125,12 @@
 				<dict>
 					<key>type</key>
 					<string>numeric</string>
+					
 					<key>ampersands</key>
 					<string>numeric</string>
+					
+					<key>undo_name</key>
+					<string>Convert To Numeric Entities</string>
 				</dict>
 			</arguments>
 		</setup>
