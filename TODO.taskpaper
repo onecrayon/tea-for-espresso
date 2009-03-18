@@ -6,7 +6,7 @@ Short term goals:
 - Improve Wrap Selection In Link's zone sniffing; currently only evaluates for the root zone of the document, which is less than useful
 - Evaluated whether to move Wrap Selection In Link's utility functions outside of the action; they might be useful to other people
 
-- Add Convert to Entities to convert text to HTML entities @feature
+- Add Convert to Entities to convert text to HTML entities @feature @done(2009-03-17)
 
 - Add Tidy HTML? @feature
 
