@@ -5,7 +5,7 @@ into HTML entities
 
 import tea_actions as tea
 
-def act(context, type='named', undo_name=None):
+def act(context, type='named', ampersands='named', undo_name=None):
     '''
     Required action method
     
@@ -21,7 +21,7 @@ def act(context, type='named', undo_name=None):
             text = tea.named_entities(text)
         elif type == 'numeric':
             # Convert any characters we can into numeric HTML entities
-            text = tea.numeric_entities(text)
+            text = tea.numeric_entities(text, ampersands)
         insertions.addReplacementString_forRange_(text, range)
     if undo_name is not None:
         insertions.setUndoActionName_(undo_name)

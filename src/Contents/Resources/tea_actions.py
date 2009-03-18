@@ -72,10 +72,13 @@ def named_entities(text):
     text = text.encode('ascii', 'html_replace')
     return encode_ampersands(text)
 
-def numeric_entities(text):
+def numeric_entities(text, ampersands='named'):
     '''Converts Unicode characters into numeric HTML entities'''
     text = text.encode('ascii', 'xmlcharrefreplace')
-    return encode_ampersands(text, '&#38;')
+    if ampersands == 'numeric':
+        return encode_ampersands(text, '&#38;')
+    else:
+        return encode_ampersands(text)
 
 # ===============================================================
 # Preference lookup shortcuts

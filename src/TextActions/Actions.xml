@@ -121,6 +121,8 @@
 				<dict>
 					<key>type</key>
 					<string>numeric</string>
+					<key>ampersands</key>
+					<string>numeric</string>
 				</dict>
 			</arguments>
 		</setup>
