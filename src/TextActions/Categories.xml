@@ -9,6 +9,7 @@
 	</category>
 	
 	<!-- TEA-specific categories -->
-	<category id="tea.wrapping" show="inline separated"></category>
+	<category id="tea.conversion" show="inline separated"></category>
 	<category id="tea.insertion" show="inline separated"></category>
+	<category id="tea.wrapping" show="inline separated"></category>
 </action-categories>

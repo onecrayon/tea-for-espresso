@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <action-sort-instructions>
 	<sort-template>
+		<selector>tea.conversion</selector>
 		<selector>tea.insertion</selector>
 		<selector>tea.wrapping</selector>
 	</sort-template>

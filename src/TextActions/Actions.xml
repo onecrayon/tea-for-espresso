@@ -98,6 +98,35 @@
 	
 	<!-- Begin HTML core suite -->
 	
+	<action id="com.onecrayon.TextActions.ConvertToNamedEntities" category="actions.text.formatting/tea.conversion">
+		<class>TEAforEspresso</class>
+		<title>Convert To Named Entities</title>
+		<key-equivalent>command &</key-equivalent>
+		<setup>
+			<target_action>convert_to_entities</target_action>
+			<arguments>
+				<dict>
+					<key>type</key>
+					<string>named</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.ConvertToNumericEntities" category="actions.text.formatting/tea.conversion">
+		<class>TEAforEspresso</class>
+		<title>Convert To Numeric Entities</title>
+		<setup>
+			<target_action>convert_to_entities</target_action>
+			<arguments>
+				<dict>
+					<key>type</key>
+					<string>numeric</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag From Word</title>
