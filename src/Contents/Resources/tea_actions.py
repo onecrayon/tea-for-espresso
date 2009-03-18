@@ -6,6 +6,7 @@ from types import StringTypes
 from Foundation import *
 
 from espresso import *
+import html_replace
 
 # ===============================================================
 # Interact with the user and output information
@@ -61,6 +62,18 @@ def is_selfclosing(tag):
     if not tag.isalpha():
         opentag, tag = parse_tag(tag)
     return tag in selfclosing
+
+def named_entities(text):
+    '''Converts Unicode characters into named HTML entities'''
+    return text.encode('ascii', 'html_replace')
+
+def numeric_entities(text):
+    '''Converts Unicode characters into numeric HTML entities'''
+    return text.encode('ascii', 'xmlcharrefreplace')
+
+def encode_ampersands(text):
+    '''Encodes ampersands'''
+    return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', '&amp;', text)
 
 # ===============================================================
 # Preference lookup shortcuts

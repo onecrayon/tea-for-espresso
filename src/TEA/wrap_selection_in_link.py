@@ -5,10 +5,6 @@ import subprocess
 import tea_actions as tea
 from persistent_re import *
 
-def encode_ampersands(text):
-    '''Encodes ampersands for use in links'''
-    return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', '&amp;', text)
-
 def format_hyperlink(text, fallback=''):
     gre = persistent_re()
     if gre.match(r'(mailto:)?(.+?@.+\..+)$', text):
@@ -20,13 +16,13 @@ def format_hyperlink(text, fallback=''):
         return 'http://' + gre.last.group(1) + '/dp/' + gre.last.group(2)
     elif gre.match(r'[a-zA-Z][a-zA-Z0-9.+-]+?://.*$', text):
         # Unknown prefix
-        return encode_ampersands(text)
+        return tea.encode_ampersands(text)
     elif gre.match(r'.*\.(com|uk|net|org|info)(/.*)?$', text):
         # Recognizable URL without http:// prefix
-        return 'http://' + encode_ampersands(text)
+        return 'http://' + tea.encode_ampersands(text)
     elif gre.match(r'\S+$', text):
         # No space characters, so could be a URL; toss 'er in there
-        return encode_ampersands(text)
+        return tea.encode_ampersands(text)
     else:
         # Nothing that remotely looks URL-ish; give them the fallback
         return fallback
