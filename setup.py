@@ -62,5 +62,5 @@ os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
 os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
 
 # Support for third party snippet collections
-os.symlink('../../../TEA/JavascriptActions.xml', 'JavascriptActions.xml')
-os.symlink('../../../TEA/JavascriptCategories.xml', 'JavascriptCategories.xml')
+os.symlink('../../../TEA/Javascript/Actions.xml', 'JavascriptActions.xml')
+os.symlink('../../../TEA/Javascript/Categories.xml', 'JavascriptCategories.xml')
