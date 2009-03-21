@@ -11,7 +11,7 @@ import os
 
 # Update this info by hand; defines the required Info.plist elements
 info = dict(
-    CFBundleVersion = '1.0b2',
+    CFBundleVersion = '1.0b3',
     CFBundleIdentifier = 'com.onecrayon.tea.espresso',
     NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
 )
@@ -60,3 +60,7 @@ setup(
 os.chdir('dist/TEA for Espresso.sugar/TextActions')
 os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
 os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
+
+# Support for third party snippet collections
+os.symlink('../../../TEA/JavascriptActions.xml', 'JavascriptActions.xml')
+os.symlink('../../../TEA/JavascriptCategories.xml', 'JavascriptCategories.xml')
