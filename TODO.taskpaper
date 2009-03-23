@@ -1,5 +1,6 @@
 Bugs:
 - Look into why an error is getting thrown when the system can't find a word under the cursor
+- Fix speed problems with large files (somehow contents of the file seem to be getting passed around in memory when they shouldn't be)
 First public release:
 - Code Indent New Line? @feature
 Short term goals:
