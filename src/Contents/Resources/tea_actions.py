@@ -263,7 +263,7 @@ def get_root_zone(context):
     '''Returns the string identifier of the current root zone'''
     # This is terrible, but I can't find a good way to detect
     # if the object is null
-    if str(context.syntaxTree()) != '(null) [0 - 0]':
+    if str(context.syntaxTree())[0:6] != '(null)':
         return context.syntaxTree().root().typeIdentifier().stringValue()
     else:
         return False
@@ -272,7 +272,7 @@ def get_active_zone(context, range):
     '''Returns the zone under the cursor'''
     # TODO: I need to implement better syntax zone sniffing to find
     #       the most applicable root zone available
-    if str(context.syntaxTree()) != '(null) [0 - 0]':
+    if str(context.syntaxTree())[0:6] != '(null)':
         return context.syntaxTree().zoneAtCharacterIndex_(range.location).\
                typeIdentifier().stringValue()
     else:
