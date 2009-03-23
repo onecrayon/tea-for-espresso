@@ -120,11 +120,7 @@ def new_recipe():
 def new_snippet(snippet):
     '''
     Initializes a string as a CETextSnippet object
-    
-    REPLACE: Note that this also replaces $ with #, allowing people to use
-    new-style snippets before the actual snippet engine is updated
     '''
-    snippet = re.sub(r'(\$)((\{[0-9])|[0-9])', r'#\2', snippet)
     return CETextSnippet.snippetWithString_(snippet)
 
 # ===============================================================
@@ -289,11 +285,9 @@ def get_active_zone(context, range):
 def sanitize_for_snippet(text):
     '''
     Escapes special characters used by snippet syntax
-    
-    REPLACE: This needs to switch to replacing $ when Jan implements
-    new-style snippets
     '''
-    text = text.replace('#', '\#')
+    # text = text.replace('$', '\$')
+    text = re.sub(r'\$(?!{|[0-9]|(SELECTED_TEXT)|(URL))', r'\$', text)
     return text.replace('`', '\`')
 
 def construct_snippet(text, snippet):
