@@ -24,10 +24,11 @@ Extending TEA for Espresso
 
 TEA for Espresso is coded in [Python][3] and can be easily extended with
 your own custom actions either by writing your own Python scripts, by defining
-new actions with existing scripts in a simple XML file, or by
+new actions for existing scripts in a simple XML file, or by
 editing the TEA for Espresso Actions.xml file to tweak existing actions
 to your liking.  For more information, see the [wiki][4]:
 
+* [Installing third party snippet collections][7]
 * [Defining new actions via XML][5]
 * [Adding or overriding Python scripts][6]
 
@@ -35,6 +36,7 @@ to your liking.  For more information, see the [wiki][4]:
    [4]: http://wiki.github.com/onecrayon/tea-for-espresso
    [5]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
    [6]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-or-overriding-python-scripts
+   [7]: http://wiki.github.com/onecrayon/tea-for-espresso/third-party-snippet-collections
 
 If you are instead interested in coding your own
 Sugar in Python, the TEA for Espresso project can also serve as an excellent
