@@ -35,7 +35,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
         if range.length > 0:
             text = tea.get_selection(context, range)
             snippet = '${1:' + insertion.replace('$SELECTED_TEXT',
-                                                 '${2:$SELECTED_TEXT}') + '}#0'
+                                                 '${2:$SELECTED_TEXT}') + '}$0'
         else:
             # Not a selection, just wrap the cursor
             text = ''
