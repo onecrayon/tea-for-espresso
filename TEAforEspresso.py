@@ -65,6 +65,7 @@ class TEAforEspresso(NSObject):
         
         # Append the bundle's resource path so that we can use common libraries
         sys.path.append(bundlePath + '/Contents/Resources/')
+        self.bundle_path = bundlePath
         
         return self
     
@@ -76,7 +77,7 @@ class TEAforEspresso(NSObject):
     
     def performActionWithContext_error_(self, context):
         '''Imports and calls the target_action's act() method'''
-        target_module = load_action(self.target_action)
+        target_module = load_action(self.target_action, self.bundle_path)
         if target_module is None:
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + self.target_action)
