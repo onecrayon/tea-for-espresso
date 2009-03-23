@@ -22,7 +22,7 @@ def load_action(target, default_root):
     user_modules = os.path.expanduser(
         '~/Library/Application Support/Espresso/TEA/Scripts/'
     )
-    default_modules = default_root + '/TEA/'
+    default_modules = os.path.join(default_root, 'TEA/')
     try:
         # Is the action already loaded?
         module = sys.modules[target]
