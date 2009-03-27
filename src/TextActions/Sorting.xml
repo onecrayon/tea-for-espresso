@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <action-sort-instructions>
 	<sort-template>
+		<selector>actions.text.important</selector>
+		<selector>actions.text.formatting</selector>
+		<selector>actions.text.HTML</selector>
+		<selector>actions.tea.internal</selector>
 		<selector>tea.conversion</selector>
 		<selector>tea.insertion</selector>
 		<selector>tea.wrapping</selector>
+		<selector>*</selector>
 	</sort-template>
 </action-sort-instructions>
