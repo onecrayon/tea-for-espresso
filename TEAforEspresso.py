@@ -72,7 +72,7 @@ class TEAforEspresso(NSObject):
         # Run one-time initialization items
         if not TEAforEspresso.initialized:
             TEAforEspresso.initialized = True
-            refresh_symlinks(self.bundle_path)
+            refresh_symlinks()
         return self
     
     # Signature is necessary for Objective-C to be able to find the method

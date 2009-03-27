@@ -41,20 +41,14 @@ def load_action(target, default_root):
         )
     return module
 
-def refresh_symlinks(cur_bundle=None):
+def refresh_symlinks():
     '''
-    Based on the current bundle location and stored paths in the preferences,
-    refreshes or enables symlinks for custom user actions in the
-    Application Support/Espresso/TEA folder
-    
-    Can be called with no parameters to just refresh existing symlinks
+    Walks the file system and adds or updates symlinks to the TEA user
+    actions folder
     '''
     NSLog('Initializing TEA user actions')
     defaults = NSUserDefaults.standardUserDefaults()
-    old_loc = defaults.stringForKey_('TEABundleLocation')
-    if old_loc is not None:
-        # user actions are enabled, so refresh them if needed
-        # check current and previous home directory
-        # check current and previous bundle location
-        # How to tell if they've added or removed files?
+    enabled = defaults.stringForKey_('TEAEnableUserActions')
+    if enabled is True:
+        # user actions are enabled, so walk the user directory and refresh them
         pass
