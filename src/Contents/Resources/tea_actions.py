@@ -22,10 +22,12 @@ def say(context, title, message,
         other_button,
         message
     )
-    
-    return alert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_(
-        context.windowForSheet(), None, None, None
-    )
+    if context.windowForSheet() is not None:
+        return alert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            context.windowForSheet(), None, None, None
+        )
+    else:
+        return alert.runModal()
 
 def log(message):
     '''

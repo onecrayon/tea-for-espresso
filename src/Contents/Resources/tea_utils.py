@@ -9,6 +9,8 @@ import imp
 import sys
 import os.path
 
+from Foundation import *
+
 def load_action(target, default_root):
     '''
     Imports target TEA action file and returns it as a module
