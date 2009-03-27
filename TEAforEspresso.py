@@ -39,6 +39,8 @@ class TEAforEspresso(NSObject):
     Performs initialization and is responsible for loading and calling
     the various external actions when the plugin is invoked
     '''
+    # Class variable; allows us to do one-time initialization
+    initialized = False
     
     def initWithDictionary_bundlePath_(self, dictionary, bundlePath):
         '''Required by Espresso; initializes the plugin settings'''
@@ -67,6 +69,10 @@ class TEAforEspresso(NSObject):
         sys.path.append(bundlePath + '/Contents/Resources/')
         self.bundle_path = bundlePath
         
+        # Run one-time initialization items
+        if not TEAforEspresso.initialized:
+            TEAforEspresso.initialized = True
+            refresh_symlinks(self.bundle_path)
         return self
     
     # Signature is necessary for Objective-C to be able to find the method
