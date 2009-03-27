@@ -57,10 +57,10 @@ setup(
 
 # We need to manually setup the symlinks for user files since py2app can't
 # handle copying actual symlinks into the plugin bundle
-os.chdir('dist/TEA for Espresso.sugar/TextActions')
-os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
-os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
+#os.chdir('dist/TEA for Espresso.sugar/TextActions')
+#os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
+#os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
 
 # Support for third party snippet collections
-os.symlink('../../../TEA/Javascript/Actions.xml', 'JavascriptActions.xml')
-os.symlink('../../../TEA/Javascript/Categories.xml', 'JavascriptCategories.xml')
+#os.symlink('../../../TEA/Javascript/Actions.xml', 'JavascriptActions.xml')
+#os.symlink('../../../TEA/Javascript/Categories.xml', 'JavascriptCategories.xml')
