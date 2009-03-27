@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<action-recipes>
+	<action id="com.onecrayon.FileActions.LinkToUserActions" category="tea.internal">
+		<class>TEAforEspresso</class>
+		<title>Enable Custom User Actions</title>
+		<setup>
+			<target_action>refresh_user_actions</target_action>
+		</setup>
+	</action>
+</action-recipes>
