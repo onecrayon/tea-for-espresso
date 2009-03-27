@@ -190,4 +190,14 @@
 		</setup>
 	</action>
 	
+	<!-- Internal TEA commands -->
+	
+	<action id="com.onecrayon.SugarActions.EnableUserActions" category="actions.tea.internal">
+		<class>TEAforEspresso</class>
+		<title>Enable Custom User Actions</title>
+		<setup>
+			<target_action>refresh_user_actions</target_action>
+		</setup>
+	</action>
+	
 </action-recipes>
