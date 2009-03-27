@@ -41,11 +41,13 @@ def load_action(target, default_root):
         )
     return module
 
-def refresh_symlinks(cur_bundle):
+def refresh_symlinks(cur_bundle=None):
     '''
     Based on the current bundle location and stored paths in the preferences,
     refreshes or enables symlinks for custom user actions in the
     Application Support/Espresso/TEA folder
+    
+    Can be called with no parameters to just refresh existing symlinks
     '''
     NSLog('Initializing TEA user actions')
     defaults = NSUserDefaults.standardUserDefaults()
