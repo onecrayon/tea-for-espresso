@@ -98,6 +98,11 @@ def get_line_ending(context):
     prefs = get_prefs(context)
     return prefs.lineEndingString()
 
+def get_indentation_string(context):
+    '''Shortcut to retrieve the indentation string'''
+    prefs = get_prefs(context)
+    return prefs.tabString()
+
 # ===============================================================
 # Espresso object convenience methods
 # ===============================================================
@@ -300,6 +305,37 @@ def construct_snippet(text, snippet):
         text = ''
     text = sanitize_for_snippet(text)
     return snippet.replace('$SELECTED_TEXT', text)
+
+def indent_snippet(context, snippet, range):
+    '''
+    Sets a snippet's indentation level to match that of the line starting
+    at the location of range
+    '''
+    # Are there newlines?
+    if re.search(r'[\n\r]', snippet) is not None:
+        # Check if line is indented
+        line = context.lineStorage().lineRangeForIndex_(range.location)
+        # Check if line is actually indented
+        if line.location != range.location:
+            line = get_selection(context, line)
+            match = re.match(r'(\s+)', line)
+            # Only indent if the line starts with whitespace
+            if match is not None:
+                current_indent = match.group(1)
+                indent_string = get_indentation_string(context)
+                # Convert tabs to indent_string and indent each line
+                if indent_string != '\t':
+                    snippet = snippet.replace('\t', indent_string)
+                lines = snippet.splitlines(True)
+                # Convert to iterator so we can avoid processing item 0
+                lines = iter(lines)
+                snippet = lines.next()
+                for line in lines:
+                    snippet += current_indent + line
+                if re.search(r'[\n\r]$', snippet) is not None:
+                    # Ends with a newline, add the indent
+                    snippet += current_indent
+    return snippet
 
 # ===============================================================
 # Insertion methods

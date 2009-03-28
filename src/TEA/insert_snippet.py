@@ -27,6 +27,8 @@ def act(context, default=None, undo_name=None, **syntaxes):
     zone = tea.get_active_zone(context, range)
     if zone in syntaxes:
         snippet = syntaxes[zone]
+    # Indent the snippet
+    snippet = tea.indent_snippet(context, snippet, range)
     # Construct the snippet
     snippet = tea.construct_snippet(text, snippet)
     # Insert that snippet!

@@ -6,13 +6,13 @@
 	
 	<action id="com.onecrayon.TextActions.InsertIndentedLine" category="actions.text.formatting/tea.insertion">
 		<class>TEAforEspresso</class>
-		<title>Insert Indented Line</title>
+		<title>Indent New Line</title>
 		<key-equivalent>control shift enter</key-equivalent>
 		<setup>
 			<target_action>insert_snippet</target_action>
 			<arguments>
 				<dict>
-					<key>first_snippet</key>
+					<key>default</key>
 					<string><![CDATA[
 	${1:$SELECTED_TEXT}$0
 ]]></string>
