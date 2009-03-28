@@ -36,7 +36,7 @@ def act(context, default='', fallback_url='', undo_name=None, **syntaxes):
     active syntax of the context
     '''
     # Get the text and range
-    text, range = tea.get_single_selection(context)
+    text, range = tea.get_single_selection(context, True)
     if text == None:
         return False
     

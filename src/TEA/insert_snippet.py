@@ -16,7 +16,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
     if default is None:
         return False
     # Get the cursor position
-    text, range = tea.get_single_selection(context, False)
+    text, range = tea.get_single_selection(context)
     # Check for root-zone specific override
     root_zone = tea.get_root_zone(context)
     if root_zone in syntaxes:

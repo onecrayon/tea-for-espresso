@@ -150,7 +150,7 @@ def set_selected_range(context, range):
     '''Sets the selection to the single range passed as an argument'''
     context.setSelectedRanges_([NSValue.valueWithRange_(range)])
 
-def get_single_range(context, with_errors=True):
+def get_single_range(context, with_errors=False):
     '''
     Returns the range of a single selection, or throws an optional
     error if there are multiple selections
@@ -169,7 +169,7 @@ def get_single_range(context, with_errors=True):
     # This converts it to an NSRange which we can work with
     return ranges[0].rangeValue()
 
-def get_single_selection(context, with_errors=True):
+def get_single_selection(context, with_errors=False):
     '''
     If there's a single selection, returns the selected text,
     otherwise throws optional descriptive errors
@@ -179,7 +179,7 @@ def get_single_selection(context, with_errors=True):
     range = get_single_range(context, with_errors)
     if range == None:
         # More than one range, apparently
-        return False
+        return None, None
     if range.length is 0:
         if with_errors:
             say(

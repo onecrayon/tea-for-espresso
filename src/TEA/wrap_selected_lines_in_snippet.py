@@ -15,7 +15,7 @@ def act(context, first_snippet='', following_snippet='',
     Theoretically we could allow discontiguous selections; have to consider
     it if recipes get snippet capabilities
     '''
-    text, range = tea.get_single_selection(context)
+    text, range = tea.get_single_selection(context, True)
     if text == None:
         return False
     # Split the text into lines, maintaining the linebreaks
