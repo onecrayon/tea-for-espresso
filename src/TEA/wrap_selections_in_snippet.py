@@ -18,5 +18,7 @@ def act(context, first_snippet='', following_snippet='',
     text, range = tea.get_single_selection(context)
     if text == None:
         return False
-    snippet = tea.construct_snippet(text, first_snippet + final_append)
+    # Indent the snippet
+    snippet = tea.indent_snippet(context, first_snippet + final_append, range)
+    snippet = tea.construct_snippet(text, snippet)
     return tea.insert_snippet_over_range(context, snippet, range, undo_name)

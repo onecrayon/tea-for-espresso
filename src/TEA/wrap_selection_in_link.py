@@ -51,7 +51,8 @@ def act(context, default='', fallback_url='', undo_name=None, **syntaxes):
         snippet = syntaxes[zone]
     else:
         snippet = default
+    # Indent the snippet
+    snippet = tea.indent_snippet(context, snippet, range)
     snippet = tea.construct_snippet(text, snippet)
     snippet = snippet.replace('$URL', tea.sanitize_for_snippet(url))
-    return tea.insert_snippet_over_range(context, snippet, range,
-                                             undo_name)
+    return tea.insert_snippet_over_range(context, snippet, range, undo_name)
