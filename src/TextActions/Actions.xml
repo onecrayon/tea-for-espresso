@@ -210,7 +210,7 @@
 		</setup>
 	</action>
 	
-	<!-- Internal TEA commands -->
+	<!-- TEA configuration -->
 	
 	<action id="com.onecrayon.SugarActions.EnableUserActions" category="actions.tea.internal">
 		<class>TEAforEspresso</class>
