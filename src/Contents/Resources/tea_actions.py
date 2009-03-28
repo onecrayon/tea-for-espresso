@@ -165,7 +165,7 @@ def get_single_range(context, with_errors=True):
                 "You must have a single selection in order to use this action."
             )
         return None
-    # For some reason, range is not an NSRange; it's an NSConcreteValue
+    # Range is not an NSConcreteValue b/c it's stored in an array
     # This converts it to an NSRange which we can work with
     return ranges[0].rangeValue()
 
@@ -288,7 +288,6 @@ def sanitize_for_snippet(text):
     '''
     Escapes special characters used by snippet syntax
     '''
-    # text = text.replace('$', '\$')
     text = re.sub(r'\$(?!{|[0-9]|(SELECTED_TEXT)|(URL))', r'\$', text)
     return text.replace('`', '\`')
 
@@ -297,6 +296,8 @@ def construct_snippet(text, snippet):
     Constructs a simple snippet by replacing $SELECTED_TEXT with
     sanitized text
     '''
+    if text is None:
+        text = ''
     text = sanitize_for_snippet(text)
     return snippet.replace('$SELECTED_TEXT', text)
 

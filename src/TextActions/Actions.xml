@@ -1,6 +1,51 @@
 <?xml version="1.0"?>
 <action-recipes>
-	<!-- Begin generic formatting commands -->
+	<!-- Commands are in menu order, because that's how I roll -->
+	
+	<!-- Formatting commands -->
+	
+	<action id="com.onecrayon.TextActions.InsertIndentedLine" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Indented Line</title>
+		<key-equivalent>control shift enter</key-equivalent>
+		<setup>
+			<target_action>insert_snippet</target_action>
+			<arguments>
+				<dict>
+					<key>first_snippet</key>
+					<string><![CDATA[
+	${1:$SELECTED_TEXT}$0
+]]></string>
+					
+					<key>undo_name</key>
+					<string>Insert Indented Line</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Linebreak(s)</title>
+		<key-equivalent>control enter</key-equivalent>
+		<setup>
+			<target_action>insert_text</target_action>
+			<arguments>
+				<dict>
+					<key>default</key>
+					<string>&lt;br /></string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Insert Linebreak(s)</string>
+					
+					<!-- Syntax-specific overrides -->
+				</dict>
+			</arguments>
+		</setup>
+	</action>
 	
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
@@ -46,59 +91,9 @@
 		</setup>
 	</action>
 	
-	<!-- Begin commands with cross-syntax options -->
+	<!-- HTML Suite -->
 	
-	<action id="com.onecrayon.TextActions.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
-		<class>TEAforEspresso</class>
-		<title>Wrap Selection In Link</title>
-		<key-equivalent>control L</key-equivalent>
-		<setup>
-			<target_action>wrap_selection_in_link</target_action>
-			<arguments>
-				<dict>
-					<key>default</key>
-					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
-					
-					<key>fallback_url</key>
-					<string>http://</string>
-					
-					<key>undo_name</key>
-					<string>Wrap Selection In Link</string>
-					
-					<!-- Syntax-specific overrides -->
-					<key>text.markdown</key>
-					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
-				</dict>
-			</arguments>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.formatting/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Insert Linebreak(s)</title>
-		<key-equivalent>control enter</key-equivalent>
-		<setup>
-			<target_action>insert_text</target_action>
-			<arguments>
-				<dict>
-					<key>default</key>
-					<string>&lt;br /></string>
-					
-					<key>suffix_selection</key>
-					<true/>
-					
-					<key>undo_name</key>
-					<string>Insert Linebreak(s)</string>
-					
-					<!-- Syntax-specific overrides -->
-				</dict>
-			</arguments>
-		</setup>
-	</action>
-	
-	<!-- Begin HTML core suite -->
-	
-	<action id="com.onecrayon.TextActions.ConvertToNamedEntities" category="actions.text.formatting/tea.conversion">
+	<action id="com.onecrayon.TextActions.ConvertToNamedEntities" category="actions.text.HTML/tea.conversion">
 		<class>TEAforEspresso</class>
 		<title>Convert To Named Entities</title>
 		<key-equivalent>option &amp;</key-equivalent>
@@ -116,7 +111,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.ConvertToNumericEntities" category="actions.text.formatting/tea.conversion">
+	<action id="com.onecrayon.TextActions.ConvertToNumericEntities" category="actions.text.HTML/tea.conversion">
 		<class>TEAforEspresso</class>
 		<title>Convert To Numeric Entities</title>
 		<setup>
@@ -156,7 +151,7 @@
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
 		<setup>
-			<target_action>wrap_selection_in_snippet</target_action>
+			<target_action>wrap_selections_in_snippet</target_action>
 			<arguments>
 				<dict>
 					<key>first_snippet</key>
@@ -185,6 +180,31 @@
 					
 					<key>undo_name</key>
 					<string>Wrap Selected Lines In Tag</string>
+				</dict>
+			</arguments>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
+		<class>TEAforEspresso</class>
+		<title>Wrap Selection In Link</title>
+		<key-equivalent>control L</key-equivalent>
+		<setup>
+			<target_action>wrap_selection_in_link</target_action>
+			<arguments>
+				<dict>
+					<key>default</key>
+					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
+					
+					<key>fallback_url</key>
+					<string>http://</string>
+					
+					<key>undo_name</key>
+					<string>Wrap Selection In Link</string>
+					
+					<!-- Syntax-specific overrides -->
+					<key>text.markdown</key>
+					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 				</dict>
 			</arguments>
 		</setup>

@@ -18,7 +18,5 @@ def act(context, first_snippet='', following_snippet='',
     text, range = tea.get_single_selection(context)
     if text == None:
         return False
-    # count = 1
     snippet = tea.construct_snippet(text, first_snippet + final_append)
-    return tea.insert_snippet_over_range(context, snippet, range,
-                                             undo_name)
+    return tea.insert_snippet_over_range(context, snippet, range, undo_name)
