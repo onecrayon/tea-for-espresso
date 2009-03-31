@@ -2,8 +2,8 @@
 <action-recipes>
 	
 	<action id="com.onecrayon.SugarActions.EnableUserActions" category="actions.tea.internal">
-		<class>TEAforEspresso</class>
-		<title>Enable Custom User Actions</title>
+		<class>TEACustomTitles</class>
+		<title>Toggle Custom User Actions</title>
 		<setup>
 			<target_action>refresh_user_actions</target_action>
 		</setup>
