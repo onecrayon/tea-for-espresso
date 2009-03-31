@@ -2,7 +2,7 @@ Bugs:
 1.0:
 - Code Indent New Line @feature @done(2009-03-27)
 - Improve and finalize logic for sniffing active syntax zone @improvement
-- Code internal logic for generating symlinks to user action files @feature
+- Code internal logic for generating symlinks to user action files @feature @done(2009-03-30)
 
 Archive:
 - Look into why an error is getting thrown when the system can't find a word under the cursor @done(2009-03-27) @project(Bugs)
