@@ -48,6 +48,13 @@ def refresh_symlinks(bundle_path, rebuild=False):
     Walks the file system and adds or updates symlinks to the TEA user
     actions folder
     '''
+    def test_link(link, path):
+        '''Utility function; tests if the symlink is pointing to the path'''
+        if os.path.islink(link):
+            if os.readlink(link) == path:
+                return True
+        return False
+    
     defaults = NSUserDefaults.standardUserDefaults()
     enabled = defaults.boolForKey_('TEAEnableUserActions')
     sym_loc = bundle_path + '/TextActions/'
@@ -65,10 +72,17 @@ def refresh_symlinks(bundle_path, rebuild=False):
                     ref = basename + file
                     # Make sure it's a unique filename
                     count = 1
+                    refbase = ref[:-4]
+                    prior_link = False
                     while os.path.exists(sym_loc + ref):
-                        ref = ref[:-4] + str(count) + '.xml'
-                        count += 1
-                    os.symlink(os.path.join(root, file), sym_loc + ref)
+                        if test_link(sym_loc + ref, os.path.join(root, file)):
+                            prior_link = True
+                            break
+                        else:
+                            ref = refbase + str(count) + '.xml'
+                            count += 1
+                    if prior_link is False:
+                        os.symlink(os.path.join(root, file), sym_loc + ref)
     elif rebuild:
         # user actions just disabled; remove any symlinks in the bundle
         for root, dirs, filenames in os.walk(sym_loc):
