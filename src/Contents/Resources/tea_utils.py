@@ -7,7 +7,7 @@ Most common usage is to find and load TEA actions
 
 import imp
 import sys
-import os.path
+import os
 
 from Foundation import *
 
@@ -43,14 +43,37 @@ def load_action(target, default_root):
         )
     return module
 
-def refresh_symlinks():
+def refresh_symlinks(bundle_path, rebuild=False):
     '''
     Walks the file system and adds or updates symlinks to the TEA user
     actions folder
     '''
-    NSLog('Initializing TEA user actions')
     defaults = NSUserDefaults.standardUserDefaults()
-    enabled = defaults.stringForKey_('TEAEnableUserActions')
-    if enabled is True:
+    enabled = defaults.boolForKey_('TEAEnableUserActions')
+    sym_loc = bundle_path + '/TextActions/'
+    if enabled:
         # user actions are enabled, so walk the user directory and refresh them
-        pass
+        user_dir = os.path.expanduser(
+            '~/Library/Application Support/Espresso/TEA/TextActions/'
+        )
+        for root, dirs, filenames in os.walk(user_dir):
+            # Rewrite dirs to only include folders that don't start with '.'
+            dirs[:] = [dir for dir in dirs if not dir[0] == '.']
+            basename = root[len(user_dir):].replace('/', '-')
+            for file in filenames:
+                if file[-3:] == 'xml':
+                    ref = basename + file
+                    # Make sure it's a unique filename
+                    count = 1
+                    while os.path.exists(sym_loc + ref):
+                        ref = ref[:-4] + str(count) + '.xml'
+                        count += 1
+                    os.symlink(os.path.join(root, file), sym_loc + ref)
+    elif rebuild:
+        # user actions just disabled; remove any symlinks in the bundle
+        for root, dirs, filenames in os.walk(sym_loc):
+            for file in filenames:
+                loc = os.path.join(root, file)
+                if os.path.islink(loc):
+                    os.remove(loc)
+            break
