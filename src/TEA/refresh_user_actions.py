@@ -21,17 +21,18 @@ def act(context, notify=True):
         defaults.setBool_forKey_(False, 'TEAEnableUserActions')
         title = 'Custom User Actions Disabled'
         text = 'You have successfully disabled custom user actions. ' \
-               'Relaunch Espresso to remove your actions from the menus.'
+               'Relaunch Espresso for the change to take effect.'
     else:
         # switch preference to true, or add it if it doesn't exist
         defaults.setBool_forKey_(True, 'TEAEnableUserActions')
         title = 'Custom User Actions Enabled'
-        text = 'You have successfully enabled custom user actions. ' \
-               'You must relaunch Espresso in order to load your custom ' \
-               'actions.\n\nChanges to your custom actions will be ' \
-               'refreshed whenever you relaunch Espresso. If you add files ' \
-               'to your custom action folder, you will need to relaunch ' \
-               'Espresso twice for them to take effect.'
+        text = 'Please relaunch Espresso to load your custom actions.' \
+               '\n\nChanges to your custom actions will be ' \
+               'refreshed whenever you launch Espresso. If you add new ' \
+               'files to your custom actions folder, you must relaunch ' \
+               'Espresso TWICE for them to take effect. See the TEA wiki ' \
+               'for more information:\n\n' \
+               'http://wiki.github.com/onecrayon/tea-for-espresso'
     # Add or remove the symlinks
     bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
     refresh_symlinks(bundle.bundlePath(), True)
