@@ -74,13 +74,29 @@ def named_entities(text):
     text = text.encode('ascii', 'html_replace')
     return encode_ampersands(text)
 
-def numeric_entities(text, ampersands='named'):
+def numeric_entities(text, ampersands=None):
     '''Converts Unicode characters into numeric HTML entities'''
     text = text.encode('ascii', 'xmlcharrefreplace')
     if ampersands == 'numeric':
         return encode_ampersands(text, '&#38;')
-    else:
+    elif ampersands == 'named':
         return encode_ampersands(text)
+    else:
+        return text
+
+def entities_to_hex(text, wrap):
+    '''
+    Converts HTML entities into hexadecimal; replaces $HEX in wrap
+    with the hex code
+    '''
+    # This is a bit of a hack to make the variable available to the function
+    wrap = [wrap]
+    def wrap_hex(match):
+        hex = '%X' % int(match.group(2))
+        while len(hex) < 4:
+            hex = '0' + hex
+        return wrap[0].replace('$HEX', hex)
+    return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
 # ===============================================================
 # Preference lookup shortcuts

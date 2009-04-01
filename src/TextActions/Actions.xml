@@ -98,7 +98,7 @@
 		<title>Convert To Named Entities</title>
 		<key-equivalent>option &amp;</key-equivalent>
 		<setup>
-			<action>convert_to_entities</action>
+			<action>encode_unicode</action>
 			<options>
 				<dict>
 					<key>type</key>
@@ -115,13 +115,10 @@
 		<class>TEAforEspresso</class>
 		<title>Convert To Numeric Entities</title>
 		<setup>
-			<action>convert_to_entities</action>
+			<action>encode_unicode</action>
 			<options>
 				<dict>
 					<key>type</key>
-					<string>numeric</string>
-					
-					<key>ampersands</key>
 					<string>numeric</string>
 					
 					<key>undo_name</key>
