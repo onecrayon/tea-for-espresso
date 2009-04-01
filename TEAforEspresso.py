@@ -48,8 +48,8 @@ class TEAforEspresso(NSObject):
         if self is None: return None
         
         # Set object's internal variables
-        # target_action is required; name of a Python TEA module
-        self.target_action = dictionary["target_action"]
+        # action is required; name of a Python TEA module
+        self.action = dictionary["action"]
         
         # arguments is an optional dictionary with named extra arguments
         # for the act() call
@@ -85,11 +85,11 @@ class TEAforEspresso(NSObject):
         return True
     
     def performActionWithContext_error_(self, context):
-        '''Imports and calls the target_action's act() method'''
-        target_module = load_action(self.target_action, self.bundle_path)
+        '''Imports and calls the action's act() method'''
+        target_module = load_action(self.action, self.bundle_path)
         if target_module is None:
             # Couldn't find the module, log the error
-            NSLog('TEA: Could not find the module ' + self.target_action)
+            NSLog('TEA: Could not find the module ' + self.action)
             return False
         if self.arguments != None:
             # We've got arguments, pass them as keyword arguments

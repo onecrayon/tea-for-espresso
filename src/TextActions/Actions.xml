@@ -9,7 +9,7 @@
 		<title>Indent New Line</title>
 		<key-equivalent>control shift enter</key-equivalent>
 		<setup>
-			<target_action>insert_snippet</target_action>
+			<action>insert_snippet</action>
 			<arguments>
 				<dict>
 					<key>default</key>
@@ -29,7 +29,7 @@
 		<title>Insert Linebreak(s)</title>
 		<key-equivalent>control enter</key-equivalent>
 		<setup>
-			<target_action>insert_text</target_action>
+			<action>insert_text</action>
 			<arguments>
 				<dict>
 					<key>default</key>
@@ -52,7 +52,7 @@
 		<title>Emphasize</title>
 		<key-equivalent>cmd I</key-equivalent>
 		<setup>
-			<target_action>format_text</target_action>
+			<action>format_text</action>
 			<arguments>
 				<dict>
 					<key>default</key>
@@ -74,7 +74,7 @@
 		<title>Strong</title>
 		<key-equivalent>cmd b</key-equivalent>
 		<setup>
-			<target_action>format_text</target_action>
+			<action>format_text</action>
 			<arguments>
 				<dict>
 					<key>default</key>
@@ -98,7 +98,7 @@
 		<title>Convert To Named Entities</title>
 		<key-equivalent>option &amp;</key-equivalent>
 		<setup>
-			<target_action>convert_to_entities</target_action>
+			<action>convert_to_entities</action>
 			<arguments>
 				<dict>
 					<key>type</key>
@@ -115,7 +115,7 @@
 		<class>TEAforEspresso</class>
 		<title>Convert To Numeric Entities</title>
 		<setup>
-			<target_action>convert_to_entities</target_action>
+			<action>convert_to_entities</action>
 			<arguments>
 				<dict>
 					<key>type</key>
@@ -136,7 +136,7 @@
 		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
-			<target_action>insert_tag_from_word</target_action>
+			<action>insert_tag_from_word</action>
 			<arguments>
 				<dict>
 					<key>close_string</key>
@@ -151,7 +151,7 @@
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
 		<setup>
-			<target_action>wrap_selections_in_snippet</target_action>
+			<action>wrap_selections_in_snippet</action>
 			<arguments>
 				<dict>
 					<key>first_snippet</key>
@@ -166,7 +166,7 @@
 		<title>Wrap Selected Lines In Tag</title>
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
-			<target_action>wrap_selected_lines_in_snippet</target_action>
+			<action>wrap_selected_lines_in_snippet</action>
 			<arguments>
 				<dict>
 					<key>first_snippet</key>
@@ -190,7 +190,7 @@
 		<title>Wrap Selection In Link</title>
 		<key-equivalent>control L</key-equivalent>
 		<setup>
-			<target_action>wrap_selection_in_link</target_action>
+			<action>wrap_selection_in_link</action>
 			<arguments>
 				<dict>
 					<key>default</key>
