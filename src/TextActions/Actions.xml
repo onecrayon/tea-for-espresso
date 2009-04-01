@@ -10,7 +10,7 @@
 		<key-equivalent>control shift enter</key-equivalent>
 		<setup>
 			<action>insert_snippet</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>default</key>
 					<string><![CDATA[
@@ -20,7 +20,7 @@
 					<key>undo_name</key>
 					<string>Insert Indented Line</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -30,7 +30,7 @@
 		<key-equivalent>control enter</key-equivalent>
 		<setup>
 			<action>insert_text</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;br /></string>
@@ -43,7 +43,7 @@
 					
 					<!-- Syntax-specific overrides -->
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -53,7 +53,7 @@
 		<key-equivalent>cmd I</key-equivalent>
 		<setup>
 			<action>format_text</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;em>$SELECTED_TEXT&lt;/em></string>
@@ -65,7 +65,7 @@
 					<key>text.markdown</key>
 					<string>*$SELECTED_TEXT*</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -75,7 +75,7 @@
 		<key-equivalent>cmd b</key-equivalent>
 		<setup>
 			<action>format_text</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
@@ -87,7 +87,7 @@
 					<key>text.markdown</key>
 					<string>**$SELECTED_TEXT**</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -99,7 +99,7 @@
 		<key-equivalent>option &amp;</key-equivalent>
 		<setup>
 			<action>convert_to_entities</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>type</key>
 					<string>named</string>
@@ -107,7 +107,7 @@
 					<key>undo_name</key>
 					<string>Convert To Named Entities</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -116,7 +116,7 @@
 		<title>Convert To Numeric Entities</title>
 		<setup>
 			<action>convert_to_entities</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>type</key>
 					<string>numeric</string>
@@ -127,7 +127,7 @@
 					<key>undo_name</key>
 					<string>Convert To Numeric Entities</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -137,12 +137,12 @@
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
 			<action>insert_tag_from_word</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>close_string</key>
 					<string> /</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -152,12 +152,12 @@
 		<key-equivalent>control W</key-equivalent>
 		<setup>
 			<action>wrap_selections_in_snippet</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>first_snippet</key>
 					<string>&lt;${1:p}>$SELECTED_TEXT&lt;/${1/\s.*//}>$0</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -167,7 +167,7 @@
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
 			<action>wrap_selected_lines_in_snippet</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>first_snippet</key>
 					<string>&lt;${1:li}>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
@@ -181,7 +181,7 @@
 					<key>undo_name</key>
 					<string>Wrap Selected Lines In Tag</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -191,7 +191,7 @@
 		<key-equivalent>control L</key-equivalent>
 		<setup>
 			<action>wrap_selection_in_link</action>
-			<arguments>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
@@ -206,7 +206,7 @@
 					<key>text.markdown</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	

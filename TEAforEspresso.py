@@ -51,19 +51,19 @@ class TEAforEspresso(NSObject):
         # action is required; name of a Python TEA module
         self.action = dictionary["action"]
         
-        # arguments is an optional dictionary with named extra arguments
+        # options is an optional dictionary with named extra arguments
         # for the act() call
-        if "arguments" in dictionary:
+        if "options" in dictionary:
             # In order to pass dictionary as keyword arguments it has to:
             # 1) be a Python dictionary
             # 2) have both the key and the value encoded as strings
             # This dictionary comprehension takes care of both issues
-            self.arguments = dict(
+            self.options = dict(
                 [str(arg), str(value)] \
-                for arg, value in dictionary["arguments"].iteritems()
+                for arg, value in dictionary["options"].iteritems()
             )
         else:
-            self.arguments = None
+            self.options = None
         
         # Append the bundle's resource path so that we can use common libraries
         # By looking up the bundle instead of using bundlePath, third party
@@ -91,7 +91,7 @@ class TEAforEspresso(NSObject):
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + self.action)
             return False
-        if self.arguments != None:
-            # We've got arguments, pass them as keyword arguments
-            return target_module.act(context, **self.arguments)
+        if self.options != None:
+            # We've got options, pass them as keyword arguments
+            return target_module.act(context, **self.options)
         return target_module.act(context)
