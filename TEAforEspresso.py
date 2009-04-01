@@ -49,10 +49,17 @@ class TEAforEspresso(NSObject):
         
         # Set object's internal variables
         # action is required; name of a Python TEA module
-        self.action = dictionary["action"]
+        if 'target_action' in dictionary:
+            # backwards compatible fix
+            self.action = dictionary['target_action']
+        else:
+            self.action = dictionary["action"]
         
         # options is an optional dictionary with named extra arguments
         # for the act() call
+        if 'arguments' in dictionary:
+            # backwards compatible fix
+            dictionary['options'] = dictionary['arguments']
         if "options" in dictionary:
             # In order to pass dictionary as keyword arguments it has to:
             # 1) be a Python dictionary
