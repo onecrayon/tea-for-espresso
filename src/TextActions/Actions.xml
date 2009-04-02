@@ -52,7 +52,7 @@
 		<title>Emphasize</title>
 		<key-equivalent>cmd I</key-equivalent>
 		<setup>
-			<action>format_text</action>
+			<action>selections_to_text</action>
 			<options>
 				<dict>
 					<key>default</key>
@@ -74,7 +74,7 @@
 		<title>Strong</title>
 		<key-equivalent>cmd b</key-equivalent>
 		<setup>
-			<action>format_text</action>
+			<action>selections_to_text</action>
 			<options>
 				<dict>
 					<key>default</key>
@@ -133,7 +133,7 @@
 		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
-			<action>insert_tag_from_word</action>
+			<action>word_to_snippet</action>
 			<options>
 				<dict>
 					<key>close_string</key>
@@ -148,7 +148,7 @@
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
 		<setup>
-			<action>wrap_selections_in_snippet</action>
+			<action>selections_to_snippets</action>
 			<options>
 				<dict>
 					<key>first_snippet</key>
@@ -163,7 +163,7 @@
 		<title>Wrap Selected Lines In Tag</title>
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
-			<action>wrap_selected_lines_in_snippet</action>
+			<action>selected_lines_to_snippets</action>
 			<options>
 				<dict>
 					<key>first_snippet</key>
@@ -187,7 +187,7 @@
 		<title>Wrap Selection In Link</title>
 		<key-equivalent>control L</key-equivalent>
 		<setup>
-			<action>wrap_selection_in_link</action>
+			<action>insert_url_snippet</action>
 			<options>
 				<dict>
 					<key>default</key>
