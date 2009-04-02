@@ -73,16 +73,21 @@ class TEAforEspresso(NSObject):
             self.options = None
         
         # Append the bundle's resource path so that we can use common libraries
-        # By looking up the bundle instead of using bundlePath, third party
-        # sugars can call TEA for Espresso actions, which is pretty cool
+        self.bundle_path = bundlePath
+        # By looking up the bundle, third party sugars can call
+        # TEA for Espresso actions, which is pretty cool
         bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
-        self.bundle_path = bundle.bundlePath()
-        sys.path.append(self.bundle_path + '/Contents/Resources/')
+        self.tea_bundle = bundle.bundlePath()
+        sys.path.append(self.tea_bundle + '/Contents/Resources/')
+        if self.bundle_path == self.tea_bundle:
+            self.search_paths = [self.bundle_path]
+        else:
+            self.search_paths = [self.bundle_path, self.tea_bundle]
         
         # Run one-time initialization items
         if not TEAforEspresso.initialized:
             TEAforEspresso.initialized = True
-            refresh_symlinks(self.bundle_path)
+            refresh_symlinks(self.tea_bundle)
         return self
     
     # Signature is necessary for Objective-C to be able to find the method
@@ -93,7 +98,7 @@ class TEAforEspresso(NSObject):
     
     def performActionWithContext_error_(self, context):
         '''Imports and calls the action's act() method'''
-        target_module = load_action(self.action, self.bundle_path)
+        target_module = load_action(self.action, *self.search_paths)
         if target_module is None:
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + self.action)
