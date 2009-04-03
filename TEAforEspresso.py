@@ -72,13 +72,11 @@ class TEAforEspresso(NSObject):
         else:
             self.options = None
         
-        # Append the bundle's resource path so that we can use common libraries
-        self.bundle_path = bundlePath
         # By looking up the bundle, third party sugars can call
-        # TEA for Espresso actions, which is pretty cool
-        bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
-        self.tea_bundle = bundle.bundlePath()
-        sys.path.append(self.tea_bundle + '/Contents/Resources/')
+        # TEA for Espresso actions or include their own custom actions
+        self.bundle_path = bundlePath
+        self.tea_bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso').\
+                          bundlePath()
         if self.bundle_path == self.tea_bundle:
             self.search_paths = [self.bundle_path]
         else:
