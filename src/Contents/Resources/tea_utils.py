@@ -25,7 +25,7 @@ def load_action(target, *roots):
         '~/Library/Application Support/Espresso/TEA/Scripts/'
     )]
     for root in roots:
-        paths.append(os.path.join(root, 'TEA/')
+        paths.append(os.path.join(root, 'TEA/'))
     try:
         # Is the action already loaded?
         module = sys.modules[target]
