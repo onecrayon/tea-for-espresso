@@ -3,7 +3,7 @@
 import tea_actions as tea
 
 def act(context, default=None, alpha_numeric=True, extra_characters='',
-        mode=None, undo_name=None, **syntaxes):
+        mode=None, close_string='', undo_name=None, **syntaxes):
     '''
     Required action method
     
@@ -49,7 +49,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
             snippet = '<' + fullword
             if fullword == word and not fullword in ['br', 'hr']:
                 snippet += ' $1'
-            snippet += word + '>$0'
+            snippet += close_string + '>$0'
     
     # Indent the snippet
     snippet = tea.indent_snippet(context, snippet, new_range)
