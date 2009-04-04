@@ -5,3 +5,4 @@ import objc
 MRRangeSet = objc.lookUpClass('MRRangeSet')
 CETextRecipe = objc.lookUpClass('CETextRecipe')
 CETextSnippet = objc.lookUpClass('CETextSnippet')
+SXSelectorGroup = objc.lookUpClass('SXSelectorGroup')

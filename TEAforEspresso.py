@@ -29,6 +29,7 @@ from Foundation import *
 import objc
 
 from tea_utils import *
+from espresso import *
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
@@ -72,6 +73,12 @@ class TEAforEspresso(NSObject):
         else:
             self.options = None
         
+        # Set the syntax context
+        if 'syntax-context' in dictionary:
+            self.syntax_context = dictionary['syntax-context']
+        else:
+            self.syntax_context = None
+        
         # By looking up the bundle, third party sugars can call
         # TEA for Espresso actions or include their own custom actions
         self.bundle_path = bundlePath
@@ -92,7 +99,17 @@ class TEAforEspresso(NSObject):
     @objc.signature('B@:@')
     def canPerformActionWithContext_(self, context):
         '''Returns bool; can the action be performed in the given context'''
-        return True
+        if self.syntax_context is not None:
+            ranges = context.selectedRanges()
+            range = ranges[0].rangeValue()
+            selectors = SXSelectorGroup.selectorGroupWithString_(self.syntax_context)
+            zone = context.syntaxTree().root().zoneAtCharacterIndex_(range.location);
+            if selectors.matches_(zone):
+                return True
+            else:
+                return False
+        else:
+            return True
     
     def performActionWithContext_error_(self, context):
         '''Imports and calls the action's act() method'''
