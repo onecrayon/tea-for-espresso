@@ -18,7 +18,7 @@ def act(context, type='named', wrap='$HEX', undo_name=None):
     hex value.  For example '\u$HEX' will be result in something like '\u0022'
     '''
     ranges = tea.get_ranges(context)
-    if len(ranges) is 1 and ranges[0].length is 0:
+    if len(ranges) == 1 and ranges[0].length == 0:
         # We've got one empty range; make sure it's not at the
         # beginning of the document
         if ranges[0].location > 0:
