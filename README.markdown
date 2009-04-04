@@ -63,3 +63,5 @@ If you are interested in coding your own Sugar in Python, the TEA for
 Espresso project can also serve as an excellent starting point.  The
 code is released under the MIT license, as described in the main bundle
 file.
+
+   [10]: http://wiki.github.com/onecrayon/tea-for-espresso
