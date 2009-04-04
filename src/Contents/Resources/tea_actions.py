@@ -220,10 +220,10 @@ def get_word_or_selection(context, range, alpha_only=True,
     characters. Setting alpha_only to False will define a word as a
     contiguous string of alpha-numeric characters plus extra_characters
     '''
-    def test_alpha():
+    def test_word():
         # Mini-function to cut down on code bloat
         if alpha_only:
-            return char.isalpha()
+            return all(char.isalpha() or c in extra_characters for c in char)
         else:
             return all(c.isalnum() or c in extra_characters for c in char)
     
@@ -236,12 +236,12 @@ def get_word_or_selection(context, range, alpha_only=True,
         if index != maxlength:
             # Check if cursor is mid-word
             char = get_selection(context, NSMakeRange(index, 1))
-            if test_alpha():
+            if test_word():
                 inword = True
                 # Parse forward until we hit the end of word or document
                 while inword:
                     char = get_selection(context, NSMakeRange(index, 1))
-                    if test_alpha():
+                    if test_word():
                         word += char
                     else:
                         inword = False
@@ -261,7 +261,7 @@ def get_word_or_selection(context, range, alpha_only=True,
             inword = True
             while inword:
                 char = get_selection(context, NSMakeRange(index, 1))
-                if test_alpha():
+                if test_word():
                     word = char + word
                 else:
                     inword = False

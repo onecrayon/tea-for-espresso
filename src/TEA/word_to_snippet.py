@@ -17,8 +17,7 @@ def act(context, check_selfclosing=True, close_string=''):
     range = tea.get_single_range(context, True)
     if range == None:
         return False
-    tag, new_range = tea.get_word_or_selection(context, range, alpha_only=False,
-                                               extra_characters='')
+    tag, new_range = tea.get_word_or_selection(context, range, False, '')
     if tag == '':
         # No tag, so nothing further to do
         return False
@@ -36,4 +35,4 @@ def act(context, check_selfclosing=True, close_string=''):
     else:
         snippet = '<' + opentag + '>$1</' + closetag + '>$0'
     return tea.insert_snippet_over_range(context, snippet, new_range,
-                                             'Insert Tag From Word')
+                                         'Insert Tag From Word')
