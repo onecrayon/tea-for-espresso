@@ -11,7 +11,7 @@ import os
 
 # Update this info by hand; defines the required Info.plist elements
 info = dict(
-    CFBundleVersion = '1.0b6',
+    CFBundleVersion = '1.0b7',
     CFBundleIdentifier = 'com.onecrayon.tea.espresso',
     NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
 )
@@ -54,13 +54,3 @@ setup(
         plist = info
     )),
 )
-
-# We need to manually setup the symlinks for user files since py2app can't
-# handle copying actual symlinks into the plugin bundle
-#os.chdir('dist/TEA for Espresso.sugar/TextActions')
-#os.symlink('../../../TEA/UserActions.xml', 'UserActions.xml')
-#os.symlink('../../../TEA/UserCategories.xml', 'UserCategories.xml')
-
-# Support for third party snippet collections
-#os.symlink('../../../TEA/Javascript/Actions.xml', 'JavascriptActions.xml')
-#os.symlink('../../../TEA/Javascript/Categories.xml', 'JavascriptCategories.xml')
