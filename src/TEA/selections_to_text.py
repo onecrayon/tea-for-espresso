@@ -11,8 +11,8 @@ def act(context, default=None, undo_name=None, **syntaxes):
     '''
     Required action method
     
-    default parameter is plain text (not a snippet), but should contain the
-    $SELECTED_TEXT string to place the selected text
+    default parameter is not a snippet, but should contain the
+    $SELECTED_TEXT placeholder
     '''
     # Check for root-zone specific override
     root_zone = tea.get_root_zone(context)

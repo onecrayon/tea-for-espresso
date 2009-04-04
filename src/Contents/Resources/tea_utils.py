@@ -11,7 +11,7 @@ import os
 
 from Foundation import *
 
-def load_action(target, default_root):
+def load_action(target, *roots):
     '''
     Imports target TEA action file and returns it as a module
     (TEA modules are likely not, by default, in the system path)
@@ -21,19 +21,17 @@ def load_action(target, default_root):
     
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
-    user_modules = os.path.expanduser(
+    paths = [os.path.expanduser(
         '~/Library/Application Support/Espresso/TEA/Scripts/'
-    )
-    default_modules = os.path.join(default_root, 'TEA/')
+    )]
+    for root in roots:
+        paths.append(os.path.join(root, 'TEA/'))
     try:
         # Is the action already loaded?
         module = sys.modules[target]
     except (KeyError, ImportError):
         # Find the action (searches user overrides first)
-        file, pathname, description = imp.find_module(
-            target,
-            [user_modules, default_modules]
-        )
+        file, pathname, description = imp.find_module(target, paths)
         if file is None:
             # Action doesn't exist
             return None

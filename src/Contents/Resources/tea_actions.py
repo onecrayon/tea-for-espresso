@@ -42,27 +42,27 @@ def log(message):
 # Text manipulations and helper functions
 # ===============================================================
 
-def parse_tag(opentag):
+def parse_word(selection):
     '''
-    Extract the tag from a string including optional attributes
+    Extract the first word from a string
     
-    Returns the opentag (in case it included carets) and the closetag:
-    parse_tag('p class="stuff"') => opentag = 'p class="stuff"', closetag = 'p'
-    
-    If you pass anything except an opening XML tag, the regex will fail
+    Returns the word:
+    parse_word('p class="stuff"') => word = 'p'
     '''
-    matches = re.match(r'<?(([^\s]+)\s*.*)>?$', opentag)
+    matches = re.match(r'(([^\s]+)\s*.*)$', selection)
     if matches == None:
-        return None, None
-    return matches.group(1), matches.group(2)
+        return None
+    return matches.group(2)
 
 def is_selfclosing(tag):
     '''Checks a tag and returns True if it's a self-closing XHTML tag'''
     # For now, we're just checking off a list
     selfclosing = ['img', 'input', 'br', 'hr', 'link', 'base', 'meta']
     # Make sure we've just got the tag
-    if not tag.isalpha():
-        opentag, tag = parse_tag(tag)
+    if not tag.isalnum():
+        tag = parse_word(tag)
+        if tag is None:
+            return False
     return tag in selfclosing
 
 def encode_ampersands(text, enc='&amp;'):
@@ -74,13 +74,29 @@ def named_entities(text):
     text = text.encode('ascii', 'html_replace')
     return encode_ampersands(text)
 
-def numeric_entities(text, ampersands='named'):
+def numeric_entities(text, ampersands=None):
     '''Converts Unicode characters into numeric HTML entities'''
     text = text.encode('ascii', 'xmlcharrefreplace')
     if ampersands == 'numeric':
         return encode_ampersands(text, '&#38;')
-    else:
+    elif ampersands == 'named':
         return encode_ampersands(text)
+    else:
+        return text
+
+def entities_to_hex(text, wrap):
+    '''
+    Converts HTML entities into hexadecimal; replaces $HEX in wrap
+    with the hex code
+    '''
+    # This is a bit of a hack to make the variable available to the function
+    wrap = [wrap]
+    def wrap_hex(match):
+        hex = '%X' % int(match.group(2))
+        while len(hex) < 4:
+            hex = '0' + hex
+        return wrap[0].replace('$HEX', hex)
+    return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
 # ===============================================================
 # Preference lookup shortcuts
@@ -194,22 +210,23 @@ def get_single_selection(context, with_errors=False):
         return None, range
     return get_selection(context, range), range
 
-def get_word_or_selection(context, range, alpha_only=True,
+def get_word_or_selection(context, range, alpha_numeric=True,
                           extra_characters='_-'):
     '''
     Selects and returns the current word and its range from the passed range,
     or if there's already a selection returns the contents and its range
     
-    By default it defines a word as a contiguous string of alphabetical
-    characters. Setting alpha_only to False will define a word as a
-    contiguous string of alpha-numeric characters plus extra_characters
+    By default it defines a word as a contiguous string of alphanumeric
+    characters plus extra_characters. Setting alpha_numeric to False will
+    define a word as a contiguous string of alphabetic characters plus
+    extra_characters
     '''
-    def test_alpha():
+    def test_word():
         # Mini-function to cut down on code bloat
-        if alpha_only:
-            return char.isalpha()
-        else:
+        if alpha_numeric:
             return all(c.isalnum() or c in extra_characters for c in char)
+        else:
+            return all(char.isalpha() or c in extra_characters for c in char)
     
     if range.length == 0:
         # Set up basic variables
@@ -220,12 +237,12 @@ def get_word_or_selection(context, range, alpha_only=True,
         if index != maxlength:
             # Check if cursor is mid-word
             char = get_selection(context, NSMakeRange(index, 1))
-            if test_alpha():
+            if test_word():
                 inword = True
                 # Parse forward until we hit the end of word or document
                 while inword:
                     char = get_selection(context, NSMakeRange(index, 1))
-                    if test_alpha():
+                    if test_word():
                         word += char
                     else:
                         inword = False
@@ -240,12 +257,12 @@ def get_word_or_selection(context, range, alpha_only=True,
         # Reset index to one less than the cursor
         index = range.location - 1
         # Only walk backwards if we aren't at the beginning
-        if index > 0:
+        if index >= 0:
             # Parse backward to get the word ahead of the cursor
             inword = True
             while inword:
                 char = get_selection(context, NSMakeRange(index, 1))
-                if test_alpha():
+                if test_word():
                     word = char + word
                 else:
                     inword = False
@@ -279,7 +296,8 @@ def get_active_zone(context, range):
     '''Returns the zone under the cursor'''
     # TODO: I need to implement better syntax zone sniffing to find
     #       the most applicable root zone available
-    if context.syntaxTree().zoneAtCharacterIndex_(range.location) is not None:
+    if context.syntaxTree().zoneAtCharacterIndex_(range.location).\
+       typeIdentifier() is not None:
         return context.syntaxTree().zoneAtCharacterIndex_(range.location).\
                typeIdentifier().stringValue()
     else:

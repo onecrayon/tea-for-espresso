@@ -1,44 +1,68 @@
 Text Editor Actions for Espresso
 --------------------------------
 
-Text Editor Actions (TEA) for Espresso (originally Textmate Emulation
-Actions) are some of the text manipulation actions that
-I think every text editor should have, implemented as an [Espresso][1]
-Sugar. I originally began work on TEA because I wanted to use Espresso
-but couldn't bear to abandon some of my favorite Textmate workflows, but
-it has since grown into a general use platform for extending the application
-in ways useful to my everyday work as a web developer.
+Text Editor Actions (TEA) for Espresso is an [Espresso][1] plugin that provides:
 
-TEA for Espresso is currently in an early testing stage; please see the
-[TEA for Espresso forum post][2] for download information, known bugs,
-and more.
+1. Some of my favorite text actions for HTML, such as Wrap Selection In Tag
+   (inspired mainly by Textmate's excellent HTML bundle)
+2. Generic text manipulation scripts that can be leveraged by any Sugar (or
+   through custom user actions)
 
-If you are interested in extending or modifying TEA for Espresso
-for your own use, then you've come to the right place.
+TEA has been bundled with Espresso since version 1.0, so you do not need to
+download it (unless you want to test bleeding edge improvements).
 
    [1]: http://macrabbit.com/espresso/
-   [2]: http://wiki.macrabbit.com/forums/viewthread/160/
 
-Extending TEA for Espresso
-==========================
+TEA for users
+=============
 
-TEA for Espresso is coded in [Python][3] and can be easily extended with
-your own custom actions either by writing your own Python scripts, by defining
-new actions for existing scripts in a simple XML file, or by
-editing the TEA for Espresso Actions.xml file to tweak existing actions
-to your liking.  For more information, see the [wiki][4]:
+Many people will be content with the default TEA HTML actions, but if you
+wish you can add your own custom actions by defining them in XML (I plan to
+add an interface for managing custom actions; until then you'll need to
+use XML):
 
-* [Installing third party snippet collections][7]
-* [Defining new actions via XML][5]
-* [Adding or overriding Python scripts][6]
+* [Adding your own actions][2]
+* [A tutorial for adding simple tab completions][3]
+* [Text snippets reference][4]
+* [Third party snippet collections][5]
+* [Adding or overriding Python scripts][6] (for more advanced custom actions)
 
-   [3]: http://python.org/
-   [4]: http://wiki.github.com/onecrayon/tea-for-espresso
-   [5]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
+**Found something about TEA that makes you unhappy?** [Submit a bug report or
+feature request][7] (requires free Lighthouse account) or visit the official
+[TEA forum post][8].
+
+   [2]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
+   [3]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-simple-tab-completions
+   [4]: http://wiki.github.com/onecrayon/tea-for-espresso/text-snippets-reference
+   [5]: http://wiki.github.com/onecrayon/tea-for-espresso/third-party-snippet-collections
    [6]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-or-overriding-python-scripts
-   [7]: http://wiki.github.com/onecrayon/tea-for-espresso/third-party-snippet-collections
+   [7]: http://onecrayon.lighthouseapp.com/projects/28070-tea-espresso/tickets/new
+   [8]: http://wiki.macrabbit.com/forums/viewthread/160/
+   
 
-If you are instead interested in coding your own
-Sugar in Python, the TEA for Espresso project can also serve as an excellent
-starting point.  The code is released under the MIT license, as described in
-the main bundle file.
+TEA for Sugar developers
+========================
+
+You can leverage TEA's generic internal actions within your own Sugars simply
+by adding XML definitions (syntax is identical to custom user actions above;
+only difference is you put your actions in your Sugar's TextActions folder).
+
+For a full list of available actions, see the [generic action API][9].
+
+**Please note:** it is not currently possible to define custom Python scripts
+for use with third-party Sugars and TEA.
+
+   [9]: http://wiki.github.com/onecrayon/tea-for-espresso/generic-action-api
+
+Errata
+======
+
+The [TEA for Espresso wiki][10] is currently the best place for information
+about extending TEA. I do not yet have any documentation about using TEA's
+bundled HTML actions; hopefully their names will be self-explanatory to some
+extent.
+
+If you are interested in coding your own Sugar in Python, the TEA for
+Espresso project can also serve as an excellent starting point.  The
+code is released under the MIT license, as described in the main bundle
+file.

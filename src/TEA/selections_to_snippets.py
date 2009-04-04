@@ -10,8 +10,7 @@ def act(context, first_snippet='', following_snippet='',
     Wraps the selected text in a snippet
     
     Support for discontiguous selections will be implemented when recipes
-    can support snippets; until then only opensnippet and closesnippet will
-    be used
+    can support snippets; until then only first_snippet will be used
     '''
     # TODO: change to a loop once snippets in recipes are supported
     # This function will handle the logic of when to use open vs. multi

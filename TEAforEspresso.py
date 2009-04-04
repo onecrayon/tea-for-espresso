@@ -29,6 +29,7 @@ from Foundation import *
 import objc
 
 from tea_utils import *
+from espresso import *
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
@@ -48,50 +49,76 @@ class TEAforEspresso(NSObject):
         if self is None: return None
         
         # Set object's internal variables
-        # target_action is required; name of a Python TEA module
-        self.target_action = dictionary["target_action"]
+        # action is required; name of a Python TEA module
+        if 'target_action' in dictionary:
+            # backwards compatible fix
+            self.action = dictionary['target_action']
+        else:
+            self.action = dictionary["action"]
         
-        # arguments is an optional dictionary with named extra arguments
+        # options is an optional dictionary with named extra arguments
         # for the act() call
-        if "arguments" in dictionary:
+        if 'arguments' in dictionary:
+            # backwards compatible fix
+            dictionary['options'] = dictionary['arguments']
+        if "options" in dictionary:
             # In order to pass dictionary as keyword arguments it has to:
             # 1) be a Python dictionary
             # 2) have both the key and the value encoded as strings
             # This dictionary comprehension takes care of both issues
-            self.arguments = dict(
+            self.options = dict(
                 [str(arg), str(value)] \
-                for arg, value in dictionary["arguments"].iteritems()
+                for arg, value in dictionary["options"].iteritems()
             )
         else:
-            self.arguments = None
+            self.options = None
         
-        # Append the bundle's resource path so that we can use common libraries
-        # By looking up the bundle instead of using bundlePath, third party
-        # sugars can call TEA for Espresso actions, which is pretty cool
-        bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
-        self.bundle_path = bundle.bundlePath()
-        sys.path.append(self.bundle_path + '/Contents/Resources/')
+        # Set the syntax context
+        if 'syntax-context' in dictionary:
+            self.syntax_context = dictionary['syntax-context']
+        else:
+            self.syntax_context = None
+        
+        # By looking up the bundle, third party sugars can call
+        # TEA for Espresso actions or include their own custom actions
+        self.bundle_path = bundlePath
+        self.tea_bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso').\
+                          bundlePath()
+        if self.bundle_path == self.tea_bundle:
+            self.search_paths = [self.bundle_path]
+        else:
+            self.search_paths = [self.bundle_path, self.tea_bundle]
         
         # Run one-time initialization items
         if not TEAforEspresso.initialized:
             TEAforEspresso.initialized = True
-            refresh_symlinks(self.bundle_path)
+            refresh_symlinks(self.tea_bundle)
         return self
     
     # Signature is necessary for Objective-C to be able to find the method
     @objc.signature('B@:@')
     def canPerformActionWithContext_(self, context):
         '''Returns bool; can the action be performed in the given context'''
-        return True
+        if self.syntax_context is not None:
+            ranges = context.selectedRanges()
+            range = ranges[0].rangeValue()
+            selectors = SXSelectorGroup.selectorGroupWithString_(self.syntax_context)
+            zone = context.syntaxTree().root().zoneAtCharacterIndex_(range.location);
+            if selectors.matches_(zone):
+                return True
+            else:
+                return False
+        else:
+            return True
     
     def performActionWithContext_error_(self, context):
-        '''Imports and calls the target_action's act() method'''
-        target_module = load_action(self.target_action, self.bundle_path)
+        '''Imports and calls the action's act() method'''
+        target_module = load_action(self.action, *self.search_paths)
         if target_module is None:
             # Couldn't find the module, log the error
-            NSLog('TEA: Could not find the module ' + self.target_action)
+            NSLog('TEA: Could not find the module ' + self.action)
             return False
-        if self.arguments != None:
-            # We've got arguments, pass them as keyword arguments
-            return target_module.act(context, **self.arguments)
+        if self.options != None:
+            # We've got options, pass them as keyword arguments
+            return target_module.act(context, **self.options)
         return target_module.act(context)

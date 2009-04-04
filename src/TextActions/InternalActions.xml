@@ -5,7 +5,7 @@
 		<class>TEAforEspresso</class>
 		<title>Toggle Custom User Actions</title>
 		<setup>
-			<target_action>refresh_user_actions</target_action>
+			<action>refresh_user_actions</action>
 		</setup>
 	</action>
 	

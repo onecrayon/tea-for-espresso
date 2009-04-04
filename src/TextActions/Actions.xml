@@ -9,8 +9,8 @@
 		<title>Indent New Line</title>
 		<key-equivalent>control shift enter</key-equivalent>
 		<setup>
-			<target_action>insert_snippet</target_action>
-			<arguments>
+			<action>insert_snippet</action>
+			<options>
 				<dict>
 					<key>default</key>
 					<string><![CDATA[
@@ -20,7 +20,7 @@
 					<key>undo_name</key>
 					<string>Insert Indented Line</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -29,8 +29,8 @@
 		<title>Insert Linebreak(s)</title>
 		<key-equivalent>control enter</key-equivalent>
 		<setup>
-			<target_action>insert_text</target_action>
-			<arguments>
+			<action>insert_text</action>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;br /></string>
@@ -43,7 +43,7 @@
 					
 					<!-- Syntax-specific overrides -->
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -52,8 +52,8 @@
 		<title>Emphasize</title>
 		<key-equivalent>cmd I</key-equivalent>
 		<setup>
-			<target_action>format_text</target_action>
-			<arguments>
+			<action>selections_to_text</action>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;em>$SELECTED_TEXT&lt;/em></string>
@@ -65,7 +65,7 @@
 					<key>text.markdown</key>
 					<string>*$SELECTED_TEXT*</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -74,8 +74,8 @@
 		<title>Strong</title>
 		<key-equivalent>cmd b</key-equivalent>
 		<setup>
-			<target_action>format_text</target_action>
-			<arguments>
+			<action>selections_to_text</action>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
@@ -87,7 +87,7 @@
 					<key>text.markdown</key>
 					<string>**$SELECTED_TEXT**</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -98,8 +98,8 @@
 		<title>Convert To Named Entities</title>
 		<key-equivalent>option &amp;</key-equivalent>
 		<setup>
-			<target_action>convert_to_entities</target_action>
-			<arguments>
+			<action>encode_unicode</action>
+			<options>
 				<dict>
 					<key>type</key>
 					<string>named</string>
@@ -107,7 +107,7 @@
 					<key>undo_name</key>
 					<string>Convert To Named Entities</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -115,19 +115,16 @@
 		<class>TEAforEspresso</class>
 		<title>Convert To Numeric Entities</title>
 		<setup>
-			<target_action>convert_to_entities</target_action>
-			<arguments>
+			<action>encode_unicode</action>
+			<options>
 				<dict>
 					<key>type</key>
-					<string>numeric</string>
-					
-					<key>ampersands</key>
 					<string>numeric</string>
 					
 					<key>undo_name</key>
 					<string>Convert To Numeric Entities</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -136,13 +133,25 @@
 		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
-			<target_action>insert_tag_from_word</target_action>
-			<arguments>
+			<action>word_to_snippet</action>
+			<options>
 				<dict>
+					<key>default</key>
+					<string>&lt;$SELECTED_TEXT>$1&lt;/$WORD>$0</string>
+					
+					<key>extra_characters</key>
+					<string>_-</string>
+					
+					<key>mode</key>
+					<string>HTML</string>
+					
 					<key>close_string</key>
 					<string> /</string>
+					
+					<key>undo_name</key>
+					<string>Insert Tag From Word</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -151,13 +160,13 @@
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
 		<setup>
-			<target_action>wrap_selections_in_snippet</target_action>
-			<arguments>
+			<action>selections_to_snippets</action>
+			<options>
 				<dict>
 					<key>first_snippet</key>
 					<string>&lt;${1:p}>$SELECTED_TEXT&lt;/${1/\s.*//}>$0</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -166,8 +175,8 @@
 		<title>Wrap Selected Lines In Tag</title>
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
-			<target_action>wrap_selected_lines_in_snippet</target_action>
-			<arguments>
+			<action>selected_lines_to_snippets</action>
+			<options>
 				<dict>
 					<key>first_snippet</key>
 					<string>&lt;${1:li}>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
@@ -181,7 +190,7 @@
 					<key>undo_name</key>
 					<string>Wrap Selected Lines In Tag</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
@@ -190,8 +199,8 @@
 		<title>Wrap Selection In Link</title>
 		<key-equivalent>control L</key-equivalent>
 		<setup>
-			<target_action>wrap_selection_in_link</target_action>
-			<arguments>
+			<action>insert_url_snippet</action>
+			<options>
 				<dict>
 					<key>default</key>
 					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
@@ -206,7 +215,7 @@
 					<key>text.markdown</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 				</dict>
-			</arguments>
+			</options>
 		</setup>
 	</action>
 	
