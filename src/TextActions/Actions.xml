@@ -136,8 +136,17 @@
 			<action>word_to_snippet</action>
 			<options>
 				<dict>
-					<key>close_string</key>
-					<string> /</string>
+					<key>default</key>
+					<string>&lt;$SELECTED_TEXT>$1&lt;/$WORD>$0</string>
+					
+					<key>extra_characters</key>
+					<string>_-</string>
+					
+					<key>mode</key>
+					<string>HTML</string>
+					
+					<key>undo_name</key>
+					<string>Insert Tag From Word</string>
 				</dict>
 			</options>
 		</setup>

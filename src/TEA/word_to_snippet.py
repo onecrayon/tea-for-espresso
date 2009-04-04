@@ -1,38 +1,60 @@
-'''Converts word or selection under the cursor into an open/close tag pair'''
+'''Converts word or selection under the cursor into a snippet'''
 
 import tea_actions as tea
 
-def act(context, check_selfclosing=True, close_string=''):
+def act(context, default=None, alpha_numeric=True, extra_characters='',
+        mode=None, undo_name=None, **syntaxes):
     '''
     Required action method
     
     Transforms the word under the cursor (or the word immediately previous
-    to the cursor) into an open/close tag pair with the cursor in the middle
+    to the cursor) into a snippet
     
-    If some text is selected, then it is turned into an open/close tag with
-    attributes intelligently stripped from the closing tag.
-    
-    Inspired by Textmate's Insert Open/Close Tag (With Current Word)
+    The snippet offers two placeholders:
+    $SELECTED_TEXT: replaced with the word, or any selected text
+    $WORD: if text is selected, replaced just with the first word
     '''
+    if default is None:
+        return False
     range = tea.get_single_range(context, True)
     if range == None:
         return False
-    tag, new_range = tea.get_word_or_selection(context, range, False, '')
-    if tag == '':
-        # No tag, so nothing further to do
+    root_zone = tea.get_root_zone(context)
+    if root_zone in syntaxes:
+        snippet = syntaxes[root_zone]
+    else:
+        snippet = default
+    # Check for specific zone override
+    zone = tea.get_active_zone(context, range)
+    if zone in syntaxes:
+        snippet = syntaxes[zone]
+    # Fetch the word
+    word, new_range = tea.get_word_or_selection(context, range, alpha_numeric,
+                                                extra_characters)
+    if word == '':
+        # No word, so nothing further to do
         return False
-    if not tag.isalpha():
-        # There's a non-alpha character, so parse it
-        opentag, closetag = tea.parse_tag(tag)
+    # If we're using $WORD, make sure the word is just a word
+    if snippet.find('$WORD') >= 0:
+        fullword = word
+        word = tea.parse_word(word)
     else:
-        opentag = closetag = tag
-    # Construct the snippet and insert it
-    if check_selfclosing and tea.is_selfclosing(closetag):
-        snippet = '<' + opentag
-        if opentag is closetag and not opentag in ['br', 'hr']:
-            snippet += ' $1'
-        snippet += close_string + '>$0'
-    else:
-        snippet = '<' + opentag + '>$1</' + closetag + '>$0'
-    return tea.insert_snippet_over_range(context, snippet, new_range,
-                                         'Insert Tag From Word')
+        fullword = word
+    
+    # We've got some extra work if the mode is HTML
+    # This is a really hacky solution, but I can't think of a concise way to
+    # represent this functionality via XML
+    if mode == 'HTML':
+        if tea.is_selfclosing(word):
+            snippet = '<' + fullword
+            if fullword == word and not fullword in ['br', 'hr']:
+                snippet += ' $1'
+            snippet += word + '>$0'
+    
+    # Indent the snippet
+    snippet = tea.indent_snippet(context, snippet, new_range)
+    # Special replacement in case we're using $WORD
+    snippet = snippet.replace('$WORD', word)
+    # Construct the snippet
+    snippet = tea.construct_snippet(fullword, snippet)
+    return tea.insert_snippet_over_range(context, snippet, new_range, undo_name)
