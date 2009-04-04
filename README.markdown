@@ -49,9 +49,6 @@ only difference is you put your actions in your Sugar's TextActions folder).
 
 For a full list of available actions, see the [generic action API][9].
 
-**Please note:** it is not currently possible to define custom Python scripts
-for use with third-party Sugars and TEA.
-
    [9]: http://wiki.github.com/onecrayon/tea-for-espresso/generic-action-api
 
 Errata
