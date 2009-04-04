@@ -32,7 +32,7 @@ def act(context, type='named', wrap='$HEX', undo_name=None):
         text = tea.get_selection(context, range)
         if type == 'named':
             # Convert any characters we can into named HTML entities
-            text = tea.named_entities(text, type)
+            text = tea.named_entities(text)
         elif type == 'numeric':
             # Convert any characters we can into numeric HTML entities
             text = tea.numeric_entities(text, type)
