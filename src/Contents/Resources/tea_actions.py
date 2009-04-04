@@ -60,7 +60,9 @@ def is_selfclosing(tag):
     selfclosing = ['img', 'input', 'br', 'hr', 'link', 'base', 'meta']
     # Make sure we've just got the tag
     if not tag.isalnum():
-        opentag, tag = parse_word(tag)
+        tag = parse_word(tag)
+        if tag is None:
+            return False
     return tag in selfclosing
 
 def encode_ampersands(text, enc='&amp;'):
@@ -255,7 +257,7 @@ def get_word_or_selection(context, range, alpha_numeric=True,
         # Reset index to one less than the cursor
         index = range.location - 1
         # Only walk backwards if we aren't at the beginning
-        if index > 0:
+        if index >= 0:
             # Parse backward to get the word ahead of the cursor
             inword = True
             while inword:

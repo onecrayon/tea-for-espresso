@@ -38,6 +38,8 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     if snippet.find('$WORD') >= 0:
         fullword = word
         word = tea.parse_word(word)
+        if word is None:
+            word = ''
     else:
         fullword = word
     
