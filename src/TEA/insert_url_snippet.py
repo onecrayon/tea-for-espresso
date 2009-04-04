@@ -27,7 +27,7 @@ def format_hyperlink(text, fallback=''):
         # Nothing that remotely looks URL-ish; give them the fallback
         return fallback
 
-def act(context, default='', fallback_url='', undo_name=None, **syntaxes):
+def act(context, default=None, fallback_url='', undo_name=None, **syntaxes):
     '''
     Required action method
     
@@ -35,6 +35,8 @@ def act(context, default='', fallback_url='', undo_name=None, **syntaxes):
     a recognizable link there) and formats the snippet based on the
     active syntax of the context
     '''
+    if default is None:
+        return False
     # Get the text and range
     text, range = tea.get_single_selection(context, True)
     if text == None:
