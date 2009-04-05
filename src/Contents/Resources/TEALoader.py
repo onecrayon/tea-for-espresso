@@ -12,7 +12,6 @@ import objc
 
 import tea_actions as tea
 from espresso import *
-from truthy import *
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
@@ -86,8 +85,8 @@ class TEALoader(NSObject):
         os.putenv('ROOT_ZONE', tea.get_root_zone(context))
         # Set up the preferences
         prefs = tea.get_prefs(context)
-        os.putenv('SOFT_TABS', prefs.insertsSpacesForTab())
-        os.putenv('TAB_SIZE', prefs.numberOfSpacesForTab())
+        os.putenv('SOFT_TABS', str(prefs.insertsSpacesForTab()))
+        os.putenv('TAB_SIZE', str(prefs.numberOfSpacesForTab()))
         os.putenv('LINE_ENDING', prefs.lineEndingString())
         
         # Initialize our common variables
@@ -101,11 +100,11 @@ class TEALoader(NSObject):
             # These environment variables may change with repetition, so reset
             os.putenv(
                 'LINE_NUMBER',
-                context.lineStorage().lineNumberForIndex_(range.location)
+                str(context.lineStorage().lineNumberForIndex_(range.location))
             )
             os.putenv('ACTIVE_ZONE', tea.get_active_zone(context, range))
             if self.input == 'selection':
-                input = text.get_selection(context, range)
+                input = tea.get_selection(context, range)
                 if input == '':
                     if self.alt == 'document':
                         input = context.string()
