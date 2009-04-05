@@ -1,8 +1,8 @@
 '''
-Textmate Emulation Actions for Espresso
+Text Editor Actions for Espresso
 
-A collection of Python scripts that enable useful actions
-from Textmate into Espresso
+A collection of HTML actions and generic Python scripts to allow
+users and third party Sugars to easily extend Espresso
 
 Copyright (c) 2009 Ian Beck
 
@@ -30,6 +30,7 @@ import objc
 
 from tea_utils import *
 from espresso import *
+import TEALoader
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
