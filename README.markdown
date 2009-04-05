@@ -26,35 +26,44 @@ use XML):
 * [Text snippets reference][4]
 * [Third party snippet collections][5]
 * [Adding or overriding Python scripts][6] (for more advanced custom actions)
+* [Running shell scripts][7] (for advanced custom actions)
 
 **Found something about TEA that makes you unhappy?** [Submit a bug report or
-feature request][7] (requires free Lighthouse account) or visit the official
-[TEA forum post][8].
+feature request][8] (requires free Lighthouse account) or visit the official
+[TEA forum post][9].
 
    [2]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
    [3]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-simple-tab-completions
    [4]: http://wiki.github.com/onecrayon/tea-for-espresso/text-snippets-reference
    [5]: http://wiki.github.com/onecrayon/tea-for-espresso/third-party-snippet-collections
    [6]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-or-overriding-python-scripts
-   [7]: http://onecrayon.lighthouseapp.com/projects/28070-tea-espresso/tickets/new
-   [8]: http://wiki.macrabbit.com/forums/viewthread/160/
+   [7]: http://wiki.github.com/onecrayon/tea-for-espresso/running-shell-scripts
+   [8]: http://onecrayon.lighthouseapp.com/projects/28070-tea-espresso/tickets/new
+   [9]: http://wiki.macrabbit.com/forums/viewthread/160/
    
 
 TEA for Sugar developers
 ========================
 
-You can leverage TEA's generic internal actions within your own Sugars simply
-by adding XML definitions (syntax is identical to custom user actions above;
-only difference is you put your actions in your Sugar's TextActions folder).
+There are three ways to leverage TEA within your own Sugar:
 
-For a full list of available actions, see the [generic action API][9].
+1. Use TEA's generic internal actions simply by adding XML definitions
+(syntax is identical to custom user actions above; only difference is you
+put your actions in your Sugar's TextActions folder). For a full list of
+available actions, see the [generic action API][10].
 
-   [9]: http://wiki.github.com/onecrayon/tea-for-espresso/generic-action-api
+2. Use the TEALoader class to run a custom script in any language supported
+by the Mac OS X command line.  See [Running shell scripts][7] for more info.
+
+3. Code your own Python scripts for TEA, leveraging the numerous built-in
+helper functions.  See [Adding or overriding Python scripts][6] for more info.
+
+   [10]: http://wiki.github.com/onecrayon/tea-for-espresso/generic-action-api
 
 Errata
 ======
 
-The [TEA for Espresso wiki][10] is currently the best place for information
+The [TEA for Espresso wiki][11] is currently the best place for information
 about extending TEA. I do not yet have any documentation about using TEA's
 bundled HTML actions; hopefully their names will be self-explanatory to some
 extent.
@@ -64,4 +73,4 @@ Espresso project can also serve as an excellent starting point.  The
 code is released under the MIT license, as described in the main bundle
 file.
 
-   [10]: http://wiki.github.com/onecrayon/tea-for-espresso
+   [11]: http://wiki.github.com/onecrayon/tea-for-espresso
