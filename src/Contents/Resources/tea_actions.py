@@ -167,6 +167,11 @@ def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
 
+def get_line(context, range):
+    '''Returns the line bounding range.location'''
+    linerange = context.lineStorage().lineRangeForIndex_(range.location)
+    return get_selection(context, linerange), linerange
+
 def set_selected_range(context, range):
     '''Sets the selection to the single range passed as an argument'''
     context.setSelectedRanges_([NSValue.valueWithRange_(range)])
@@ -210,11 +215,17 @@ def get_single_selection(context, with_errors=False):
         return None, range
     return get_selection(context, range), range
 
-def get_word_or_selection(context, range, alpha_numeric=True,
-                          extra_characters='_-'):
+def get_character(context, range):
+    '''Returns the character immediately preceding the cursor'''
+    if range.location > 0:
+        range = new_range(range.location - 1, 1)
+        return get_selection(context, range), range
+    else:
+        return None, range
+
+def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     '''
-    Selects and returns the current word and its range from the passed range,
-    or if there's already a selection returns the contents and its range
+    Selects and returns the current word and its range from the passed range
     
     By default it defines a word as a contiguous string of alphanumeric
     characters plus extra_characters. Setting alpha_numeric to False will
@@ -228,8 +239,7 @@ def get_word_or_selection(context, range, alpha_numeric=True,
         else:
             return all(char.isalpha() or c in extra_characters for c in char)
     
-    if range.length == 0:
-        # Set up basic variables
+    # Set up basic variables
         index = range.location
         word = ''
         maxlength = context.string().length()
@@ -276,6 +286,17 @@ def get_word_or_selection(context, range, alpha_numeric=True,
         lastindex = lastindex - firstindex
         range = NSMakeRange(firstindex, lastindex)
         return word, range
+
+def get_word_or_selection(context, range, alpha_numeric=True,
+                          extra_characters='_-'):
+    '''
+    Selects and returns the current word and its range from the passed range,
+    or if there's already a selection returns the contents and its range
+    
+    See get_word() for an explanation of the extra arguments
+    '''
+    if range.length == 0:
+        return get_word(context, range, alpha_numeric, extra_characters)
     else:
         return get_selection(context, range), range
 
