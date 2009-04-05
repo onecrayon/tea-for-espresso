@@ -82,7 +82,10 @@ class TEALoader(NSObject):
         filepath = context.documentContext().fileURL()
         if filepath is not None:
             os.putenv('FILEPATH', filepath.absoluteString())
-        os.putenv('ROOT_ZONE', tea.get_root_zone(context))
+        root = tea.get_root_zone(context)
+        if root is False:
+            root = ''
+        os.putenv('ROOT_ZONE', root)
         # Set up the preferences
         prefs = tea.get_prefs(context)
         os.putenv('SOFT_TABS', str(prefs.insertsSpacesForTab()))
@@ -92,7 +95,21 @@ class TEALoader(NSObject):
         # Initialize our common variables
         recipe = tea.new_recipe()
         ranges = tea.get_ranges(context)
-        file = os.path.join(self.bundle_path, 'TEA', self.script)
+        # Check the user script folder for overrides
+        file = os.path.join(os.path.expanduser(
+            '~/Library/Application Support/Espresso/TEA/Scripts/'
+        ), self.script)
+        if not os.path.exists(file):
+            file = os.path.join(self.bundle_path, 'TEA', self.script)
+        if not os.path.exists(file):
+            # File doesn't exist in the bundle, either, so something is screwy
+            return tea.say(
+                context, 'Error: could not find script',
+                'TEA could not find the script associated with this action. '\
+                'Please contact the Sugar developer, or make sure it is '\
+                'installed here:\n\n'\
+                '~/Library/Application Support/Espresso/TEA/Scripts'
+            )
         
         # There's always at least one range; this thus supports multiple
         # discontinuous selections
@@ -102,7 +119,10 @@ class TEALoader(NSObject):
                 'LINE_NUMBER',
                 str(context.lineStorage().lineNumberForIndex_(range.location))
             )
-            os.putenv('ACTIVE_ZONE', tea.get_active_zone(context, range))
+            active = tea.get_active_zone(context, range)
+            if active is False:
+                active = ''
+            os.putenv('ACTIVE_ZONE', active)
             if self.input == 'selection':
                 input = tea.get_selection(context, range)
                 if input == '':
