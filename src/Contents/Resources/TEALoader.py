@@ -81,7 +81,7 @@ class TEALoader(NSObject):
         os.putenv('E_SUGARPATH', self.bundle_path)
         filepath = context.documentContext().fileURL()
         if filepath is not None:
-            os.putenv('E_FILEPATH', fileURL.path().lastPathComponent())
+            os.putenv('E_FILENAME', fileURL.path().lastPathComponent())
             if filepath.isFileURL():
                 os.putenv(
                     'E_DIRECTORY',
@@ -124,16 +124,18 @@ class TEALoader(NSObject):
             os.putenv('E_SELECTED_TEXT',
                 context.string().substringWithRange_(range)
             )
-            os.putenv('E_SELECTED_LINE', # OR USE CURRENT_LINE (around caret)?
+            word, wordrange = tea.get_word(context, range)
+            os.putenv('E_CURRENT_WORD', word)
+            os.putenv('E_CURRENT_LINE',
                 context.string().substringWithRange_(
                     context.lineStorage().lineRangeForRange_(range)
                 )
             )
             os.putenv(
-                'E_SELECTED_LINENUMBER', # OR USE CURRENT_LINENUMBER?
+                'E_LINENUMBER',
                 str(context.lineStorage().lineNumberForIndex_(range.location))
             )
-            os.putenv('E_SELECTED_LINEINDEX', str( # OR USE CURRENT?
+            os.putenv('E_LINEINDEX', str(
                 range.location - \
                 context.lineStorage().lineStartIndexForIndex_lineNumber_(
                     range.location, None
