@@ -78,19 +78,25 @@ class TEALoader(NSObject):
         if self.script is None:
             return False
         # Environment variables that won't change with repetition
-        os.putenv('SUGAR_BUNDLE', self.bundle_path)
+        os.putenv('E_SUGARPATH', self.bundle_path)
         filepath = context.documentContext().fileURL()
         if filepath is not None:
-            os.putenv('FILEPATH', filepath.absoluteString())
+            os.putenv('E_FILEPATH', fileURL.path().lastPathComponent())
+            if filepath.isFileURL():
+                os.putenv(
+                    'E_DIRECTORY',
+                    fileURL.path().stringByDeletingLastPathComponent()
+                )
+                os.putenv('E_FILEPATH', fileURL.path())
         root = tea.get_root_zone(context)
         if root is False:
             root = ''
-        os.putenv('ROOT_ZONE', root)
+        os.putenv('E_ROOT_ZONE', root)
         # Set up the preferences
         prefs = tea.get_prefs(context)
-        os.putenv('SOFT_TABS', str(prefs.insertsSpacesForTab()))
-        os.putenv('TAB_SIZE', str(prefs.numberOfSpacesForTab()))
-        os.putenv('LINE_ENDING', prefs.lineEndingString())
+        os.putenv('E_SOFT_TABS', str(prefs.insertsSpacesForTab()))
+        os.putenv('E_TAB_SIZE', str(prefs.numberOfSpacesForTab()))
+        os.putenv('E_LINE_ENDING', prefs.lineEndingString())
         
         # Initialize our common variables
         recipe = tea.new_recipe()
@@ -115,14 +121,30 @@ class TEALoader(NSObject):
         # discontinuous selections
         for range in ranges:
             # These environment variables may change with repetition, so reset
+            os.putenv('E_SELECTED_TEXT',
+                context.string().substringWithRange_(range)
+            )
+            os.putenv('E_SELECTED_LINE', # OR USE CURRENT_LINE (around caret)?
+                context.string().substringWithRange_(
+                    context.lineStorage().lineRangeForRange_(range)
+                )
+            )
             os.putenv(
-                'LINE_NUMBER',
+                'E_SELECTED_LINENUMBER', # OR USE CURRENT_LINENUMBER?
                 str(context.lineStorage().lineNumberForIndex_(range.location))
             )
+            os.putenv('E_SELECTED_LINEINDEX', str( # OR USE CURRENT?
+                range.location - \
+                context.lineStorage().lineStartIndexForIndex_lineNumber_(
+                    range.location, None
+                )
+            ))
             active = tea.get_active_zone(context, range)
             if active is False:
                 active = ''
-            os.putenv('ACTIVE_ZONE', active)
+            os.putenv('E_ACTIVE_ZONE', active)
+            
+            # Setup STDIN
             if self.input == 'selection':
                 input = tea.get_selection(context, range)
                 if input == '':
