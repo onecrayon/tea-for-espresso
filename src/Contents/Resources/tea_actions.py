@@ -317,12 +317,13 @@ def get_active_zone(context, range):
     '''Returns the zone under the cursor'''
     # TODO: I need to implement better syntax zone sniffing to find
     #       the most applicable root zone available
-    if context.syntaxTree().zoneAtCharacterIndex_(range.location).\
-       typeIdentifier() is not None:
-        return context.syntaxTree().zoneAtCharacterIndex_(range.location).\
-               typeIdentifier().stringValue()
-    else:
-        return False
+    if context.syntaxTree().zoneAtCharacterIndex_(range.location) is not None:
+        if context.syntaxTree().zoneAtCharacterIndex_(range.location).\
+           typeIdentifier() is not None:
+            return context.syntaxTree().zoneAtCharacterIndex_(range.location).\
+                   typeIdentifier().stringValue()
+    # Made it here, something's wrong
+    return False
 
 # ===============================================================
 # Snippet methods
