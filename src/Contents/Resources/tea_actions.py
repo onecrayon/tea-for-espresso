@@ -240,52 +240,52 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
             return all(char.isalpha() or c in extra_characters for c in char)
     
     # Set up basic variables
-        index = range.location
-        word = ''
-        maxlength = context.string().length()
-        # Make sure the cursor isn't at the end of the document
-        if index != maxlength:
-            # Check if cursor is mid-word
-            char = get_selection(context, NSMakeRange(index, 1))
-            if test_word():
-                inword = True
-                # Parse forward until we hit the end of word or document
-                while inword:
-                    char = get_selection(context, NSMakeRange(index, 1))
-                    if test_word():
-                        word += char
-                    else:
-                        inword = False
-                    index += 1
-                    if index == maxlength:
-                        inword = False
-            else:
-                # lastindex logic assumes we've been incrementing as we go,
-                # so bump it up one to compensate
-                index += 1
-        lastindex = index - 1 if index < maxlength else index
-        # Reset index to one less than the cursor
-        index = range.location - 1
-        # Only walk backwards if we aren't at the beginning
-        if index >= 0:
-            # Parse backward to get the word ahead of the cursor
+    index = range.location
+    word = ''
+    maxlength = context.string().length()
+    # Make sure the cursor isn't at the end of the document
+    if index != maxlength:
+        # Check if cursor is mid-word
+        char = get_selection(context, NSMakeRange(index, 1))
+        if test_word():
             inword = True
+            # Parse forward until we hit the end of word or document
             while inword:
                 char = get_selection(context, NSMakeRange(index, 1))
                 if test_word():
-                    word = char + word
+                    word += char
                 else:
                     inword = False
-                index -= 1
-                if index < 0:
+                index += 1
+                if index == maxlength:
                     inword = False
-        # Since index is left-aligned and we've overcompensated,
-        # need to increment +2
-        firstindex = index + 2 if index > 0 else 0
-        # Switch last index to length for use in range
-        lastindex = lastindex - firstindex
-        range = NSMakeRange(firstindex, lastindex)
-        return word, range
+        else:
+            # lastindex logic assumes we've been incrementing as we go,
+            # so bump it up one to compensate
+            index += 1
+    lastindex = index - 1 if index < maxlength else index
+    # Reset index to one less than the cursor
+    index = range.location - 1
+    # Only walk backwards if we aren't at the beginning
+    if index >= 0:
+        # Parse backward to get the word ahead of the cursor
+        inword = True
+        while inword:
+            char = get_selection(context, NSMakeRange(index, 1))
+            if test_word():
+                word = char + word
+            else:
+                inword = False
+            index -= 1
+            if index < 0:
+                inword = False
+    # Since index is left-aligned and we've overcompensated,
+    # need to increment +2
+    firstindex = index + 2 if index > 0 else 0
+    # Switch last index to length for use in range
+    lastindex = lastindex - firstindex
+    range = NSMakeRange(firstindex, lastindex)
+    return word, range
 
 def get_word_or_selection(context, range, alpha_numeric=True,
                           extra_characters='_-'):
