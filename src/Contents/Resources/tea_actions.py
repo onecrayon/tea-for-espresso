@@ -358,7 +358,7 @@ def indent_snippet(context, snippet, range):
         # Check if line is actually indented
         if line.location != range.location:
             line = get_selection(context, line)
-            match = re.match(r'(\s+)', line)
+            match = re.match(r'([ \t]+)', line)
             # Only indent if the line starts with whitespace
             if match is not None:
                 current_indent = match.group(1)
