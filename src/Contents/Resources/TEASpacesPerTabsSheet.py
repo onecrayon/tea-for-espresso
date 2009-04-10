@@ -11,5 +11,5 @@ class TEASpacesPerTabsSheet(NSWindowController):
         NSLog(spaces)
     
     @objc.IBAction
-    def doCancelSheet_(self, sender):
+    def cancel_(self, sender):
         pass
