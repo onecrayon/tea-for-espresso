@@ -10,7 +10,6 @@ def act(context, target=None, source=None, prompt=None, search_string=None,
     Required action method
     
     target dictates what we're looking for:
-    - line (by number)
     - text
     - zone (by syntax zone selector string)
     
