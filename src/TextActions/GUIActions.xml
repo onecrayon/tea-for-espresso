@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<action-recipes>
+	<!-- GUI actions typically require special classes, so they aren't good examples for what you can do with TEA -->
+	
+	<action id="com.onecrayon.TextActions.Entab" category="actions.text.important">
+		<class>TEASpacesToTabs</class>
+		<title>Entab...</title>
+		<setup>
+			<action>entab</action>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.Detab" category="actions.text.important">
+		<class>TEASpacesToTabs</class>
+		<title>Detab...</title>
+		<setup>
+			<action>detab</action>
+		</setup>
+	</action>
+	
+</action-recipes>
