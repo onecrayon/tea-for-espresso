@@ -45,7 +45,7 @@ for root, dirs, filenames in os.walk(includes_dir):
 # Here's where the magic happens
 setup(
     name='TEA for Espresso',
-    plugin = ['TEAforEspresso.py'],
+    plugin = ['main.py'],
     data_files = includes,
     options=dict(py2app=dict(
         extension='.sugar',

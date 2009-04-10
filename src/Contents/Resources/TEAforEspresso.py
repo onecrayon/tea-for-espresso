@@ -30,8 +30,6 @@ import objc
 
 from tea_utils import *
 from espresso import *
-import TEALoader
-import TEASpacesToTabs
 
 # This really shouldn't be necessary thanks to the Foundation import
 # but for some reason the plugin dies without it
