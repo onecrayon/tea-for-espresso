@@ -1,3 +1,5 @@
+'''Classes that allow TEA to convert between spaces and tabs for indenting'''
+
 from Foundation import *
 from AppKit import *
 from PyObjCTools import AppHelper
@@ -6,6 +8,10 @@ import objc
 from TEAforEspresso import TEAforEspresso
 
 class TEASpacesPerTabsSheet(NSWindowController):
+    '''
+    Defines the sheet necessary for choosing the number of spaces to equate
+    with a tab
+    '''
     numSpaces = objc.IBOutlet()
     
     @objc.IBAction
