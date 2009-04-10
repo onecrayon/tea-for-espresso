@@ -7,39 +7,11 @@ import objc
 
 from TEAforEspresso import TEAforEspresso
 
-class TEASpacesPerTabsSheet(NSWindowController):
-    '''
-    Defines the sheet necessary for choosing the number of spaces to equate
-    with a tab
-    '''
-    numSpaces = objc.IBOutlet()
-    customSheet = objc.IBOutlet()
-    
-    @classmethod
-    def showSheetForWindow_delegate_(self, window, delegate):
-        controller = self.alloc().initWithWindowNibName_('TEASpacesPerTabsSheet')
-        NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-            controller.window(),
-            window,
-            delegate,
-            'didEndSheet:returnCode:info:',
-            None
-        )
-        NSLog('sheet is up, returning')
-    
-    @objc.IBAction
-    def doSubmitSheet_(self, sender):
-        spaces = self.numSpaces.stringValue()
-        NSLog(spaces)
-        NSApp.endSheet_returnCode_(self.customSheet(), 0)
-    
-    @objc.IBAction
-    def cancel_(self, sender):
-        NSApp.endSheet_returnCode_(self.customSheet(), 0)
-
 
 class TEASpacesToTabs(TEAforEspresso):
     '''Class for entabbing and detabbing current document or selection'''
+    customSheet = objc.IBOutlet()
+    numSpaces = objc.IBOutlet()
     
     def performActionWithContext_error_(self, context):
         '''
@@ -47,11 +19,37 @@ class TEASpacesToTabs(TEAforEspresso):
         indentation style accordingly
         '''
         NSLog('changing indent style')
-        TEASpacesPerTabsSheet.showSheetForWindow_delegate_(
-            context.windowForSheet(), self
+        if not self.customSheet:
+            NSLog('loading nib')
+            #temp = NSBundle.loadNibNamed_owner_('TEASpacesPerTabsSheet', self)
+            bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
+            NSLog('bundle: ' + str(bundle))
+            nib = NSNib.alloc().initWithNibNamed_bundle_(
+                'TEASpacesPerTabsSheet', bundle
+            )
+            NSLog('returned: ' + str(nib))
+            return True
+        NSLog(str(self.customSheet))
+        NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            self.customSheet,
+            context.windowForSheet(),
+            self,
+            'didEndSheet:returnCode:contextInfo:',
+            None
         )
+        NSLog('sheet is up, returning')
         return True
     
+    @objc.IBAction
+    def doSubmitSheet_(self, sender):
+        spaces = self.numSpaces.stringValue()
+        NSLog('spaces: ' + spaces)
+        NSApp.endSheet_(self.window())
+    
+    @objc.IBAction
+    def cancel_(self, sender):
+        NSApp.endSheet_(self.window())
+    
     @AppHelper.endSheetMethod
-    def didEndSheet_returnCode_info(self, sheet, code, info):
+    def didEndSheet_returnCode_contextInfo_(self, sheet, code, info):
         NSLog('we have a sheet response!')
