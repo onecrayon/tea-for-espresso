@@ -81,13 +81,13 @@ class TEALoader(NSObject):
         os.putenv('E_SUGARPATH', self.bundle_path)
         filepath = context.documentContext().fileURL()
         if filepath is not None:
-            os.putenv('E_FILENAME', fileURL.path().lastPathComponent())
+            os.putenv('E_FILENAME', filepath.path().lastPathComponent())
             if filepath.isFileURL():
                 os.putenv(
                     'E_DIRECTORY',
-                    fileURL.path().stringByDeletingLastPathComponent()
+                    filepath.path().stringByDeletingLastPathComponent()
                 )
-                os.putenv('E_FILEPATH', fileURL.path())
+                os.putenv('E_FILEPATH', filepath.path())
         root = tea.get_root_zone(context)
         if root is False:
             root = ''
