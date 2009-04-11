@@ -50,6 +50,10 @@ class TEASpacesToTabs(TEAforEspresso):
     
     @AppHelper.endSheetMethod
     def didEndSheet_returnCode_contextInfo_(self, sheet, code, info):
+        def replacements(match):
+            '''Utility function for replacing items'''
+            return match.group(0).replace(self.search, self.replace)
+        
         if code == 1:
             NSLog('Processing...')
             # Leave sheet open with "processing" spinner
@@ -57,40 +61,24 @@ class TEASpacesToTabs(TEAforEspresso):
             
             spaces = int(self.numSpaces.stringValue())
             if self.action == 'entab':
-                target = re.compile(r' +')
-                search = ' ' * spaces
-                replace = '\t'
+                target = re.compile(r'^ +', re.MULTILINE)
+                self.search = ' ' * spaces
+                self.replace = '\t'
             else:
-                target = re.compile(r'\t+')
-                search = '\t'
-                replace = ' ' * spaces
+                target = re.compile(r'^\t+', re.MULTILINE)
+                self.search = '\t'
+                self.replace = ' ' * spaces
             insertions = tea.new_recipe()
             ranges = tea.get_ranges(self.context)
             if len(ranges) == 1 and ranges[0].length == 0:
                 # No selection, use the document
                 ranges[0] = tea.new_range(0, self.context.string().length())
-            lines = self.context.lineStorage()
             for range in ranges:
-                maxindex = range.location + range.length
-                linenum = lines.lineNumberForIndex_(range.location)
-                linerange = lines.lineRangeForLineNumber_(linenum)
-                while linerange.location < maxindex:
-                    match = target.match(tea.get_selection(
-                        self.context, linerange
-                    ))
-                    if match:
-                        new = match.group(0).replace(search, replace)
-                        insertions.addReplacementString_forRange_(
-                            new, tea.new_range(
-                                linerange.location, len(match.group(0))
-                            )
-                        )
-                    if (linerange.location + linerange.length) < maxindex:
-                        linenum += 1
-                        linerange = lines.lineRangeForLineNumber_(linenum)
-                    else:
-                        break
+                text = tea.get_selection(self.context, range)
+                text = re.sub(target, replacements, text)
+                insertions.addReplacementString_forRange_(text, range)
             insertions.setUndoActionName_(self.action.title())
             self.context.applyTextRecipe_(insertions)
             self.spinner.stopAnimation_(self)
+        
         sheet.orderOut_(self)
