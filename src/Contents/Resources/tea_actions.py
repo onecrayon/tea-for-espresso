@@ -39,6 +39,27 @@ def log(message):
     NSLog(message)
 
 # ===============================================================
+# Preference lookup shortcuts
+# ===============================================================
+
+def get_prefs(context):
+    '''
+    Convenience function; returns the CETextPreferences object with
+    current preferences
+    '''
+    return context.textPreferences()
+
+def get_line_ending(context):
+    '''Shortcut function to get the line-endings for the context'''
+    prefs = get_prefs(context)
+    return prefs.lineEndingString()
+
+def get_indentation_string(context):
+    '''Shortcut to retrieve the indentation string'''
+    prefs = get_prefs(context)
+    return prefs.tabString()
+
+# ===============================================================
 # Text manipulations and helper functions
 # ===============================================================
 
@@ -98,26 +119,45 @@ def entities_to_hex(text, wrap):
         return wrap[0].replace('$HEX', hex)
     return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
-# ===============================================================
-# Preference lookup shortcuts
-# ===============================================================
-
-def get_prefs(context):
+def trim(context, text, lines=True, sides='both', respect_indent=False):
     '''
-    Convenience function; returns the CETextPreferences object with
-    current preferences
+    Trims whitespace from the text
+    
+    If lines=True, will trim each line in the text.
+    
+    sides can be both, start, or end and dictates where trimming occurs.
+    
+    If respect_indent=True, indent characters at the start of lines will be
+    left alone (specific character determined by preferences)
     '''
-    return context.textPreferences()
-
-def get_line_ending(context):
-    '''Shortcut function to get the line-endings for the context'''
-    prefs = get_prefs(context)
-    return prefs.lineEndingString()
-
-def get_indentation_string(context):
-    '''Shortcut to retrieve the indentation string'''
-    prefs = get_prefs(context)
-    return prefs.tabString()
+    def trimit(text, sides, indent):
+        '''Utility function for trimming the text'''
+        if (sides == 'both' or sides == 'start') and indent != '':
+            match = re.match(indent + '+', text)
+            indent_chars = match.group(0)
+        else:
+            indent_chars = ''
+        if sides = 'start':
+            text = text.lstrip()
+        elif sides = 'end':
+            text = text.rstrip()
+        else:
+            text = text.strip()
+        return indent_chars + text
+    
+    # Set up which characters to treat as indent
+    if respect_indent:
+        indent = get_indentation_string(context)
+    else:
+        indent = ''
+    finaltext = ''
+    if lines:
+        linebreak = get_line_ending(context)
+        for line in text.splitlines(True):
+            finaltext += trimit(line, sides, indent)
+    else:
+        finaltext = trimit(text, sides, indent)
+    return finaltext
 
 # ===============================================================
 # Espresso object convenience methods
