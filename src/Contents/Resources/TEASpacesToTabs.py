@@ -18,18 +18,8 @@ class TEASpacesToTabs(TEAforEspresso):
         Gets the user's preferred number of spaces and switches the 
         indentation style accordingly
         '''
-        NSLog('changing indent style')
         if not self.customSheet:
-            NSLog('loading nib')
-            #temp = NSBundle.loadNibNamed_owner_('TEASpacesPerTabsSheet', self)
-            bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
-            NSLog('bundle: ' + str(bundle))
-            nib = NSNib.alloc().initWithNibNamed_bundle_(
-                'TEASpacesPerTabsSheet', bundle
-            )
-            NSLog('returned: ' + str(nib))
-            return True
-        NSLog(str(self.customSheet))
+            NSBundle.loadNibNamed_owner_('TEASpacesPerTabsSheet', self)
         NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
             self.customSheet,
             context.windowForSheet(),
@@ -37,7 +27,6 @@ class TEASpacesToTabs(TEAforEspresso):
             'didEndSheet:returnCode:contextInfo:',
             None
         )
-        NSLog('sheet is up, returning')
         return True
     
     @objc.IBAction
@@ -52,4 +41,5 @@ class TEASpacesToTabs(TEAforEspresso):
     
     @AppHelper.endSheetMethod
     def didEndSheet_returnCode_contextInfo_(self, sheet, code, info):
-        NSLog('we have a sheet response!')
+        NSLog('time to process that sheet!')
+        sheet.orderOut_(self)
