@@ -55,7 +55,6 @@ class TEASpacesToTabs(TEAforEspresso):
             return match.group(0).replace(self.search, self.replace)
         
         if code == 1:
-            NSLog('Processing...')
             # Leave sheet open with "processing" spinner
             self.spinner.startAnimation_(self)
             
