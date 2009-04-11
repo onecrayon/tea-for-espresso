@@ -132,18 +132,29 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
     '''
     def trimit(text, sides, indent):
         '''Utility function for trimming the text'''
+        # Preserve the indent if an indent string is passed in
         if (sides == 'both' or sides == 'start') and indent != '':
-            match = re.match(indent + '+', text)
-            indent_chars = match.group(0)
+            match = re.match('(' + indent + ')+', text)
+            if match:
+                indent_chars = match.group(0)
+            else:
+                indent_chars = ''
         else:
             indent_chars = ''
-        if sides = 'start':
+        # Always preserve the linebreaks at the end
+        match = re.search(r'[\n\r]+$', text)
+        if match:
+            linebreak = match.group(0)
+        else:
+            linebreak = ''
+        # Strip that whitespace!
+        if sides == 'start':
             text = text.lstrip()
-        elif sides = 'end':
+        elif sides == 'end':
             text = text.rstrip()
         else:
             text = text.strip()
-        return indent_chars + text
+        return indent_chars + text + linebreak
     
     # Set up which characters to treat as indent
     if respect_indent:
@@ -152,7 +163,6 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
         indent = ''
     finaltext = ''
     if lines:
-        linebreak = get_line_ending(context)
         for line in text.splitlines(True):
             finaltext += trimit(line, sides, indent)
     else:

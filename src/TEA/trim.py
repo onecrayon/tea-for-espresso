@@ -30,7 +30,7 @@ def act(context, input=None, alternate=None, trim='both', respect_indent=False,
     # Since input is always a selection of some kind, check if we have one
     ranges = tea.get_ranges(context)
     insertions = tea.new_recipe()
-    if (len(ranges) == 1 and ranges[0].length = 0) or input is None:
+    if (len(ranges) == 1 and ranges[0].length == 0) or input is None:
         if alternate == 'line':
             text, range = tea.get_line(context, ranges[0])
             text = tea.trim(context, text, False, trim, respect_indent)
