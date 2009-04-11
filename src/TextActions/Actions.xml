@@ -245,4 +245,27 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.HTMLTagDocLookup" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Documentation For Tag</title>
+		<key-equivalent>control h</key-equivalent>
+		<setup>
+			<action>visit_url</action>
+			<syntax-context>tag.html, tag.html *</syntax-context>
+			<options>
+				<dict>
+					<key>input</key>
+					<string>word</string>
+					
+					<key>default</key>
+					<string><![CDATA[http://google.com/search?q=$SELECTED_TEXT+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F]]></string>
+					
+
+					<key>entity.name</key>
+					<string><![CDATA[http://google.com/search?q=$SELECTED_TEXT+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F&btnI=745]]></string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 </action-recipes>
