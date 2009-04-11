@@ -2,17 +2,17 @@
 <action-recipes>
 	<!-- GUI actions typically require special classes, so they aren't good examples for what you can do with TEA -->
 	
-	<action id="com.onecrayon.TextActions.Entab" category="actions.text.important">
+	<action id="com.onecrayon.TextActions.Entab" category="actions.text.whitespace/1">
 		<class>TEASpacesToTabs</class>
-		<title>Entab...</title>
+		<title>Spaces To Tabs...</title>
 		<setup>
 			<action>entab</action>
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.Detab" category="actions.text.important">
+	<action id="com.onecrayon.TextActions.Detab" category="actions.text.whitespace/2">
 		<class>TEASpacesToTabs</class>
-		<title>Detab...</title>
+		<title>Tabs To Spaces...</title>
 		<setup>
 			<action>detab</action>
 		</setup>

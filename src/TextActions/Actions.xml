@@ -47,6 +47,32 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.whitespace">
+		<class>TEAforEspresso</class>
+		<title>Trim Line(s)</title>
+		<setup>
+			<action>trim</action>
+			<options>
+				<dict>
+					<key>input</key>
+					<string>selected_lines</string>
+					
+					<key>alternate</key>
+					<string>line</string>
+					
+					<key>trim</key>
+					<string>both</string>
+					
+					<key>respect_indent</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Trim Lines</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>

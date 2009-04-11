@@ -2,6 +2,7 @@
 <action-sort-instructions>
 	<sort-template>
 		<selector>actions.text.important</selector>
+		<selector>actions.text.whitespace</selector>
 		<selector>actions.text.formatting</selector>
 		<selector>actions.text.HTML</selector>
 		<selector>actions.tea.internal</selector>

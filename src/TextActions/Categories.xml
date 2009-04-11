@@ -10,6 +10,7 @@
 	<category id="actions.tea.internal" show="sub">
 		<title>TEA</title>
 	</category>
+	<category id="actions.text.whitespace" show="inline separated"></category>
 	
 	<!-- TEA-specific categories -->
 	<category id="tea.conversion" show="inline separated"></category>
