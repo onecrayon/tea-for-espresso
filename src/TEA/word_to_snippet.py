@@ -47,6 +47,9 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
     if mode == 'HTML':
+        # If no spaces, might be a hashed shortcut tag
+        if fullword.find(' ') < 0:
+            fullword = tea.string_to_tag(fullword)
         if tea.is_selfclosing(word):
             snippet = '<' + fullword
             if fullword == word and not fullword in ['br', 'hr']:

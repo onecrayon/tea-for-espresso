@@ -166,7 +166,7 @@
 					<string>&lt;$SELECTED_TEXT>$1&lt;/$WORD>$0</string>
 					
 					<key>extra_characters</key>
-					<string>_-</string>
+					<string>_-#.</string>
 					
 					<key>mode</key>
 					<string>HTML</string>

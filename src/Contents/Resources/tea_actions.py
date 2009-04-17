@@ -70,10 +70,38 @@ def parse_word(selection):
     Returns the word:
     parse_word('p class="stuff"') => word = 'p'
     '''
-    matches = re.match(r'(([^\s]+)\s*.*)$', selection)
+    matches = re.match(r'(([a-zA-Z0-9_-]+)\s*.*)$', selection)
     if matches == None:
         return None
     return matches.group(2)
+
+def string_to_tag(string):
+    '''
+    Parses a string into a tag with id and class attributes
+    
+    For example, div#stuff.good.things translates into
+    `div id="stuff" class="good things"`
+    '''
+    if string.find('#') > 0 or string.find('.') > 0:
+        match = re.search('#([a-zA-Z0-9_-]+)', string)
+        if match:
+            id = match.group(1)
+        else:
+            id = False
+        matches = re.findall('\.([a-zA-Z0-9_-]+)', string)
+        classes = ''
+        for match in matches:
+            if classes:
+                classes += ' '
+            classes += match
+        tag = parse_word(string)
+        if id:
+            tag += ' id="' + id + '"'
+        if classes:
+            tag += ' class="' + classes + '"'
+        return tag
+    else:
+        return string
 
 def is_selfclosing(tag):
     '''Checks a tag and returns True if it's a self-closing XHTML tag'''
