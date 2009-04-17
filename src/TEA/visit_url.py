@@ -3,7 +3,8 @@ Visits a URL, filling a placeholder with selected text (or similar)
 '''
 
 import urllib
-import webbrowser
+
+from Foundation import NSWorkspace, NSURL
 
 import tea_actions as tea
 
@@ -42,6 +43,6 @@ def act(context, input=None, default=None, **syntaxes):
         url = root_url
     # Got the URL, let's run the URL
     url = url.replace('$SELECTED_TEXT', text)
-    webbrowser.open(url)
-    
+    NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+    # Because this gets passed through to Obj-C, using int prevents beeping
     return True
