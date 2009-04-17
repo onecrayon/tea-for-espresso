@@ -37,8 +37,8 @@ class TEASpacesToTabs(TEAforEspresso):
         )
         # Save the context for later reference (once the sheet is complete)
         self.context = context
-        # False prevents Espresso from beeping
-        return False
+        
+        return True
     
     @objc.IBAction
     def doSubmitSheet_(self, sender):

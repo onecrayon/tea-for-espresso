@@ -43,5 +43,5 @@ def act(context, input=None, default=None, **syntaxes):
     # Got the URL, let's run the URL
     url = url.replace('$SELECTED_TEXT', text)
     webbrowser.open(url)
-    # Returning false prevents Espresso from beeping
-    return False
+    
+    return True
