@@ -77,7 +77,7 @@ def refresh_symlinks(bundle_path, rebuild=False):
                             prior_link = True
                             break
                         else:
-                            ref = refbase + str(count) + '.xml'
+                            ref = str(count) + refbase + '.xml'
                             count += 1
                     if prior_link is False:
                         os.symlink(os.path.join(root, file), sym_loc + ref)
