@@ -85,6 +85,7 @@ class TEAforEspresso(NSObject):
         else:
             return True
     
+    @objc.signature('B@:@')
     def performActionWithContext_error_(self, context):
         '''Imports and calls the action's act() method'''
         target_module = load_action(self.action, *self.search_paths)
