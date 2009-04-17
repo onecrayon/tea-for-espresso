@@ -16,6 +16,7 @@ class TEASpacesToTabs(TEAforEspresso):
     numSpaces = objc.IBOutlet()
     spinner = objc.IBOutlet()
     
+    @objc.signature('B@:@')
     def performActionWithContext_error_(self, context):
         '''
         Gets the user's preferred number of spaces and switches the 
@@ -37,7 +38,7 @@ class TEASpacesToTabs(TEAforEspresso):
         )
         # Save the context for later reference (once the sheet is complete)
         self.context = context
-        
+        # Because this gets passed through to Obj-C, using int prevents beeping
         return True
     
     @objc.IBAction
