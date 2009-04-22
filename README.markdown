@@ -29,8 +29,9 @@ use XML):
 * [Running shell scripts][7] (for advanced custom actions)
 
 **Found something about TEA that makes you unhappy?** [Submit a bug report or
-feature request][8] (requires free Lighthouse account) or visit the official
-[TEA forum post][9].
+feature request][8] (requires free GitHub account) or visit the official
+[TEA forum post][9]. You can, of course, also email me: <ian@onecrayon.com>.
+I typically respond within a day.
 
    [2]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-your-own-actions
    [3]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-simple-tab-completions
@@ -38,7 +39,7 @@ feature request][8] (requires free Lighthouse account) or visit the official
    [5]: http://wiki.github.com/onecrayon/tea-for-espresso/third-party-snippet-collections
    [6]: http://wiki.github.com/onecrayon/tea-for-espresso/adding-or-overriding-python-scripts
    [7]: http://wiki.github.com/onecrayon/tea-for-espresso/running-shell-scripts
-   [8]: http://onecrayon.lighthouseapp.com/projects/28070-tea-espresso/tickets/new
+   [8]: http://github.com/onecrayon/tea-for-espresso/issues
    [9]: http://wiki.macrabbit.com/forums/viewthread/160/
    
 
