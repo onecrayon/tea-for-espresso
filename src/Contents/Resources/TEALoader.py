@@ -76,6 +76,7 @@ class TEALoader(NSObject):
             return script.communicate(input)
         
         if self.script is None:
+            tea.log('No script found')
             return False
         # Environment variables that won't change with repetition
         os.putenv('E_SUGARPATH', self.bundle_path)
