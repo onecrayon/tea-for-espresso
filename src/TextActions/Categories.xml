@@ -7,6 +7,9 @@
 	<category id="actions.text.formatting" show="sub">
 		<title>Format</title>
 	</category>
+	<category id="actions.snippets" show="sub">
+		<title>Snippets</title>
+	</category>
 	<category id="actions.tea.internal" show="sub">
 		<title>TEA</title>
 	</category>

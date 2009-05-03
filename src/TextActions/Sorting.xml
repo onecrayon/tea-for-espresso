@@ -5,6 +5,7 @@
 		<selector>actions.text.whitespace</selector>
 		<selector>actions.text.formatting</selector>
 		<selector>actions.text.HTML</selector>
+		<selector>actions.snippets</selector>
 		<selector>actions.tea.internal</selector>
 		<selector>tea.conversion</selector>
 		<selector>tea.insertion</selector>
