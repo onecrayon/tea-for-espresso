@@ -24,7 +24,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.InsertText.BR" category="actions.text.formatting/tea.insertion">
+	<action id="com.onecrayon.TextActions.InsertText.Linebreak" category="actions.text.formatting/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Linebreak(s)</title>
 		<key-equivalent>control enter</key-equivalent>
@@ -90,6 +90,9 @@
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>*$SELECTED_TEXT*</string>
+					
+					<key>text.html.textile</key>
+					<string>_$SELECTED_TEXT_</string>
 				</dict>
 			</options>
 		</setup>
@@ -112,6 +115,9 @@
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>**$SELECTED_TEXT**</string>
+					
+					<key>text.html.textile</key>
+					<string>*$SELECTED_TEXT*</string>
 				</dict>
 			</options>
 		</setup>
@@ -240,6 +246,9 @@
 					<!-- Syntax-specific overrides -->
 					<key>text.markdown</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
+					
+					<key>text.html.textile</key>
+					<string>"$SELECTED_TEXT":${1:$URL}$0</string>
 				</dict>
 			</options>
 		</setup>
