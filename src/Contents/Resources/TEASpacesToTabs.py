@@ -61,11 +61,11 @@ class TEASpacesToTabs(TEAforEspresso):
             
             spaces = int(self.numSpaces.stringValue())
             if self.action == 'entab':
-                target = re.compile(r'^ +', re.MULTILINE)
+                target = re.compile(r'^(\t* +\t*)+', re.MULTILINE)
                 self.search = ' ' * spaces
                 self.replace = '\t'
             else:
-                target = re.compile(r'^\t+', re.MULTILINE)
+                target = re.compile(r'^( *\t+ *)+', re.MULTILINE)
                 self.search = '\t'
                 self.replace = ' ' * spaces
             insertions = tea.new_recipe()
