@@ -386,8 +386,8 @@ def get_root_zone(context):
     '''Returns the string identifier of the current root zone'''
     # This is terrible, but I can't find a good way to detect
     # if the object is null
-    if context.syntaxTree().root().typeIdentifier() is not None:
-        return context.syntaxTree().root().typeIdentifier().stringValue()
+    if context.syntaxTree().rootZone().typeIdentifier() is not None:
+        return context.syntaxTree().rootZone().typeIdentifier().stringValue()
     else:
         return False
 
