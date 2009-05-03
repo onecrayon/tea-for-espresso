@@ -411,7 +411,9 @@ def sanitize_for_snippet(text):
     '''
     Escapes special characters used by snippet syntax
     '''
-    text = re.sub(r'\$(?!{|[0-9]|(SELECTED_TEXT)|(URL))', r'\$', text)
+    text = text.replace('$', '\$')
+    text = text.replace('{', '\{')
+    text = text.replace('}', '\}')
     return text.replace('`', '\`')
 
 def construct_snippet(text, snippet):
