@@ -119,7 +119,7 @@
 	
 	<!-- HTML Suite -->
 	
-	<action id="com.onecrayon.TextActions.ConvertToNamedEntities" category="actions.text.HTML/tea.conversion">
+	<action id="com.onecrayon.TextActions.ConvertToNamedEntities" category="actions.text.HTML/actions.text.entities/tea.conversion">
 		<class>TEAforEspresso</class>
 		<title>Convert To Named Entities</title>
 		<key-equivalent>option &amp;</key-equivalent>
@@ -137,7 +137,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.ConvertToNumericEntities" category="actions.text.HTML/tea.conversion">
+	<action id="com.onecrayon.TextActions.ConvertToNumericEntities" category="actions.text.HTML/actions.text.entities/tea.conversion">
 		<class>TEAforEspresso</class>
 		<title>Convert To Numeric Entities</title>
 		<setup>
@@ -263,6 +263,92 @@
 
 					<key>entity.name</key>
 					<string><![CDATA[http://google.com/search?q=$SELECTED_TEXT+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F&btnI=745]]></string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<!-- Insert XML Entities -->
+	
+	<action id="com.onecrayon.TextActions.XMLEntities.NonBreakingSpace" category="actions.text.HTML/actions.text.entities/tea.insertion/1">
+		<class>TEAforEspresso</class>
+		<title>Insert Non-Breaking Space</title>
+		<key-equivalent>control shift space</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&amp;nbsp;</string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Insert Non-Breaking Space</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.XMLEntities.Ampersand" category="actions.text.HTML/actions.text.entities/tea.insertion/2">
+		<class>TEAforEspresso</class>
+		<title>Insert &amp;</title>
+		<key-equivalent>control shift 7</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&amp;amp;</string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Insert &amp;</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+
+	<action id="com.onecrayon.TextActions.XMLEntities.AngleBracketLeft" category="actions.text.HTML/actions.text.entities/tea.insertion/3">
+		<class>TEAforEspresso</class>
+		<title>Insert &lt;</title>
+		<key-equivalent>control shift ,</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&amp;lt;</string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Insert &lt;</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+
+	<action id="com.onecrayon.TextActions.XMLEntities.AngleBracketRight" category="actions.text.HTML/actions.text.entities/tea.insertion/4">
+		<class>TEAforEspresso</class>
+		<title>Insert &gt;</title>
+		<key-equivalent>control shift .</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&amp;gt;</string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Insert &gt;</string>
 				</dict>
 			</options>
 		</setup>
