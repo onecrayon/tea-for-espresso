@@ -77,7 +77,12 @@ class TEAforEspresso(NSObject):
             ranges = context.selectedRanges()
             range = ranges[0].rangeValue()
             selectors = SXSelectorGroup.selectorGroupWithString_(self.syntax_context)
-            zone = context.syntaxTree().root().zoneAtCharacterIndex_(range.location)
+            if context.string().length() == range.location:
+                zone = context.syntaxTree().rootZone()
+            else:
+                zone = context.syntaxTree().rootZone().zoneAtCharacterIndex_(
+                    range.location
+                )
             if selectors.matches_(zone):
                 return True
             else:
