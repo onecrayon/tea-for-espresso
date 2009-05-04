@@ -315,7 +315,7 @@
 					<true/>
 					
 					<key>undo_name</key>
-					<string>Insert &amp;</string>
+					<string>Insert Entity</string>
 				</dict>
 			</options>
 		</setup>
@@ -336,7 +336,7 @@
 					<true/>
 					
 					<key>undo_name</key>
-					<string>Insert &lt;</string>
+					<string>Insert Entity</string>
 				</dict>
 			</options>
 		</setup>
@@ -357,7 +357,7 @@
 					<true/>
 					
 					<key>undo_name</key>
-					<string>Insert &gt;</string>
+					<string>Insert Entity</string>
 				</dict>
 			</options>
 		</setup>
