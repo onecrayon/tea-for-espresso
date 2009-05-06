@@ -2,6 +2,7 @@
 <action-sort-instructions>
 	<sort-template>
 		<selector>actions.text.important</selector>
+		<selector>actions.text.generic.</selector>
 		<selector>actions.text.whitespace</selector>
 		<selector>actions.text.sorting</selector>
 		<selector>actions.text.formatting</selector>
@@ -10,8 +11,9 @@
 		<selector>actions.tea.internal</selector>
 		<selector>tea.conversion</selector>
 		<selector>tea.insertion</selector>
-		<selector>actions.snippets</selector>
 		<selector>tea.wrapping</selector>
+		<selector>tea.footer</selector>
+		<selector>actions.snippets</selector>
 		<selector>*</selector>
 	</sort-template>
 </action-sort-instructions>

@@ -16,7 +16,8 @@
 	<category id="actions.tea.internal" show="sub">
 		<title>TEA</title>
 	</category>
-	<category id="actions.text.whitespace" show="inline separated"></category>
+	<category id="actions.text.whitespace" show="inline"></category>
+	<category id="actions.text.generic" show="inline separated"></category>
 	<category id="actions.text.sorting" show="sub">
 		<title>Sorting</title>
 	</category>
@@ -25,4 +26,5 @@
 	<category id="tea.conversion" show="inline separated"></category>
 	<category id="tea.insertion" show="inline separated"></category>
 	<category id="tea.wrapping" show="inline separated"></category>
+	<category id="tea.footer" show="inline"></category>
 </action-categories>

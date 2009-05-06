@@ -4,7 +4,7 @@ import random
 
 import tea_actions as tea
 
-def act(context, direction='asc', remove_duplicates=False, undo_name=None):
+def act(context, direction=None, remove_duplicates=False, undo_name=None):
 	'''
 	Required action method
 	
@@ -29,7 +29,7 @@ def act(context, direction='asc', remove_duplicates=False, undo_name=None):
 	
 	# Remove duplicates if set
 	if remove_duplicates:
-		if direction == 'none':
+		if direction is None:
 			seen = {}
 			result = []
 			for x in lines:

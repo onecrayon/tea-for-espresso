@@ -2,7 +2,7 @@
 <action-recipes>
 	<!-- GUI actions typically require special classes, so they aren't good examples for what you can do with TEA -->
 	
-	<action id="com.onecrayon.TextActions.Entab" category="actions.text.whitespace/1">
+	<action id="com.onecrayon.TextActions.Entab" category="actions.text.generic/actions.text.whitespace/1">
 		<class>TEASpacesToTabs</class>
 		<title>Spaces To Tabs...</title>
 		<setup>
@@ -10,7 +10,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.Detab" category="actions.text.whitespace/2">
+	<action id="com.onecrayon.TextActions.Detab" category="actions.text.generic/actions.text.whitespace/2">
 		<class>TEASpacesToTabs</class>
 		<title>Tabs To Spaces...</title>
 		<setup>

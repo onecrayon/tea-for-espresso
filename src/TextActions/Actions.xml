@@ -47,7 +47,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.whitespace">
+	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
 		<setup>
@@ -73,7 +73,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.SortLinesAsc" category="actions.text.sorting/1">
+	<action id="com.onecrayon.TextActions.SortLinesAsc" category="actions.text.generic/actions.text.sorting/1">
 		<class>TEAforEspresso</class>
 		<title>Sort Lines (Ascending)</title>
 		<setup>
@@ -90,7 +90,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.SortLinesDesc" category="actions.text.sorting/2">
+	<action id="com.onecrayon.TextActions.SortLinesDesc" category="actions.text.generic/actions.text.sorting/2">
 		<class>TEAforEspresso</class>
 		<title>Sort Lines (Descending)</title>
 		<setup>
@@ -107,9 +107,9 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.Randomize" category="actions.text.sorting/3">
+	<action id="com.onecrayon.TextActions.RandomizeLines" category="actions.text.generic/actions.text.sorting/3">
 		<class>TEAforEspresso</class>
-		<title>Randomize</title>
+		<title>Randomize Lines</title>
 		<setup>
 			<action>sort_lines</action>
 			<options>
@@ -118,15 +118,15 @@
 					<string>random</string>
 					
 					<key>undo_name</key>
-					<string>Randomize</string>
+					<string>Randomize Lines</string>
 				</dict>
 			</options>
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.RemoveDuplicates" category="actions.text.sorting/4">
+	<action id="com.onecrayon.TextActions.RemoveDuplicateLines" category="actions.text.generic/actions.text.sorting/4">
 		<class>TEAforEspresso</class>
-		<title>Remove Duplicates</title>
+		<title>Remove Duplicate Lines</title>
 		<setup>
 			<action>sort_lines</action>
 			<options>
@@ -138,7 +138,7 @@
 					<true/>
 					
 					<key>undo_name</key>
-					<string>Remove Duplicates</string>
+					<string>Remove Duplicate Lines</string>
 				</dict>
 			</options>
 		</setup>
@@ -325,7 +325,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.HTMLTagDocLookup" category="actions.text.HTML">
+	<action id="com.onecrayon.TextActions.HTMLTagDocLookup" category="actions.text.HTML/tea.footer">
 		<class>TEAforEspresso</class>
 		<title>Documentation For Tag</title>
 		<key-equivalent>control h</key-equivalent>
