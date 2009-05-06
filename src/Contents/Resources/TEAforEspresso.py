@@ -38,10 +38,10 @@ class TEAforEspresso(NSObject):
         if "options" in dictionary:
             # In order to pass dictionary as keyword arguments it has to:
             # 1) be a Python dictionary
-            # 2) have both the key and the value encoded as strings
+            # 2) have the key encoded as a string
             # This dictionary comprehension takes care of both issues
             self.options = dict(
-                [str(arg), str(value)] \
+                [str(arg), value] \
                 for arg, value in dictionary["options"].iteritems()
             )
         else:
