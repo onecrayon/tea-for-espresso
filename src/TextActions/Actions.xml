@@ -73,6 +73,77 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.SortLinesAsc" category="actions.text.sorting/1">
+		<class>TEAforEspresso</class>
+		<title>Sort Lines (Ascending)</title>
+		<setup>
+			<action>sort_lines</action>
+			<options>
+				<dict>
+					<key>direction</key>
+					<string>asc</string>
+					
+					<key>undo_name</key>
+					<string>Sort Lines (Ascending)</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.SortLinesDesc" category="actions.text.sorting/2">
+		<class>TEAforEspresso</class>
+		<title>Sort Lines (Descending)</title>
+		<setup>
+			<action>sort_lines</action>
+			<options>
+				<dict>
+					<key>direction</key>
+					<string>desc</string>
+					
+					<key>undo_name</key>
+					<string>Sort Lines (Descending)</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.Randomize" category="actions.text.sorting/3">
+		<class>TEAforEspresso</class>
+		<title>Randomize</title>
+		<setup>
+			<action>sort_lines</action>
+			<options>
+				<dict>
+					<key>direction</key>
+					<string>random</string>
+					
+					<key>undo_name</key>
+					<string>Randomize</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.RemoveDuplicates" category="actions.text.sorting/4">
+		<class>TEAforEspresso</class>
+		<title>Remove Duplicates</title>
+		<setup>
+			<action>sort_lines</action>
+			<options>
+				<dict>
+					<key>direction</key>
+					<string>none</string>
+					
+					<key>remove_duplicates</key>
+					<true/>
+					
+					<key>undo_name</key>
+					<string>Remove Duplicates</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
