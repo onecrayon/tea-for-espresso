@@ -11,21 +11,12 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     Required action method
     
     Transforms the word under the cursor (or the word immediately previous
-    to the cursor) into a snippet
+    to the cursor) into a snippet (or processes it using zen-coding)
     
     The snippet offers two placeholders:
     $SELECTED_TEXT: replaced with the word, or any selected text
     $WORD: if text is selected, replaced just with the first word
     '''
-    # If we're using zen-coding, set up the config variables
-    if mode == 'zen':
-        zen_core.newline = tea.get_line_ending(context)
-        zen_core.insertion_point = '$1'
-        zen_core.sub_insertion_point = '$2'
-        zen_settings['indentation'] = tea.get_indentation_string(context)
-        # Need to detect the document type (html, css, xml, xsl)
-        # Currently defaulting to HTML
-        doc_type = 'html'
     
     if default is None:
         return False
@@ -56,10 +47,26 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     else:
         fullword = word
     
-    # We've got some extra work if the mode is HTML
+    # We've got some extra work if the mode is HTML or zen
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
     if mode == 'zen':
+        # Set up the config variables
+        zen_core.newline = tea.get_line_ending(context)
+        zen_core.insertion_point = '$1'
+        zen_core.sub_insertion_point = '$2'
+        zen_settings['indentation'] = tea.get_indentation_string(context)
+        # Detect the type of document we're working with
+        doc_type = 'html'
+        
+        if 'css' in root_zone or 'css' in zone:
+            doc_type = 'css'
+        elif 'xsl' in root_zone or 'xsl' in zone:
+            doc_type = 'xsl'
+        elif 'xml' in root_zone or 'xml' in zone:
+            doc_type = 'xml'
+        
+        # Prepare the snippet
         snippet = zen_core.expand_abbr(fullword, doc_type)
         snippet = tea.indent_snippet(context, snippet, new_range)
         snippet += '$0'
