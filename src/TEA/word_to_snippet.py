@@ -2,6 +2,9 @@
 
 import tea_actions as tea
 
+from zencoding import zen_core
+from zencoding.settings import zen_settings
+
 def act(context, default=None, alpha_numeric=True, extra_characters='',
         mode=None, close_string='', undo_name=None, **syntaxes):
     '''
@@ -14,6 +17,14 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     $SELECTED_TEXT: replaced with the word, or any selected text
     $WORD: if text is selected, replaced just with the first word
     '''
+    # If we're using zen-coding, set up the config variables
+    if mode == 'zen':
+        zen_core.newline = tea.get_line_ending(context)
+        zen_core.insertion_point = '$0'
+        # Need some way to detect if XHTML (xsl) or HTML (html)
+        # Currently defaulting to XHTML
+        doc_type = 'xsl'
+    
     if default is None:
         return False
     range = tea.get_single_range(context, True)
@@ -46,20 +57,14 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # We've got some extra work if the mode is HTML
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
-    if mode == 'HTML':
-        # If no spaces, might be a hashed shortcut tag
-        if fullword.find(' ') < 0:
-            fullword = tea.string_to_tag(fullword)
-        if tea.is_selfclosing(word):
-            snippet = '<' + fullword
-            if fullword == word and not fullword in ['br', 'hr']:
-                snippet += ' $1'
-            snippet += close_string + '>$0'
-    
-    # Indent the snippet
-    snippet = tea.indent_snippet(context, snippet, new_range)
-    # Special replacement in case we're using $WORD
-    snippet = snippet.replace('$WORD', word)
-    # Construct the snippet
-    snippet = tea.construct_snippet(fullword, snippet)
+    if mode == 'zen':
+        snippet = zen_core.expand_abbr(fullword, doc_type)
+        snippet = tea.indent_snippet(context, snippet, new_range)
+    else:
+        # Indent the snippet
+        snippet = tea.indent_snippet(context, snippet, new_range)
+        # Special replacement in case we're using $WORD
+        snippet = snippet.replace('$WORD', word)
+        # Construct the snippet
+        snippet = tea.construct_snippet(fullword, snippet)
     return tea.insert_snippet_over_range(context, snippet, new_range, undo_name)
