@@ -64,6 +64,15 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         snippet = tea.indent_snippet(context, snippet, new_range)
         snippet += '$0'
     else:
+        if mode == 'HTML':
+            # If no spaces, might be a hashed shortcut tag
+            if fullword.find(' ') < 0:
+                fullword = tea.string_to_tag(fullword)
+            if tea.is_selfclosing(word):
+                snippet = '<' + fullword
+                if fullword == word and not fullword in ['br', 'hr']:
+                    snippet += ' $1'
+                snippet += close_string + '>$0'
         # Indent the snippet
         snippet = tea.indent_snippet(context, snippet, new_range)
         # Special replacement in case we're using $WORD
