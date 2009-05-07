@@ -20,11 +20,12 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # If we're using zen-coding, set up the config variables
     if mode == 'zen':
         zen_core.newline = tea.get_line_ending(context)
-        zen_core.insertion_point = '$0'
+        zen_core.insertion_point = '$1'
+        zen_core.sub_insertion_point = '$2'
         zen_settings['indentation'] = tea.get_indentation_string(context)
-        # Need some way to detect if XHTML (xsl) or HTML (html)
-        # Currently defaulting to XHTML
-        doc_type = 'xsl'
+        # Need to detect the document type (html, css, xml, xsl)
+        # Currently defaulting to HTML
+        doc_type = 'html'
     
     if default is None:
         return False
@@ -61,6 +62,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     if mode == 'zen':
         snippet = zen_core.expand_abbr(fullword, doc_type)
         snippet = tea.indent_snippet(context, snippet, new_range)
+        snippet += '$0'
     else:
         # Indent the snippet
         snippet = tea.indent_snippet(context, snippet, new_range)
