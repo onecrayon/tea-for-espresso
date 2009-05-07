@@ -320,10 +320,12 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
         else:
             return all(char.isalpha() or c in extra_characters for c in char)
     
-    def ends_with_tag(index):
+    def ends_with_tag(cur_index):
         # Mini-function to check if line to index ends with a tag
-        linerange = context.lineStorage().lineRangeForIndex_(index)
-        text = get_selection(context, new_range(linerange.location, index)) 
+        linestart = context.lineStorage().lineStartIndexLessThanIndex_(cur_index)
+        text = get_selection(
+            context, new_range(linestart, cur_index - linestart + 1)
+        )
         return re_tag.search(text) != None
     
     # Set up basic variables
