@@ -310,12 +310,21 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     define a word as a contiguous string of alphabetic characters plus
     extra_characters
     '''
+    # Helper regex for determining if line ends with a tag
+    re_tag = re.compile(r'<\/?[\w:\-]+[^>]*>$')
+    
     def test_word():
         # Mini-function to cut down on code bloat
         if alpha_numeric:
             return all(c.isalnum() or c in extra_characters for c in char)
         else:
             return all(char.isalpha() or c in extra_characters for c in char)
+    
+    def ends_with_tag(index):
+        # Mini-function to check if line to index ends with a tag
+        linerange = context.lineStorage().lineRangeForIndex_(index)
+        text = get_selection(context, new_range(linerange.location, index)) 
+        return re_tag.search(text) != None
     
     # Set up basic variables
     index = range.location
@@ -324,12 +333,12 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     # Make sure the cursor isn't at the end of the document
     if index != maxlength:
         # Check if cursor is mid-word
-        char = get_selection(context, NSMakeRange(index, 1))
+        char = get_selection(context, new_range(index, 1))
         if test_word():
             inword = True
             # Parse forward until we hit the end of word or document
             while inword:
-                char = get_selection(context, NSMakeRange(index, 1))
+                char = get_selection(context, new_range(index, 1))
                 if test_word():
                     word += char
                 else:
@@ -349,8 +358,8 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
         # Parse backward to get the word ahead of the cursor
         inword = True
         while inword:
-            char = get_selection(context, NSMakeRange(index, 1))
-            if test_word():
+            char = get_selection(context, new_range(index, 1))
+            if test_word() and not (char == '>' and ends_with_tag(index)):
                 word = char + word
             else:
                 inword = False
@@ -362,7 +371,7 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     firstindex = index + 2 if index > 0 else 0
     # Switch last index to length for use in range
     lastindex = lastindex - firstindex
-    range = NSMakeRange(firstindex, lastindex)
+    range = new_range(firstindex, lastindex)
     return word, range
 
 def get_word_or_selection(context, range, alpha_numeric=True,
