@@ -234,11 +234,14 @@
 	<action id="com.onecrayon.TextActions.ExpandAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Expand Abbreviation</title>
-		<key-equivalent>control &lt;</key-equivalent>
+		<key-equivalent>control .</key-equivalent>
 		<setup>
 			<action>word_to_snippet</action>
 			<options>
 				<dict>
+					<key>default</key>
+					<string>$SELECTED_TEXT</string>
+					
 					<key>extra_characters</key>
 					<string>_-#.>+*:$!@</string>
 					
