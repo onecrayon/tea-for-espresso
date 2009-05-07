@@ -21,6 +21,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     if mode == 'zen':
         zen_core.newline = tea.get_line_ending(context)
         zen_core.insertion_point = '$0'
+        zen_settings['indentation'] = tea.get_indentation_string(context)
         # Need some way to detect if XHTML (xsl) or HTML (html)
         # Currently defaulting to XHTML
         doc_type = 'xsl'
