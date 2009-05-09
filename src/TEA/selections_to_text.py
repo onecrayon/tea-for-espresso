@@ -14,23 +14,12 @@ def act(context, default=None, undo_name=None, **syntaxes):
     default parameter is not a snippet, but should contain the
     $SELECTED_TEXT placeholder
     '''
-    # Check for root-zone specific override
-    root_zone = tea.get_root_zone(context)
-    if root_zone in syntaxes:
-        root_insertion = syntaxes[root_zone]
-    else:
-        root_insertion = default
     # Get the selected ranges
     ranges = tea.get_ranges(context)
     if len(ranges) is 1:
         # Since we've only got one selection we can use a snippet
         range = ranges[0]
-        # Check for specific zone override
-        zone = tea.get_active_zone(context, range)
-        if zone in syntaxes:
-            insertion = syntaxes[zone]
-        else:
-            insertion = root_insertion
+        insertion = tea.select_from_zones(context, range, default, **syntaxes)
         # Make sure the range is actually a selection
         if range.length > 0:
             text = tea.get_selection(context, range)
@@ -46,12 +35,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
     # Since we're here, it must not have been a single selection
     insertions = tea.new_recipe()
     for range in ranges:
-        # Check for specific zone override
-        zone = tea.get_active_zone(context, range)
-        if zone in syntaxes:
-            insertion = syntaxes[zone]
-        else:
-            insertion = root_insertion
+        insertion = tea.select_from_zones(context, range, default, **syntaxes)
         text = tea.get_selection(context, range)
         text = insertion.replace('$SELECTED_TEXT', text)
         insertions.addReplacementString_forRange_(text, range)

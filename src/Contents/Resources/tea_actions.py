@@ -394,7 +394,10 @@ def get_word_or_selection(context, range, alpha_numeric=True,
 # ===============================================================
 
 def get_root_zone(context):
-    '''Returns the string identifier of the current root zone'''
+    '''
+    DEPRECATED: use select_from_zones instead
+    
+    Returns the string identifier of the current root zone'''
     # This is terrible, but I can't find a good way to detect
     # if the object is null
     if context.syntaxTree().rootZone().typeIdentifier() is not None:
@@ -403,9 +406,7 @@ def get_root_zone(context):
         return False
 
 def get_active_zone(context, range):
-    '''Returns the zone under the cursor'''
-    # TODO: I need to implement better syntax zone sniffing to find
-    #       the most applicable root zone available
+    '''Returns the textual zone ID immediately under the cursor'''
     if context.syntaxTree().zoneAtCharacterIndex_(range.location) is not None:
         if context.syntaxTree().zoneAtCharacterIndex_(range.location).\
            typeIdentifier() is not None:
@@ -413,6 +414,27 @@ def get_active_zone(context, range):
                    typeIdentifier().stringValue()
     # Made it here, something's wrong
     return False
+
+def select_from_zones(context, range=None, default=None, **syntaxes):
+    '''
+    Checks the keys in **syntaxes to see what matches the active zone,
+    and returns that item's contents, or default if no match
+    '''
+    if range is None:
+        range = get_single_range(context)
+    for key, value in syntaxes.iteritems():
+        selectors = SXSelectorGroup.selectorGroupWithString_(key)
+        if context.string().length() == range.location:
+            zone = context.syntaxTree().rootZone()
+        else:
+            zone = context.syntaxTree().rootZone().zoneAtCharacterIndex_(
+                range.location
+            )
+        if selectors.matches_(zone):
+            return value
+    
+    # If we reach this point, there's no match
+    return default
 
 # ===============================================================
 # Snippet methods

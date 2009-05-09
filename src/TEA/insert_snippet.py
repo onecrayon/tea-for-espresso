@@ -18,15 +18,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
     # Get the cursor position
     text, range = tea.get_single_selection(context)
     # Check for root-zone specific override
-    root_zone = tea.get_root_zone(context)
-    if root_zone in syntaxes:
-        snippet = syntaxes[root_zone]
-    else:
-        snippet = default
-    # Check for specific zone override
-    zone = tea.get_active_zone(context, range)
-    if zone in syntaxes:
-        snippet = syntaxes[zone]
+    snippet = tea.select_from_zones(context, range, default, **syntaxes)
     # Indent the snippet
     snippet = tea.indent_snippet(context, snippet, range)
     # Construct the snippet

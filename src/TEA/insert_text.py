@@ -14,13 +14,6 @@ def act(context, default=None, prefix_selection=False,
     any selected text; if suffix_selection is true it will follow any
     selected text; if both are true it will wrap the text
     '''
-    # Fetch the root zone's insert text
-    # Selection-specific zones are checked later
-    root_zone = tea.get_root_zone(context)
-    if root_zone in syntaxes:
-        root_insert = syntaxes[root_zone]
-    else:
-        root_insert = default
     # Grab the ranges
     ranges = tea.get_ranges(context)
     # Set up our text recipe
@@ -39,11 +32,7 @@ def act(context, default=None, prefix_selection=False,
         else:
             text = '$INSERT'
         # Check for zone-specific insertion
-        zone = tea.get_active_zone(context, range)
-        if zone in syntaxes:
-            insert = syntaxes[zone]
-        else:
-            insert = root_insert
+        insert = tea.select_from_zones(context, range, default, **syntaxes)
         text = text.replace('$INSERT', insert)
         # Insert the text, or replace the selected text
         if range.length is 0:

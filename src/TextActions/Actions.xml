@@ -159,10 +159,10 @@
 					<string>Emphasize</string>
 					
 					<!-- Syntax-specific overrides -->
-					<key>text.markdown</key>
+					<key>markdown, markdown structural, markdown stylistic</key>
 					<string>*$SELECTED_TEXT*</string>
 					
-					<key>text.html.textile</key>
+					<key>textile</key>
 					<string>_$SELECTED_TEXT_</string>
 				</dict>
 			</options>
@@ -184,10 +184,10 @@
 					<string>Strong</string>
 					
 					<!-- Syntax-specific overrides -->
-					<key>text.markdown</key>
+					<key>markdown, markdown structural, markdown stylistic</key>
 					<string>**$SELECTED_TEXT**</string>
 					
-					<key>text.html.textile</key>
+					<key>textile</key>
 					<string>*$SELECTED_TEXT*</string>
 				</dict>
 			</options>
@@ -339,10 +339,10 @@
 					<string>Wrap Selection In Link</string>
 					
 					<!-- Syntax-specific overrides -->
-					<key>text.markdown</key>
+					<key>markdown, markdown structural, markdown stylistic</key>
 					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
 					
-					<key>text.html.textile</key>
+					<key>textile</key>
 					<string>"$SELECTED_TEXT":${1:$URL}$0</string>
 				</dict>
 			</options>

@@ -31,16 +31,7 @@ def act(context, input=None, default=None, **syntaxes):
         return False
     # URL escape the selected text
     text = urllib.quote_plus(text)
-    root_zone = tea.get_root_zone(context)
-    if root_zone in syntaxes:
-        root_url = syntaxes[root_zone]
-    else:
-        root_url = default
-    zone = tea.get_active_zone(context, range)
-    if zone in syntaxes:
-        url = syntaxes[zone]
-    else:
-        url = root_url
+    url = tea.select_from_zones(context, range, default, **syntaxes)
     # Got the URL, let's run the URL
     url = url.replace('$SELECTED_TEXT', text)
     NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))

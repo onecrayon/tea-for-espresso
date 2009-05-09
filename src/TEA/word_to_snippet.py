@@ -23,15 +23,8 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     range = tea.get_single_range(context, True)
     if range == None:
         return False
-    root_zone = tea.get_root_zone(context)
-    if root_zone in syntaxes:
-        snippet = syntaxes[root_zone]
-    else:
-        snippet = default
     # Check for specific zone override
-    zone = tea.get_active_zone(context, range)
-    if zone in syntaxes:
-        snippet = syntaxes[zone]
+    snippet = tea.select_from_zones(context, range, default, **syntaxes)
     # Fetch the word
     word, new_range = tea.get_word_or_selection(context, range, alpha_numeric,
                                                 extra_characters)
