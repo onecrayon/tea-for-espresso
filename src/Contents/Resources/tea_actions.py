@@ -301,7 +301,8 @@ def get_character(context, range):
     else:
         return None, range
 
-def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
+def get_word(context, range, alpha_numeric=True, extra_characters='_-',
+             bidirectional=True):
     '''
     Selects and returns the current word and its range from the passed range
     
@@ -309,6 +310,8 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     characters plus extra_characters. Setting alpha_numeric to False will
     define a word as a contiguous string of alphabetic characters plus
     extra_characters
+    
+    If bidirectional is False, then it will only look behind the cursor
     '''
     # Helper regex for determining if line ends with a tag
     re_tag = re.compile(r'<\/?[\w:\-]+[^>]*>$')
@@ -332,27 +335,31 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     index = range.location
     word = ''
     maxlength = context.string().length()
-    # Make sure the cursor isn't at the end of the document
-    if index != maxlength:
-        # Check if cursor is mid-word
-        char = get_selection(context, new_range(index, 1))
-        if test_word():
-            inword = True
-            # Parse forward until we hit the end of word or document
-            while inword:
-                char = get_selection(context, new_range(index, 1))
-                if test_word():
-                    word += char
-                else:
-                    inword = False
+    if bidirectional:
+        # Make sure the cursor isn't at the end of the document
+        if index != maxlength:
+            # Check if cursor is mid-word
+            char = get_selection(context, new_range(index, 1))
+            if test_word():
+                inword = True
+                # Parse forward until we hit the end of word or document
+                while inword:
+                    char = get_selection(context, new_range(index, 1))
+                    if test_word():
+                        word += char
+                    else:
+                        inword = False
+                    index += 1
+                    if index == maxlength:
+                        inword = False
+            else:
+                # lastindex logic assumes we've been incrementing as we go,
+                # so bump it up one to compensate
                 index += 1
-                if index == maxlength:
-                    inword = False
-        else:
-            # lastindex logic assumes we've been incrementing as we go,
-            # so bump it up one to compensate
-            index += 1
-    lastindex = index - 1 if index < maxlength else index
+        lastindex = index - 1 if index < maxlength else index
+    else:
+        # Only parsing backward, so final index is cursor
+        lastindex = range.location
     # Reset index to one less than the cursor
     index = range.location - 1
     # Only walk backwards if we aren't at the beginning
@@ -377,7 +384,7 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-'):
     return word, range
 
 def get_word_or_selection(context, range, alpha_numeric=True,
-                          extra_characters='_-'):
+                          extra_characters='_-', bidirectional=True):
     '''
     Selects and returns the current word and its range from the passed range,
     or if there's already a selection returns the contents and its range
@@ -385,7 +392,7 @@ def get_word_or_selection(context, range, alpha_numeric=True,
     See get_word() for an explanation of the extra arguments
     '''
     if range.length == 0:
-        return get_word(context, range, alpha_numeric, extra_characters)
+        return get_word(context, range, alpha_numeric, extra_characters, bidirectional)
     else:
         return get_selection(context, range), range
 

@@ -6,7 +6,8 @@ from zencoding import zen_core
 from zencoding.settings import zen_settings
 
 def act(context, default=None, alpha_numeric=True, extra_characters='',
-        mode=None, close_string='', undo_name=None, **syntaxes):
+        bidirectional=True, mode=None, close_string='', undo_name=None,
+        **syntaxes):
     '''
     Required action method
     
@@ -27,7 +28,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     snippet = tea.select_from_zones(context, range, default, **syntaxes)
     # Fetch the word
     word, new_range = tea.get_word_or_selection(context, range, alpha_numeric,
-                                                extra_characters)
+                                                extra_characters, bidirectional)
     if word == '':
         # No word, so nothing further to do
         return False
