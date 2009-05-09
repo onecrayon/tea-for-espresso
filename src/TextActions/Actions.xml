@@ -17,6 +17,10 @@
 	${1:$SELECTED_TEXT}$0
 ]]></string>
 					
+					<key>python, python *</key>
+					<string><![CDATA[
+	${1:$SELECTED_TEXT}$0]]></string>
+					
 					<key>undo_name</key>
 					<string>Insert Indented Line</string>
 				</dict>
@@ -37,6 +41,16 @@
 					
 					<key>suffix_selection</key>
 					<true/>
+					
+					<key>php string.double, php string.double quote.end</key>
+					<string>\n</string>
+					
+					<key>python string, python string end</key>
+					<string>\n</string>
+					
+					<key>markdown, markdown structural, markdown stylistic</key>
+					<string><![CDATA[$TOUCH  
+]]></string>
 					
 					<key>undo_name</key>
 					<string>Insert Linebreak(s)</string>

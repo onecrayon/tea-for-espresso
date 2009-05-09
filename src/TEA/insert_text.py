@@ -34,6 +34,7 @@ def act(context, default=None, prefix_selection=False,
         # Check for zone-specific insertion
         insert = tea.select_from_zones(context, range, default, **syntaxes)
         text = text.replace('$INSERT', insert)
+        text = text.replace('$TOUCH', '')
         # Insert the text, or replace the selected text
         if range.length is 0:
             insertions.addInsertedString_forIndex_(text, range.location)
