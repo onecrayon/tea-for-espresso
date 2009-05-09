@@ -147,7 +147,8 @@ class TEALoader(NSObject):
                 active = ''
             os.putenv('E_ACTIVE_ZONE', active)
             
-            # Setup STDIN
+            # Setup STDIN and track the source
+            source = 'input'
             if self.input == 'selection':
                 input = tea.get_selection(context, range)
                 if input == '':
@@ -159,6 +160,7 @@ class TEALoader(NSObject):
                         input, range = tea.get_word(context, range)
                     elif self.alt == 'character':
                         input, range = tea.get_character(context, range)
+                    source = 'alt'
             elif self.input == 'document':
                 input = context.string()
             else:
@@ -182,7 +184,8 @@ class TEALoader(NSObject):
             if error:
                 tea.log(str(error))
             # Process the output
-            if self.output == 'document':
+            if self.output == 'document' or \
+               (source == 'alt' and self.alt == 'document'):
                 docrange = tea.new_range(0, context.string().length())
                 recipe.addReplacementString_forRange_(output, docrange)
                 break
