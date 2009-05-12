@@ -29,3 +29,4 @@ THE SOFTWARE.
 import TEAforEspresso
 import TEALoader
 import TEASpacesToTabs
+import TEAPreferences
