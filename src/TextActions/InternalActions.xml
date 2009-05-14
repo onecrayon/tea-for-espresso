@@ -9,4 +9,12 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.SugarActions.Preferences" category="actions.tea.internal">
+		<class>TEAPreferences</class>
+		<title>TEA Preferences...</title>
+		<setup>
+			<action>preferences</action>
+		</setup>
+	</action>
+	
 </action-recipes>
