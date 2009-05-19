@@ -123,14 +123,14 @@ class TEALoader(NSObject):
         for range in ranges:
             # These environment variables may change with repetition, so reset
             os.putenv('E_SELECTED_TEXT',
-                context.string().substringWithRange_(range)
+                str(context.string().substringWithRange_(range))
             )
             word, wordrange = tea.get_word(context, range)
-            os.putenv('E_CURRENT_WORD', word)
+            os.putenv('E_CURRENT_WORD', str(word))
             os.putenv('E_CURRENT_LINE',
-                context.string().substringWithRange_(
+                str(context.string().substringWithRange_(
                     context.lineStorage().lineRangeForRange_(range)
-                )
+                ))
             )
             os.putenv(
                 'E_LINENUMBER',
@@ -145,7 +145,7 @@ class TEALoader(NSObject):
             active = tea.get_active_zone(context, range)
             if active is False:
                 active = ''
-            os.putenv('E_ACTIVE_ZONE', active)
+            os.putenv('E_ACTIVE_ZONE', str(active))
             
             # Setup STDIN and track the source
             source = 'input'
