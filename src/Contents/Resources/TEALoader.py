@@ -73,7 +73,7 @@ class TEALoader(NSObject):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )
-            return script.communicate(input)
+            return script.communicate(str(input))
         
         if self.script is None:
             tea.log('No script found')
@@ -156,6 +156,9 @@ class TEALoader(NSObject):
                         input = context.string()
                     elif self.alt == 'line':
                         input, range = tea.get_line(context, range)
+                        # For this usage, we don't want to pass the final linebreak
+                        input = input[:-1]
+                        range = tea.new_range(range.location, range.length-1)
                     elif self.alt == 'word':
                         input, range = tea.get_word(context, range)
                     elif self.alt == 'character':
