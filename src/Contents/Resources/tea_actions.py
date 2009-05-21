@@ -464,6 +464,8 @@ def construct_snippet(text, snippet):
     if text is None:
         text = ''
     text = sanitize_for_snippet(text)
+    # This is a temporary hack; this will move into the TEA preferences
+    snippet = snippet.replace('$E_XHTML', ' /')
     return snippet.replace('$SELECTED_TEXT', text)
 
 def indent_snippet(context, snippet, range):
