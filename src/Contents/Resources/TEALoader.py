@@ -187,6 +187,7 @@ class TEALoader(NSObject):
             if error:
                 tea.log(str(error))
             # Process the output
+            output = output.decode('utf-8')
             if self.output == 'document' or \
                (source == 'alt' and self.alt == 'document'):
                 docrange = tea.new_range(0, context.string().length())
