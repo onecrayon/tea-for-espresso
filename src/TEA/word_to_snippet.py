@@ -62,7 +62,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
             'xsl, xsl *': 'xsl',
             'xml, xml *': 'xml'
         }
-        doc_type = tea.select_from_zones(context, default='html', **zones)
+        doc_type = tea.select_from_zones(context, range, 'html', **zones)
         
         # Prepare the snippet
         snippet = zen_core.expand_abbr(fullword, doc_type)
