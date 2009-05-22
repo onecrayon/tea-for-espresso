@@ -47,23 +47,28 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     if mode == 'zen':
         # Set up the config variables
         zen_core.newline = tea.get_line_ending(context)
-        zen_core.insertion_point = '$1'
-        zen_core.sub_insertion_point = '$2'
+        # This allows us to use smart incrementing tab stops in zen snippets
+        global point_ix
+        point_ix = 0
+        def place_ins_point(text):
+            globals()['point_ix'] += 1
+            return '$%s' % point_ix
+        zen_core.insertion_point = place_ins_point
+        zen_core.sub_insertion_point = place_ins_point
         zen_settings['indentation'] = tea.get_indentation_string(context)
         # Detect the type of document we're working with
-        doc_type = 'html'
-        
-        if 'css' in root_zone or 'css' in zone:
-            doc_type = 'css'
-        elif 'xsl' in root_zone or 'xsl' in zone:
-            doc_type = 'xsl'
-        elif 'xml' in root_zone or 'xml' in zone:
-            doc_type = 'xml'
+        zones = {
+            'css, css *': 'css',
+            'xsl, xsl *': 'xsl',
+            'xml, xml *': 'xml'
+        }
+        doc_type = tea.select_from_zones(context, default='html', **zones)
         
         # Prepare the snippet
         snippet = zen_core.expand_abbr(fullword, doc_type)
         snippet = tea.indent_snippet(context, snippet, new_range)
         snippet += '$0'
+        tea.log(snippet)
     else:
         if mode == 'HTML':
             # If no spaces, might be a hashed shortcut tag
