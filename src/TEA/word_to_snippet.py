@@ -77,7 +77,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
                 snippet = '<' + fullword
                 if fullword == word and not fullword in ['br', 'hr']:
                     snippet += ' $1'
-                snippet += close_string + '>$0'
+                snippet += '$E_XHTML>$0'
         # Indent the snippet
         snippet = tea.indent_snippet(context, snippet, new_range)
         # Special replacement in case we're using $WORD

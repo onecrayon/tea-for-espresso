@@ -286,9 +286,6 @@
 					<key>mode</key>
 					<string>HTML</string>
 					
-					<key>close_string</key>
-					<string> /</string>
-					
 					<key>undo_name</key>
 					<string>Insert Tag From Word</string>
 				</dict>
