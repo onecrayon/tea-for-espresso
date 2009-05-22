@@ -68,7 +68,6 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         snippet = zen_core.expand_abbr(fullword, doc_type)
         snippet = tea.indent_snippet(context, snippet, new_range)
         snippet += '$0'
-        tea.log(snippet)
     else:
         if mode == 'HTML':
             # If no spaces, might be a hashed shortcut tag
