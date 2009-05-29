@@ -76,10 +76,10 @@ class TEASpacesToTabs(TEAforEspresso):
             for range in ranges:
                 text = tea.get_selection(self.context, range)
                 # Non-Unix line endings will bork things; convert them
-                tea.unix_line_endings(text)
+                text = tea.unix_line_endings(text)
                 text = re.sub(target, replacements, text)
-                if tea.get_line_ending(context) != '\n':
-                    text = tea.clean_line_endings(context, text)
+                if tea.get_line_ending(self.context) != '\n':
+                    text = tea.clean_line_endings(self.context, text)
                 insertions.addReplacementString_forRange_(text, range)
             insertions.setUndoActionName_(self.action.title())
             self.context.applyTextRecipe_(insertions)

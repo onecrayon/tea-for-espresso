@@ -201,9 +201,9 @@ def unix_line_endings(text):
     '''Converts all line endings to Unix'''
     if text.find('\r\n') != -1:
         text = text.replace('\r\n','\n')
-    elif text.find('\r') != -1:
+    if text.find('\r') != -1:
         text = text.replace('\r','\n')
-	return text
+    return text
 
 def clean_line_endings(context, text, line_ending=None):
     '''
@@ -215,7 +215,7 @@ def clean_line_endings(context, text, line_ending=None):
         target = get_line_ending(context)
     else:
         target = line_ending
-    return text.replace('\n', line_ending)
+    return text.replace('\n', target)
 
 # ===============================================================
 # Espresso object convenience methods
