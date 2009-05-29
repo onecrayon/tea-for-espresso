@@ -73,6 +73,9 @@ class TEAforEspresso(NSObject):
     @objc.signature('B@:@')
     def canPerformActionWithContext_(self, context):
         '''Returns bool; can the action be performed in the given context'''
+        # Possible for context to be empty if it's partially initialized
+        if context.string() is None:
+            return False
         if self.syntax_context is not None:
             ranges = context.selectedRanges()
             range = ranges[0].rangeValue()
