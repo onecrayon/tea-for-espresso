@@ -197,6 +197,26 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
         finaltext = trimit(text, sides, indent)
     return finaltext
 
+def unix_line_endings(text):
+    '''Converts all line endings to Unix'''
+    if text.find('\r\n') != -1:
+        text = text.replace('\r\n','\n')
+    elif text.find('\r') != -1:
+        text = text.replace('\r','\n')
+	return text
+
+def clean_line_endings(context, text, line_ending=None):
+    '''
+    Converts all line endings to the default line ending of the file,
+    or if line_ending is specified uses that
+    '''
+    text = unix_line_endings(text)
+    if line_ending is None:
+        target = get_line_ending(context)
+    else:
+        target = line_ending
+    return text.replace('\n', line_ending)
+
 # ===============================================================
 # Espresso object convenience methods
 # ===============================================================
