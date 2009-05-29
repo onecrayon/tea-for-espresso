@@ -370,14 +370,14 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-',
             char = get_selection(context, new_range(index, 1))
             if test_word() and not (char == '>' and ends_with_tag(index)):
                 word = char + word
+                index -= 1
             else:
                 inword = False
-            index -= 1
             if index < 0:
                 inword = False
     # Since index is left-aligned and we've overcompensated,
-    # need to increment +2
-    firstindex = index + 2 if index > 0 else 0
+    # need to increment +1
+    firstindex = index + 1
     # Switch last index to length for use in range
     lastindex = lastindex - firstindex
     range = new_range(firstindex, lastindex)

@@ -248,30 +248,6 @@
 	<action id="com.onecrayon.TextActions.ExpandAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Expand Abbreviation</title>
-		<key-equivalent>control .</key-equivalent>
-		<setup>
-			<action>word_to_snippet</action>
-			<options>
-				<dict>
-					<key>default</key>
-					<string>$SELECTED_TEXT</string>
-					
-					<key>extra_characters</key>
-					<string>_-#.>+*:$!@</string>
-					
-					<key>mode</key>
-					<string>zen</string>
-					
-					<key>undo_name</key>
-					<string>Expand Abbreviation</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.InsertTagFromWord" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Insert Tag From Word</title>
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
 			<action>word_to_snippet</action>
@@ -281,13 +257,13 @@
 					<string>&lt;$SELECTED_TEXT>$1&lt;/$WORD>$0</string>
 					
 					<key>extra_characters</key>
-					<string>_-#.</string>
+					<string>_-#.>+*:$!@</string>
 					
 					<key>mode</key>
-					<string>HTML</string>
+					<string>zen</string>
 					
 					<key>undo_name</key>
-					<string>Insert Tag From Word</string>
+					<string>Expand Abbreviation</string>
 				</dict>
 			</options>
 		</setup>

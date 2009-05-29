@@ -44,7 +44,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # We've got some extra work if the mode is HTML or zen
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
-    if mode == 'zen':
+    if mode == 'zen' and fullword.find(' ') < 0:
         # Set up the config variables
         zen_core.newline = tea.get_line_ending(context)
         # This allows us to use smart incrementing tab stops in zen snippets
@@ -66,22 +66,16 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         
         # Prepare the snippet
         snippet = zen_core.expand_abbr(fullword, doc_type)
-        snippet = tea.indent_snippet(context, snippet, new_range)
-        snippet += '$0'
-    else:
-        if mode == 'HTML':
-            # If no spaces, might be a hashed shortcut tag
-            if fullword.find(' ') < 0:
-                fullword = tea.string_to_tag(fullword)
-            if tea.is_selfclosing(word):
-                snippet = '<' + fullword
-                if fullword == word and not fullword in ['br', 'hr']:
-                    snippet += ' $1'
-                snippet += '$E_XHTML>$0'
-        # Indent the snippet
-        snippet = tea.indent_snippet(context, snippet, new_range)
-        # Special replacement in case we're using $WORD
-        snippet = snippet.replace('$WORD', word)
-        # Construct the snippet
-        snippet = tea.construct_snippet(fullword, snippet)
+    elif (mode == 'zen' or mode == 'html') and tea.is_selfclosing(word):
+        # Self-closing, so construct the snippet from scratch
+        snippet = '<' + fullword
+        if fullword == word and not fullword in ['br', 'hr']:
+            snippet += ' $1'
+        snippet += '$E_XHTML>$0'
+    # Indent the snippet
+    snippet = tea.indent_snippet(context, snippet, new_range)
+    # Special replacement in case we're using $WORD
+    snippet = snippet.replace('$WORD', word)
+    # Construct the snippet
+    snippet = tea.construct_snippet(fullword, snippet)
     return tea.insert_snippet_over_range(context, snippet, new_range, undo_name)
