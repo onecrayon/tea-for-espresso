@@ -1,20 +1,9 @@
 <?xml version="1.0"?>
 <action-recipes>
 	
-	<action id="com.onecrayon.SugarActions.EnableUserActions" category="actions.tea.internal">
-		<class>TEAforEspresso</class>
-		<title>Toggle Custom User Actions</title>
-		<setup>
-			<action>refresh_user_actions</action>
-		</setup>
-	</action>
-	
 	<action id="com.onecrayon.SugarActions.Preferences" category="actions.tea.internal">
 		<class>TEAPreferences</class>
 		<title>TEA Preferences...</title>
-		<setup>
-			<action>preferences</action>
-		</setup>
 	</action>
 	
 </action-recipes>
