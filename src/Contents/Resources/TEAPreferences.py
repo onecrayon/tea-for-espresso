@@ -5,12 +5,21 @@ from AppKit import *
 from PyObjCTools import AppHelper
 import objc
 
-from TEAforEspresso import TEAforEspresso
 import tea_actions as tea
 import BWToolkitFramework
 
-class TEAPreferences(TEAforEspresso):
+class TEAPreferences(NSObject):
     '''Controller for TEA preference window'''
+    
+    def initWithDictionary_bundlePath_(self, dictionary, bundlePath):
+        '''Required by Espresso; initializes the plugin settings'''
+        self = super(TEAPreferences, self).init()
+        if self is None: return None
+        return self
+    
+    @objc.signature('B@:@')
+    def canPerformActionWithContext_(self, context):
+    	return True
     
     @objc.signature('B@:@')
     def performActionWithContext_error_(self, context):
