@@ -16,7 +16,7 @@ def act(context, first_snippet='', following_snippet='',
     # This function will handle the logic of when to use open vs. multi
     text, range = tea.get_single_selection(context)
     if text == None:
-        return False
+        text = ''
     # Indent the snippet
     snippet = tea.indent_snippet(context, first_snippet + final_append, range)
     snippet = tea.construct_snippet(text, snippet)

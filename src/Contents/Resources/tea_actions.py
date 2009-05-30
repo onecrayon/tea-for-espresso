@@ -197,6 +197,26 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
         finaltext = trimit(text, sides, indent)
     return finaltext
 
+def unix_line_endings(text):
+    '''Converts all line endings to Unix'''
+    if text.find('\r\n') != -1:
+        text = text.replace('\r\n','\n')
+    if text.find('\r') != -1:
+        text = text.replace('\r','\n')
+    return text
+
+def clean_line_endings(context, text, line_ending=None):
+    '''
+    Converts all line endings to the default line ending of the file,
+    or if line_ending is specified uses that
+    '''
+    text = unix_line_endings(text)
+    if line_ending is None:
+        target = get_line_ending(context)
+    else:
+        target = line_ending
+    return text.replace('\n', target)
+
 # ===============================================================
 # Espresso object convenience methods
 # ===============================================================
@@ -370,14 +390,14 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-',
             char = get_selection(context, new_range(index, 1))
             if test_word() and not (char == '>' and ends_with_tag(index)):
                 word = char + word
+                index -= 1
             else:
                 inword = False
-            index -= 1
             if index < 0:
                 inword = False
     # Since index is left-aligned and we've overcompensated,
-    # need to increment +2
-    firstindex = index + 2 if index > 0 else 0
+    # need to increment +1
+    firstindex = index + 1
     # Switch last index to length for use in range
     lastindex = lastindex - firstindex
     range = new_range(firstindex, lastindex)
@@ -464,6 +484,8 @@ def construct_snippet(text, snippet):
     if text is None:
         text = ''
     text = sanitize_for_snippet(text)
+    # This is a temporary hack; this will move into the TEA preferences
+    snippet = snippet.replace('$E_XHTML', ' /')
     return snippet.replace('$SELECTED_TEXT', text)
 
 def indent_snippet(context, snippet, range):

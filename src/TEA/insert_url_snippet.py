@@ -48,11 +48,7 @@ def act(context, default=None, fallback_url='', undo_name=None, **syntaxes):
     # Construct the default link
     url = format_hyperlink(clipboard, fallback_url)
     # Get the snippet based on the root zone
-    zone = tea.get_root_zone(context)
-    if zone in syntaxes:
-        snippet = syntaxes[zone]
-    else:
-        snippet = default
+    snippet = tea.select_from_zones(context, range, default, **syntaxes)
     # Indent the snippet
     snippet = tea.indent_snippet(context, snippet, range)
     snippet = tea.construct_snippet(text, snippet)
