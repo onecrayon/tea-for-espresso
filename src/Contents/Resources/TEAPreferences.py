@@ -39,19 +39,27 @@ class TEAPreferences(NSObject):
         return True
 
 class TEAPreferencesController(NSWindowController):
+    '''
+    Controls the actual preferences window; manages all tasks,
+    and cleans it up afterward
+    '''
+    close_string = objc.IBOutlet()
     
     @objc.IBAction
-    def toggleUserDefaults_(self, sender):
+    def toggleUserActions_(self, sender):
+        '''Performs the symlink refresh when custom user actions are toggled'''
         # Add or remove the symlinks
         bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
         refresh_symlinks(bundle.bundlePath(), True)
     
     @objc.IBAction
     def customActionsHelp_(self, sender):
+        '''Opens URL with help info for custom user actions'''
         url = 'http://wiki.github.com/onecrayon/tea-for-espresso'
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
     
     def windowWillClose_(self, notification):
+        '''Delegate method to auto-release everything'''
         # Unless we retain then self-release, we'll lose the window to the
         # default garbage collector; this delegate method is automatic
         self.autorelease()
