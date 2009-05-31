@@ -31,8 +31,9 @@ class TEAPreferences(NSObject):
         prefs = TEAPreferencesController.alloc().initWithWindowNibName_(
         	'TEAPreferences'
         )
+        prefs.setShouldCascadeWindows_(False)
+        prefs.window().setFrameAutosaveName_('TEAPreferences')
         prefs.showWindow_(self)
-        prefs.window().center()
         return True
 
 class TEAPreferencesController(NSWindowController):

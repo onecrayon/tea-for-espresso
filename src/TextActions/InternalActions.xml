@@ -3,7 +3,7 @@
 	
 	<action id="com.onecrayon.SugarActions.Preferences" category="actions.tea.internal">
 		<class>TEAPreferences</class>
-		<title>TEA Preferences...</title>
+		<title>Preferences...</title>
 	</action>
 	
 </action-recipes>
