@@ -6,6 +6,7 @@ from PyObjCTools import AppHelper
 import objc
 
 import tea_actions as tea
+from tea_utils import refresh_symlinks
 import BWToolkitFramework
 
 class TEAPreferences(NSObject):
@@ -19,7 +20,7 @@ class TEAPreferences(NSObject):
     
     @objc.signature('B@:@')
     def canPerformActionWithContext_(self, context):
-    	return True
+        return True
     
     @objc.signature('B@:@')
     def performActionWithContext_error_(self, context):
@@ -29,12 +30,29 @@ class TEAPreferences(NSObject):
         '''
         # Load the sheet
         prefs = TEAPreferencesController.alloc().initWithWindowNibName_(
-        	'TEAPreferences'
+            'TEAPreferences'
         )
         prefs.setShouldCascadeWindows_(False)
         prefs.window().setFrameAutosaveName_('TEAPreferences')
         prefs.showWindow_(self)
+        prefs.retain()
         return True
 
 class TEAPreferencesController(NSWindowController):
-	somevar = objc.IBOutlet()
+    
+    @objc.IBAction
+    def toggleUserDefaults_(self, sender):
+        # Add or remove the symlinks
+        bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
+        refresh_symlinks(bundle.bundlePath(), True)
+        NSLog('user defaults toggled successfully')
+    
+    @objc.IBAction
+    def customActionsHelp_(self, sender):
+        url = 'http://wiki.github.com/onecrayon/tea-for-espresso'
+        NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+    
+    def windowWillClose_(self, notification):
+        # Unless we retain then self-release, we'll lose the window to the
+        # default garbage collector; this delegate method is automatic
+        self.autorelease()
