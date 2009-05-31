@@ -60,6 +60,10 @@ def get_indentation_string(context):
     return prefs.tabString()
 
 def get_xhtml_closestring():
+    '''
+    Retrieves the XHTML closing string (based on user preferences;
+    may be an empty string)
+    '''
     defaults = NSUserDefaults.standardUserDefaults()
     use_xhtml = defaults.boolForKey_('TEADefaultToXHTML')
     if not use_xhtml:
