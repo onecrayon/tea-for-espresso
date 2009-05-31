@@ -66,6 +66,12 @@ class TEAforEspresso(NSObject):
         # Run one-time initialization items
         if not TEAforEspresso.initialized:
             TEAforEspresso.initialized = True
+            # Add default preferences to shared user defaults
+            bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
+            defaults = NSUserDefaults.standardUserDefaults()
+            defaults.registerDefaults_(NSDictionary.dictionaryWithContentsOfFile_(
+                bundle.pathForResource_ofType_('Defaults', 'plist')
+            ))
             refresh_symlinks(self.tea_bundle)
         return self
     
