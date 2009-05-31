@@ -8,5 +8,14 @@
 	<false/>
 	<key>TEASelfClosingString</key>
 	<string> /</string>
+	<key>TEAShellVariables</key>
+	<array>
+		<dict>
+			<key>value</key>
+			<string>__MyCompanyName__</string>
+			<key>variable</key>
+			<string>E_ORGANIZATION_NAME</string>
+		</dict>
+	</array>
 </dict>
 </plist>

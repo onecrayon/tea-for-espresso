@@ -45,7 +45,6 @@ class TEAPreferencesController(NSWindowController):
         # Add or remove the symlinks
         bundle = NSBundle.bundleWithIdentifier_('com.onecrayon.tea.espresso')
         refresh_symlinks(bundle.bundlePath(), True)
-        NSLog('user defaults toggled successfully')
     
     @objc.IBAction
     def customActionsHelp_(self, sender):
