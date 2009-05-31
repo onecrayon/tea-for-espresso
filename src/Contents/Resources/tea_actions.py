@@ -59,6 +59,13 @@ def get_indentation_string(context):
     prefs = get_prefs(context)
     return prefs.tabString()
 
+def get_xhtml_closestring():
+    defaults = NSUserDefaults.standardUserDefaults()
+    use_xhtml = defaults.boolForKey_('TEADefaultToXHTML')
+    if not use_xhtml:
+        return ''
+    return defaults.stringForKey_('TEASelfClosingString')
+
 # ===============================================================
 # Text manipulations and helper functions
 # ===============================================================

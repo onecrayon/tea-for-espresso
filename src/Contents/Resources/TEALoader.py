@@ -98,6 +98,13 @@ class TEALoader(NSObject):
         os.putenv('E_SOFT_TABS', str(prefs.insertsSpacesForTab()))
         os.putenv('E_TAB_SIZE', str(prefs.numberOfSpacesForTab()))
         os.putenv('E_LINE_ENDING', prefs.lineEndingString())
+        os.putenv('E_XHTML', tea.get_xhtml_closestring())
+        
+        # Set up the user-defined shell variables
+        defaults = NSUserDefaults.standardUserDefaults()
+        for item in defaults.arrayForKey_('TEAShellVariables'):
+            if item['variable'] != '':
+                os.putenv(item['variable'], item['value'])
         
         # Initialize our common variables
         recipe = tea.new_recipe()
