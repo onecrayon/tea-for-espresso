@@ -43,7 +43,28 @@ class TEAPreferencesController(NSWindowController):
     Controls the actual preferences window; manages all tasks,
     and cleans it up afterward
     '''
-    close_string = objc.IBOutlet()
+    arrayController = objc.IBOutlet()
+    tableView = objc.IBOutlet()
+    
+    @objc.IBAction
+    def addListItem_(self, sender):
+        '''Adds an item to a table, and selects it for editing'''
+        self.arrayController.add_(sender)
+        self.performSelector_withObject_afterDelay_(
+            'editInsertedRow:', self.tableView, 0
+        )
+    
+    def editInsertedRow_(self, tableView):
+        '''
+        Edits the most recently inserted row
+        
+        Many thank to Todd Ransom for pointing me in this direction!
+        '''
+        row = self.arrayController.arrangedObjects().count() - 1
+        self.arrayController.setSelectionIndex_(row)
+        tableView.editColumn_row_withEvent_select_(
+            0, tableView.selectedRow(), None, True
+        )
     
     @objc.IBAction
     def toggleUserActions_(self, sender):
