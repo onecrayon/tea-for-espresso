@@ -84,3 +84,14 @@ class TEAPreferencesController(NSWindowController):
         # Unless we retain then self-release, we'll lose the window to the
         # default garbage collector; this delegate method is automatic
         self.autorelease()
+
+class TEAPrefsExampleUpdater(NSTextField):
+    '''Special text field that can update example text based on its contents'''
+    exampleText = objc.IBOutlet()
+    
+    def textDidChange_(self, notification):
+        '''Delegate method to update the example text'''
+        # Hard-coded label text is bad mojo! How to generalize?
+        self.exampleText.setStringValue_(
+            'Example: <img src="booyah.jpg"' + self.stringValue() + '>'
+        )

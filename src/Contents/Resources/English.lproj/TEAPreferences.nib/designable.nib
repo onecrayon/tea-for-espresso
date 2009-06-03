@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="90"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -549,7 +549,7 @@ dy4</string>
 							<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhAxOU0RpY3Rpb25hcnkAhIQITlNPYmplY3QAhYQBaQKShISECE5T
 U3RyaW5nAZSEASskN0U2QTkyMjgtQzlGMy00RjIxLTgwNTQtRTRCRjNGMkY2QkE4hpKEhIQHTlNWYWx1
 ZQCUhAEqhIQMe19OU1NpemU9ZmZ9moGrAYFNAYaShJaXJDBENTk1MEQxLUQ0QTgtNDRDNi05REJDLTI1
-MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
+MUNGRUY4NTJFMoaShJiZmZoIg8QKNpOGhg</bytes>
 						</object>
 						<string key="BWSTHSelectedIdentifier">0D5950D1-D4A8-44C6-9DBC-251CFEF852E2</string>
 						<string key="BWSTHOldWindowTitle">Window</string>
@@ -624,7 +624,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 							<object class="NSTextFieldCell" key="NSCell" id="1037859096">
 								<int key="NSCellFlags">-1804468671</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents"> /</string>
+								<string key="NSContents"/>
 								<reference key="NSSupport" ref="164561226"/>
 								<reference key="NSControlView" ref="448102127"/>
 								<bool key="NSDrawsBackground">YES</bool>
@@ -655,7 +655,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 							<object class="NSTextFieldCell" key="NSCell" id="934270968">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string type="base64-UTF8" key="NSContents">RXhhbXBsZTogPGltZyBzcmM9IiI+A</string>
+								<string type="base64-UTF8" key="NSContents">RXhhbXBsZTogPGltZyBzcmM9ImJvb3lhaC5qcGciPg</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">1.100000e+01</double>
@@ -701,7 +701,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{370, 152}</string>
 											<reference key="NSSuperview" ref="573512693"/>
-											<reference key="NSNextKeyView" ref="194096934"/>
+											<reference key="NSNextKeyView" ref="192641778"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="1054703421">
 												<reference key="NSNextResponder" ref="192641778"/>
@@ -859,7 +859,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 							</object>
 							<string key="NSFrame">{{20, 48}, {387, 185}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="192641778"/>
+							<reference key="NSNextKeyView" ref="573512693"/>
 							<int key="NSsFlags">50</int>
 							<reference key="NSVScroller" ref="194096934"/>
 							<reference key="NSHScroller" ref="318461409"/>
@@ -961,6 +961,13 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 			</object>
 			<object class="NSUserDefaultsController" id="867346891">
+				<object class="NSMutableArray" key="NSDeclaredKeys">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSMutableString">
+						<characters key="NS.bytes">stringValue</characters>
+					</object>
+					<string>TEASelfClosingString</string>
+				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSArrayController" id="327681832">
@@ -1131,34 +1138,6 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">close_string</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="448102127"/>
-					</object>
-					<int key="connectionID">181</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">displayPatternValue1: values.TEASelfClosingString</string>
-						<reference key="source" ref="677736805"/>
-						<reference key="destination" ref="867346891"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="677736805"/>
-							<reference key="NSDestination" ref="867346891"/>
-							<string key="NSLabel">displayPatternValue1: values.TEASelfClosingString</string>
-							<string key="NSBinding">displayPatternValue1</string>
-							<string key="NSKeyPath">values.TEASelfClosingString</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSDisplayPattern</string>
-								<string type="base64-UTF8" key="NS.object.0">RXhhbXBsZTogPGltZyBzcmM9ImJvb3lhaC5qcGciJXt2YWx1ZTF9QD4</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">190</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">arrayController</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="327681832"/>
@@ -1180,6 +1159,14 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 						<reference key="destination" ref="198029334"/>
 					</object>
 					<int key="connectionID">193</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">exampleText</string>
+						<reference key="source" ref="448102127"/>
+						<reference key="destination" ref="677736805"/>
+					</object>
+					<int key="connectionID">213</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1580,6 +1567,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 					<string>8.IBPluginDependency</string>
 					<string>85.IBPluginDependency</string>
 					<string>86.IBPluginDependency</string>
+					<string>87.CustomClassName</string>
 					<string>87.IBPluginDependency</string>
 					<string>88.IBPluginDependency</string>
 					<string>89.IBPluginDependency</string>
@@ -1636,6 +1624,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>TEAPrefsExampleUpdater</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1672,7 +1661,7 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">199</int>
+			<int key="maxID">223</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
@@ -1686,12 +1675,10 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addListItem:</string>
 							<string>customActionsHelp:</string>
-							<string>editInsertedRow:</string>
 							<string>toggleUserActions:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1702,18 +1689,29 @@ MUNGRUY4NTJFMoaShJiZmZqBqwGBvAGGhg</bytes>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arrayController</string>
+							<string>closeString</string>
 							<string>tableView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="47247783">
 						<string key="majorKey">IBDocumentRelativeSource</string>
 						<string key="minorKey">../TEAPreferences.py</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TEAPrefsExampleUpdater</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">exampleText</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<reference key="sourceIdentifier" ref="47247783"/>
 				</object>
 			</object>
 		</object>
