@@ -85,13 +85,27 @@ class TEAPreferencesController(NSWindowController):
         # default garbage collector; this delegate method is automatic
         self.autorelease()
 
-class TEAPrefsExampleUpdater(NSTextField):
-    '''Special text field that can update example text based on its contents'''
-    exampleText = objc.IBOutlet()
+class NilToString(NSValueTransformer):
+    '''
+    Transforms a nil value in a binding to an empty string
     
-    def textDidChange_(self, notification):
-        '''Delegate method to update the example text'''
-        # Hard-coded label text is bad mojo! How to generalize?
-        self.exampleText.setStringValue_(
-            'Example: <img src="booyah.jpg"' + self.stringValue() + '>'
-        )
+    Allows empty text fields to save empty strings to defaults
+    '''
+    @classmethod
+    def transformedValueClass(cls):
+        return NSString
+    
+    @classmethod
+    def allowsReverseTransformation(cls):
+        return True
+    
+    def transformedValue_(self, value):
+        '''From defaults to text field'''
+        return value
+    
+    def reverseTransformedValue_(self, value):
+        '''From text field to defaults'''
+        if value is None:
+            return ''
+        else:
+            return value
