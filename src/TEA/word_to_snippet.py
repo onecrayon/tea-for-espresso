@@ -55,6 +55,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
             return '$%s' % point_ix
         zen_core.insertion_point = place_ins_point
         zen_core.sub_insertion_point = place_ins_point
+        zen_core.selfclosing_string = tea.get_xhtml_closestring()
         zen_settings['indentation'] = tea.get_indentation_string(context)
         # Detect the type of document we're working with
         zones = {

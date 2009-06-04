@@ -19,6 +19,9 @@ insertion_point = '|'
 sub_insertion_point = ''
 "Символ, указывающий, куда нужно поставить курсор (для редакторов, которые позволяют указать несколько символов)"
 
+selfclosing_string = ' /'
+"The string to be inserted for self-closing elements"
+
 re_tag = re.compile(r'<\/?[\w:\-]+(?:\s+[\w\-:]+(?:\s*=\s*(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>\s]+))?)*\s*(\/?)>$')
 
 def is_allowed_char(ch):
@@ -48,6 +51,13 @@ def get_newline():
 	@return: str
 	"""
 	return newline
+
+def get_selfclosing():
+	"""
+	Returns the string for self-closing XHTML entities
+	@return: str
+	"""
+	return selfclosing_string
 
 def pad_string(text, pad):
 	"""
@@ -327,7 +337,7 @@ class Tag(object):
 			
 		if self.name:
 			if self.is_empty():
-				start_tag = '<%s />' % (self.name + attrs,)
+				start_tag = '<%s>' % (self.name + attrs + get_selfclosing(),)
 			else:
 				start_tag, end_tag = '<%s>' % (self.name + attrs,), '</%s>' % self.name
 				
