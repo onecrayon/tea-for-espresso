@@ -60,14 +60,8 @@ def get_indentation_string(context):
     return prefs.tabString()
 
 def get_xhtml_closestring():
-    '''
-    Retrieves the XHTML closing string (based on user preferences;
-    may be an empty string)
-    '''
+    '''Retrieves the XHTML closing string (based on user preferences)'''
     defaults = NSUserDefaults.standardUserDefaults()
-    use_xhtml = defaults.boolForKey_('TEADefaultToXHTML')
-    if not use_xhtml:
-        return ''
     return defaults.stringForKey_('TEASelfClosingString')
 
 # ===============================================================
@@ -124,6 +118,17 @@ def is_selfclosing(tag):
         if tag is None:
             return False
     return tag in selfclosing
+
+def get_tag_closestring(context):
+    '''
+    Tries to determine if the current context is XHTML or not, and
+    returns the proper string for self-closing tags
+    '''
+    # Currently doesn't run any logic; just defaults to user prefs
+    use_xhtml = defaults.boolForKey_('TEADefaultToXHTML')
+    if not use_xhtml:
+        return ''
+    return get_xhtml_closestring()
 
 def encode_ampersands(text, enc='&amp;'):
     '''Encodes ampersands'''
@@ -495,8 +500,6 @@ def construct_snippet(text, snippet):
     if text is None:
         text = ''
     text = sanitize_for_snippet(text)
-    # This is a temporary hack; this will move into the TEA preferences
-    snippet = snippet.replace('$E_XHTML', get_xhtml_closestring())
     return snippet.replace('$SELECTED_TEXT', text)
 
 def indent_snippet(context, snippet, range):
@@ -548,6 +551,8 @@ def insert_snippet(context, snippet):
     
     Make sure to set the selection intelligently before calling this
     '''
+    # Need context to get the tag closestring, so we do it here
+    snippet = snippet.replace('$E_XHTML', get_tag_closestring(context))
     if type(snippet) in StringTypes:
         snippet = new_snippet(snippet)
     return context.insertTextSnippet_(snippet)
