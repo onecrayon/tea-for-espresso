@@ -21,6 +21,9 @@
 	<category id="actions.text.sorting" show="sub">
 		<title>Sorting</title>
 	</category>
+	<category id="actions.text.selection" show="sub">
+		<title>Select</title>
+	</category>
 	
 	<!-- TEA-specific categories -->
 	<category id="tea.conversion" show="inline separated"></category>

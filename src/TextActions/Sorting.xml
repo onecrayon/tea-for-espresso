@@ -4,6 +4,7 @@
 		<selector>actions.text.important</selector>
 		<selector>actions.text.generic.</selector>
 		<selector>actions.text.whitespace</selector>
+		<selector>actions.text.selection</selector>
 		<selector>actions.text.sorting</selector>
 		<selector>actions.text.formatting</selector>
 		<selector>actions.text.HTML</selector>

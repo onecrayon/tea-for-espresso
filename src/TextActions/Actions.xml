@@ -2,65 +2,6 @@
 <action-recipes>
 	<!-- Commands are in menu order, because that's how I roll -->
 	
-	<!-- Formatting commands -->
-	
-	<action id="com.onecrayon.TextActions.InsertIndentedLine" category="actions.text.formatting/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Indent New Line</title>
-		<key-equivalent>control shift enter</key-equivalent>
-		<setup>
-			<action>insert_snippet</action>
-			<options>
-				<dict>
-					<key>default</key>
-					<string><![CDATA[
-	${1:$SELECTED_TEXT}$0
-]]></string>
-					
-					<key>python, python *</key>
-					<string><![CDATA[
-	${1:$SELECTED_TEXT}$0]]></string>
-					
-					<key>undo_name</key>
-					<string>Insert Indented Line</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.InsertText.Linebreak" category="actions.text.formatting/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Insert Linebreak(s)</title>
-		<key-equivalent>control enter</key-equivalent>
-		<setup>
-			<action>insert_text</action>
-			<options>
-				<dict>
-					<key>default</key>
-					<string>&lt;br /></string>
-					
-					<key>suffix_selection</key>
-					<true/>
-					
-					<key>php string.double, php string.double quote.end</key>
-					<string>\n</string>
-					
-					<key>python string, python string end</key>
-					<string>\n</string>
-					
-					<key>markdown, markdown structural, markdown stylistic</key>
-					<string><![CDATA[$TOUCH  
-]]></string>
-					
-					<key>undo_name</key>
-					<string>Insert Linebreak(s)</string>
-					
-					<!-- Syntax-specific overrides -->
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
 	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
@@ -82,6 +23,57 @@
 					
 					<key>undo_name</key>
 					<string>Trim Lines</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.SelectWord" category="actions.text.generic/actions.text.selection/1">
+		<class>TEAforEspresso</class>
+		<title>Word</title>
+		<key-equivalent>control w</key-equivalent>
+		<setup>
+			<action>goto</action>
+			<options>
+				<dict>
+					<key>source</key>
+					<string>word</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.SelectLine" category="actions.text.generic/actions.text.selection/2">
+		<class>TEAforEspresso</class>
+		<title>Line</title>
+		<key-equivalent>cmd L</key-equivalent>
+		<setup>
+			<action>goto</action>
+			<options>
+				<dict>
+					<key>source</key>
+					<string>line</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.SelectLineContents" category="actions.text.generic/actions.text.selection/3">
+		<class>TEAforEspresso</class>
+		<title>Line Contents</title>
+		<key-equivalent>cmd option l</key-equivalent>
+		<setup>
+			<action>goto</action>
+			<options>
+				<dict>
+					<key>source</key>
+					<string>line</string>
+					
+					<key>trim</key>
+					<true/>
+					
+					<key>discard_indent</key>
+					<true/>
 				</dict>
 			</options>
 		</setup>
@@ -153,6 +145,65 @@
 					
 					<key>undo_name</key>
 					<string>Remove Duplicate Lines</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<!-- Formatting commands -->
+	
+	<action id="com.onecrayon.TextActions.InsertIndentedLine" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Indent New Line</title>
+		<key-equivalent>control shift enter</key-equivalent>
+		<setup>
+			<action>insert_snippet</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string><![CDATA[
+	${1:$SELECTED_TEXT}$0
+]]></string>
+					
+					<key>python, python *</key>
+					<string><![CDATA[
+	${1:$SELECTED_TEXT}$0]]></string>
+					
+					<key>undo_name</key>
+					<string>Insert Indented Line</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.InsertText.Linebreak" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Linebreak(s)</title>
+		<key-equivalent>control enter</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&lt;br /></string>
+					
+					<key>suffix_selection</key>
+					<true/>
+					
+					<key>php string.double, php string.double quote.end</key>
+					<string>\n</string>
+					
+					<key>python string, python string end</key>
+					<string>\n</string>
+					
+					<key>markdown, markdown structural, markdown stylistic</key>
+					<string><![CDATA[$TOUCH  
+]]></string>
+					
+					<key>undo_name</key>
+					<string>Insert Linebreak(s)</string>
+					
+					<!-- Syntax-specific overrides -->
 				</dict>
 			</options>
 		</setup>
