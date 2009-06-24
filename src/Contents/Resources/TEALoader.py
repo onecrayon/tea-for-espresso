@@ -103,7 +103,7 @@ class TEALoader(NSObject):
         # Set up the user-defined shell variables
         defaults = NSUserDefaults.standardUserDefaults()
         for item in defaults.arrayForKey_('TEAShellVariables'):
-            if item['variable'] != '':
+            if 'variable' in item and item['variable'] != '':
                 os.putenv(item['variable'], item['value'])
         
         # Initialize our common variables
