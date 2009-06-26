@@ -36,7 +36,7 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     elif source == 'line':
         text, range = tea.get_line(context, range)
     elif range.length > 0:
-        text = tea.get_selection(context)
+        text = tea.get_selection(context, range)
     
     # Make sure that we've got some text, even if it's an empty string
     if text is None:
@@ -74,7 +74,7 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
         else:
             start = context.string().find(search)
             if start != -1:
-                end = start + len(start)
+                end = start + len(search)
             else:
                 start = None
         # Construct the new target range
