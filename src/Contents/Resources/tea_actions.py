@@ -125,6 +125,7 @@ def get_tag_closestring(context):
     returns the proper string for self-closing tags
     '''
     # Currently doesn't run any logic; just defaults to user prefs
+    defaults = NSUserDefaults.standardUserDefaults()
     use_xhtml = defaults.boolForKey_('TEADefaultToXHTML')
     if not use_xhtml:
         return ''
