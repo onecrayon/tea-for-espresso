@@ -2,6 +2,14 @@
 <action-recipes>
 	<!-- Commands are in menu order, because that's how I roll -->
 	
+	<action id="com.onecrayon.TextActions.Balance" category="category.id">
+		<class>TEAforEspresso</class>
+		<title>Balance</title>
+		<setup>
+			<action>balance</action>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
