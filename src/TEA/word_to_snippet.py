@@ -56,12 +56,14 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         zen.sub_insertion_point = place_ins_point
         
         # Setup the settings overrides
-        global my_zen_settings
         my_zen_settings = {
             'variables': {
                 'indentation': tea.get_indentation_string(context)
             }
         }
+        # Extend the settings tables
+        zen.stparser.create_maps(my_zen_settings)
+        zen.stparser.extend(zen.zen_settings, my_zen_settings)
         
         # Detect the type of document we're working with
         zones = {
@@ -75,17 +77,17 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         profile = {}
         if doc_type == 'html':
             close_string = tea.get_tag_closestring(context)
-            if close_string == ' /':
-                profile['self_closing_tag'] = 'xhtml'
-            elif close_string == '/':
+            if close_string == '/':
                 profile['self_closing_tag'] = True
+            elif close_string != ' /':
+                profile['self_closing_tag'] = False
         elif doc_type == 'xml':
             profile = {'self_closing_tag': True, 'tag_nl': True}
         
         zen.setup_profile('tea_profile', profile)
         
         # Prepare the snippet
-        snippet = zen.expand_abbr(fullword, doc_type, 'tea_profile')
+        snippet = zen.expand_abbreviation(fullword, doc_type, 'tea_profile')
     elif (mode == 'zen' or mode == 'html') and tea.is_selfclosing(word):
         # Self-closing, so construct the snippet from scratch
         snippet = '<' + fullword

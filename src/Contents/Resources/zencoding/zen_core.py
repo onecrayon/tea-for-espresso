@@ -173,7 +173,7 @@ def replace_variables(text):
 	@param text: str
 	@return: str
 	"""
-	return re.sub(r'\$\{([\w\-]+)\}', lambda s, p1: p1 in zen_settings['variables'] and zen_settings['variables'][p1] or s, text)
+	return re.sub(r'\$\{([\w\-]+)\}', lambda s: s.group(1) in zen_settings['variables'] and zen_settings['variables'][s.group(1)] or s, text)
 
 def get_abbreviation(res_type, abbr):
 	"""
