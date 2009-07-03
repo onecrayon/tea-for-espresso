@@ -60,8 +60,8 @@ class TEALoader(NSObject):
         else:
             return True
     
-    @objc.signature('B@:@')
-    def performActionWithContext_error_(self, context):
+    @objc.signature('B@:@@')
+    def performActionWithContext_error_(self, context, error):
         '''
         Gathers the necessary info, populates the environment, and runs
         the script
