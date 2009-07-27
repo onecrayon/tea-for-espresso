@@ -21,7 +21,7 @@ def act(context, first_snippet='', following_snippet='',
     # Split the text into lines, maintaining the linebreaks
     lines = text.splitlines(True)
     # Compile the regex for quicker action on lots of lines
-    parser = re.compile(r'(\s*)(.*?)(\s*(\r?\n)|$)')
+    parser = re.compile(r'(\s*)(.*?)(\s*(\r|\r\n|\n)|$)')
     # Indent the snippets
     first = tea.indent_snippet(context, first_snippet, range)
     following = tea.indent_snippet(context, following_snippet, range)
