@@ -17,15 +17,22 @@ def load_action(target, *roots):
     (TEA modules are likely not, by default, in the system path)
     
     Searches user override directory first, and then the default
-    TEA scripts directory in the Sugar bundle
+    Support directory in the Sugar bundle (also searches TEA directory
+    for backwards compatibility)
     
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
-    paths = [os.path.expanduser(
-        '~/Library/Application Support/Espresso/TEA/Scripts/'
-    )]
+    paths = [
+        os.path.expanduser(
+            '~/Library/Application Support/Espresso/Support/Scripts/'
+        ),
+        os.path.expanduser(
+            '~/Library/Application Support/Espresso/TEA/Scripts/'
+        )
+    ]
     for root in roots:
-        paths.append(os.path.join(root, 'TEA/'))
+        paths.append(os.path.join(root, 'Support', 'Scripts'))
+        paths.append(os.path.join(root, 'TEA'))
     try:
         # Is the action already loaded?
         module = sys.modules[target]
@@ -58,29 +65,35 @@ def refresh_symlinks(bundle_path, rebuild=False):
     sym_loc = bundle_path + '/TextActions/'
     if enabled:
         # user actions are enabled, so walk the user directory and refresh them
-        user_dir = os.path.expanduser(
-            '~/Library/Application Support/Espresso/TEA/TextActions/'
-        )
-        for root, dirs, filenames in os.walk(user_dir):
-            # Rewrite dirs to only include folders that don't start with '.'
-            dirs[:] = [dir for dir in dirs if not dir[0] == '.']
-            basename = root[len(user_dir):].replace('/', '-')
-            for file in filenames:
-                if file[-3:] == 'xml':
-                    ref = basename + file
-                    # Make sure it's a unique filename
-                    count = 1
-                    refbase = ref[:-4]
-                    prior_link = False
-                    while os.path.exists(sym_loc + ref):
-                        if test_link(sym_loc + ref, os.path.join(root, file)):
-                            prior_link = True
-                            break
-                        else:
-                            ref = str(count) + refbase + '.xml'
-                            count += 1
-                    if prior_link is False:
-                        os.symlink(os.path.join(root, file), sym_loc + ref)
+        user_dirs = [
+            os.path.expanduser(
+                '~/Library/Application Support/Espresso/Support/TextActions/'
+            ),
+            os.path.expanduser(
+                '~/Library/Application Support/Espresso/TEA/TextActions/'
+            )
+        ]
+        for user_dir in user_dirs:
+            for root, dirs, filenames in os.walk(user_dir):
+                # Rewrite dirs to only include folders that don't start with '.'
+                dirs[:] = [dir for dir in dirs if not dir[0] == '.']
+                basename = root[len(user_dir):].replace('/', '-')
+                for file in filenames:
+                    if file[-3:] == 'xml':
+                        ref = basename + file
+                        # Make sure it's a unique filename
+                        count = 1
+                        refbase = ref[:-4]
+                        prior_link = False
+                        while os.path.exists(sym_loc + ref):
+                            if test_link(sym_loc + ref, os.path.join(root, file)):
+                                prior_link = True
+                                break
+                            else:
+                                ref = str(count) + refbase + '.xml'
+                                count += 1
+                        if prior_link is False:
+                            os.symlink(os.path.join(root, file), sym_loc + ref)
     elif rebuild:
         # user actions just disabled; remove any symlinks in the bundle
         for root, dirs, filenames in os.walk(sym_loc):
