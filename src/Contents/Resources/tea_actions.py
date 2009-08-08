@@ -351,7 +351,8 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-',
     If bidirectional is False, then it will only look behind the cursor
     '''
     # Helper regex for determining if line ends with a tag
-    re_tag = re.compile(r'<\/?[\w:\-]+[^>]*>$')
+    # Includes checks for ASP/PHP/JSP/ColdFusion closing delimiters
+    re_tag = re.compile(r'(<\/?[\w:\-]+[^>]*|\s*(\?|%|-{2,3}))>$')
     
     def test_word():
         # Mini-function to cut down on code bloat
