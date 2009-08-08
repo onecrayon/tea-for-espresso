@@ -53,7 +53,7 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
         if start != -1:
             start = range.location + start
         length = len(trimmed)
-        if source == 'line':
+        if source == 'line' and trimmed[-1:] in ['\r\n', '\r', '\n']:
             # We don't want the linebreak if we're trimming
             length = length - 1
         range = tea.new_range(start, length)
