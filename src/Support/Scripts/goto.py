@@ -45,9 +45,10 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     # Trim the source
     if trim:
         if discard_indent:
-            trimmed = tea.trim(context, text, False)
+            trimmed = tea.trim(context, text, False, preserve_linebreaks=False)
         else:
-            trimmed = tea.trim(context, text, False, 'end')
+            trimmed = tea.trim(context, text, False, 'end',
+                               preserve_linebreaks=False)
         
         start = text.find(trimmed)
         if start != -1:
