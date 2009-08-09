@@ -145,7 +145,7 @@ zen_settings = {
 			'menu:t': {'type': 'toolbar'},
 			'video': {'src': ''},
 			'audio': {'src': ''},
-			'html:xml': [{'xmlns': "http://www.w3.org/1999/xhtml"}, {'xml:lang': "ru"}]
+			'html:xml': [{'xmlns': "http://www.w3.org/1999/xhtml"}, {'xml:lang': "en"}]
 			
 		},
 		
