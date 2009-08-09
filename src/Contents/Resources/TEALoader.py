@@ -105,25 +105,35 @@ class TEALoader(NSObject):
         defaults = NSUserDefaults.standardUserDefaults()
         for item in defaults.arrayForKey_('TEAShellVariables'):
             if 'variable' in item and item['variable'] != '':
-                os.putenv(item['variable'], item['value'])
+                value = item['value'] if 'value' in item else ''
+                os.putenv(item['variable'], value)
         
         # Initialize our common variables
         recipe = tea.new_recipe()
         ranges = tea.get_ranges(context)
-        # Check the user script folder for overrides
-        file = os.path.join(os.path.expanduser(
-            '~/Library/Application Support/Espresso/TEA/Scripts/'
-        ), self.script)
-        if not os.path.exists(file):
-            file = os.path.join(self.bundle_path, 'TEA', self.script)
-        if not os.path.exists(file):
-            # File doesn't exist in the bundle, either, so something is screwy
+        # Check the user script folders for overrides
+        files = [
+            os.path.join(os.path.expanduser(
+                '~/Library/Application Support/Espresso/Support/Scripts/'
+            ), self.script),
+            os.path.join(os.path.expanduser(
+                '~/Library/Application Support/Espresso/TEA/Scripts/'
+            ), self.script),
+            os.path.join(self.bundle_path, 'Support', 'Scripts', self.script),
+            os.path.join(self.bundle_path, 'TEA', self.script)
+        ]
+        file = None
+        for loc in files:
+            if os.path.exists(loc):
+                file = loc
+        if file is None:
+            # File doesn't exist anywhere, so something is screwy
             return tea.say(
                 context, 'Error: could not find script',
                 'TEA could not find the script associated with this action. '\
                 'Please contact the Sugar developer, or make sure it is '\
                 'installed here:\n\n'\
-                '~/Library/Application Support/Espresso/TEA/Scripts'
+                '~/Library/Application Support/Espresso/Support/Scripts'
             )
         
         # There's always at least one range; this thus supports multiple
