@@ -36,7 +36,7 @@ def log(message):
     Please make sure they are strings before you try to log them; wrap
     anything you aren't sure of in str()
     '''
-    NSLog(message)
+    NSLog(str(message))
 
 # ===============================================================
 # Preference lookup shortcuts
