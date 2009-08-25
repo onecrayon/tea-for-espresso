@@ -320,12 +320,29 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.InsertSnippet.HTMLtag" category="actions.text.HTML/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Tag</title>
+		<key-equivalent>control W</key-equivalent>
+		<setup>
+			<action>insert_snippet</action>
+			<selection-context>none</selection-context>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>&lt;${1:p}>$2&lt;/${1/\s.*//}>$0</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.WrapInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
 		<key-equivalent>control W</key-equivalent>
 		<setup>
 			<action>selections_to_snippets</action>
+			<selection-context>one</selection-context>
 			<options>
 				<dict>
 					<key>first_snippet</key>
