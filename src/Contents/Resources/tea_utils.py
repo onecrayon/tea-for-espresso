@@ -22,17 +22,15 @@ def load_action(target, *roots):
     
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
-    paths = [
-        os.path.expanduser(
-            '~/Library/Application Support/Espresso/Support/Scripts/'
-        ),
-        os.path.expanduser(
-            '~/Library/Application Support/Espresso/TEA/Scripts/'
-        )
-    ]
-    for root in roots:
+    paths = []
+    for idx, root in enumerate(roots):
         paths.append(os.path.join(root, 'Support', 'Scripts'))
-        paths.append(os.path.join(root, 'TEA'))
+        if idx == 1:
+            # First item is always the user's folder, so for backwards
+            # compatibility we have to append TEA/Scripts
+            paths.append(os.path.join(root, 'TEA', 'Scripts'))
+        else:
+            paths.append(os.path.join(root, 'TEA'))
     try:
         # Is the action already loaded?
         module = sys.modules[target]

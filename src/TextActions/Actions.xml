@@ -341,6 +341,7 @@
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
 			<action>selected_lines_to_snippets</action>
+			<selection-context>one</selection-context>
 			<options>
 				<dict>
 					<key>first_snippet</key>
@@ -365,6 +366,7 @@
 		<key-equivalent>control L</key-equivalent>
 		<setup>
 			<action>insert_url_snippet</action>
+			<selection-context>one</selection-context>
 			<options>
 				<dict>
 					<key>default</key>
