@@ -69,8 +69,8 @@ class TEAGenericAction(NSObject):
                      (self.selection_context.lower() == 'one' or\
                      self.selection_context.lower() == 'one+'):
                     possible = False
-            elif self.selections_context.lower() != 'multiple' or\
-                 self.selections_context.lower() != 'one+':
+            elif self.selection_context.lower() != 'multiple' or\
+                 self.selection_context.lower() != 'one+':
                 possible = False
         
         return possible
