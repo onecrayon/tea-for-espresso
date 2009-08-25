@@ -57,7 +57,7 @@ class TEAGenericAction(NSObject):
             if not selectors.matches_(zone):
                 possible = False
         if self.selection_context is not None:
-            # selection_context might be none, one, or multiple
+            # selection_context might be none, one, one+, or multiple
             ranges = context.selectedRanges()
             if len(ranges) == 1:
                 if self.selection_context.lower() == 'multiple':
@@ -66,9 +66,11 @@ class TEAGenericAction(NSObject):
                      self.selection_context.lower() == 'none':
                     possible = False
                 elif ranges[0].rangeValue().length == 0 and \
-                     self.selection_context.lower() == 'one':
+                     (self.selection_context.lower() == 'one' or\
+                     self.selection_context.lower() == 'one+'):
                     possible = False
-            elif self.selections_context.lower() != 'multiple':
+            elif self.selections_context.lower() != 'multiple' or\
+                 self.selections_context.lower() != 'one+':
                 possible = False
         
         return possible
