@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'TEA for Espresso' target in the 'tea-for-espresso' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
