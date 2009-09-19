@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7AEEF40410652918006B7765 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF40310652918006B7765 /* Python.framework */; };
+		7AEEF429106531F2006B7765 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */; };
+		7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46310653AE8006B7765 /* TEAforEspresso.m */; };
+		7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46810653B61006B7765 /* TEAGenericAction.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -17,6 +20,11 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		7AEEF40310652918006B7765 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
+		7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = src/Frameworks/BWToolkitFramework.framework; sourceTree = "<group>"; };
+		7AEEF46210653AE8006B7765 /* TEAforEspresso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAforEspresso.h; path = src/Classes/TEAforEspresso.h; sourceTree = "<group>"; };
+		7AEEF46310653AE8006B7765 /* TEAforEspresso.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAforEspresso.m; path = src/Classes/TEAforEspresso.m; sourceTree = "<group>"; };
+		7AEEF46710653B61006B7765 /* TEAGenericAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAGenericAction.h; path = src/Classes/TEAGenericAction.h; sourceTree = "<group>"; };
+		7AEEF46810653B61006B7765 /* TEAGenericAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAGenericAction.m; path = src/Classes/TEAGenericAction.m; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* TEA for Espresso.sugar */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TEA for Espresso.sugar"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -28,6 +36,7 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				7AEEF40410652918006B7765 /* Python.framework in Frameworks */,
+				7AEEF429106531F2006B7765 /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +75,10 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7AEEF46210653AE8006B7765 /* TEAforEspresso.h */,
+				7AEEF46310653AE8006B7765 /* TEAforEspresso.m */,
+				7AEEF46710653B61006B7765 /* TEAGenericAction.h */,
+				7AEEF46810653B61006B7765 /* TEAGenericAction.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -73,6 +86,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */,
 				7AEEF40310652918006B7765 /* Python.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
@@ -114,6 +128,7 @@
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
+				7AEEF4151065318D006B7765 /* Copy Support Folders */,
 			);
 			buildRules = (
 			);
@@ -152,11 +167,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7AEEF4151065318D006B7765 /* Copy Support Folders */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Support Folders";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cp -Rf \"$SRCROOT\"/src/Support \"$TARGET_BUILD_DIR/$TARGET_NAME/\";\ncp -Rf \"$SRCROOT\"/src/TextActions \"$TARGET_BUILD_DIR/$TARGET_NAME/\";";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D5B49B1048680CD000E48DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */,
+				7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +202,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/src/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -186,6 +224,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/src/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
