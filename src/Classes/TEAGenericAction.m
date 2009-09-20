@@ -9,6 +9,8 @@
 //
 
 #import "TEAGenericAction.h"
+
+#import <EspressoTextActions.h>
 #import <EspressoSyntaxCore.h>
 
 
@@ -18,6 +20,7 @@
 @property (readwrite,copy) NSString* selectionContext;
 @property (readwrite,copy) NSString* bundlePath;
 @property (readwrite,copy) NSString* teaPath;
+@property (readwrite,retain) NSArray* supportPaths;
 @end
 
 @implementation TEAGenericAction
@@ -26,6 +29,7 @@
 @synthesize selectionContext;
 @synthesize bundlePath;
 @synthesize teaPath;
+@synthesize supportPaths;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)myBundlePath {
 	self = [super init];
@@ -87,12 +91,12 @@
 		if ([ranges count] == 1) {
 			if ([[self selectionContext] caseInsensitiveCompare:@"multiple"] == NSOrderedSame) {
 				return NO;
-			} else if ([[ranges objectAtIndex:0] rangeValue].length > 0 AND [[self selectionContext] caseInsensitiveCompare:@"none"] == NSOrderedSame) {
+			} else if (([[ranges objectAtIndex:0] rangeValue].length > 0) && ([[self selectionContext] caseInsensitiveCompare:@"none"] == NSOrderedSame)) {
 				return NO;
-			} else if ([[ranges objectAtIndex:0] rangeValue].length == 0 AND ([[self selectionContext] caseInsensitiveCompare:@"one"] == NSOrderedSame OR [[self selectionContext] caseInsensitiveCompare:@"one+"] == NSOrderedSame)) {
+			} else if (([[ranges objectAtIndex:0] rangeValue].length == 0) && ([[self selectionContext] caseInsensitiveCompare:@"one"] == NSOrderedSame || [[self selectionContext] caseInsensitiveCompare:@"one+"] == NSOrderedSame)) {
 				return NO;
 			}
-		} else if ([[self selectionContext] caseInsensitiveCompare:@"multiple"] != NSOrderedSame OR [[self selectionContext] caseInsensitiveCompare:@"one+"] != NSOrderedSame) {
+		} else if (([[self selectionContext] caseInsensitiveCompare:@"multiple"] != NSOrderedSame) || ([[self selectionContext] caseInsensitiveCompare:@"one+"] != NSOrderedSame)) {
 			return NO;
 		}
 	}

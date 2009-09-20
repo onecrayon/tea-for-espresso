@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7AEEF40410652918006B7765 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF40310652918006B7765 /* Python.framework */; };
-		7AEEF429106531F2006B7765 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */; };
 		7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46310653AE8006B7765 /* TEAforEspresso.m */; };
 		7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46810653B61006B7765 /* TEAGenericAction.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -36,7 +35,6 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				7AEEF40410652918006B7765 /* Python.framework in Frameworks */,
-				7AEEF429106531F2006B7765 /* BWToolkitFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,9 +119,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D5B49AC048680CD000E48DA /* TEA for Espresso */ = {
+		8D5B49AC048680CD000E48DA /* TEA for Espresso.sugar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso" */;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso.sugar" */;
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
 				8D5B49B1048680CD000E48DA /* Sources */,
@@ -134,7 +132,7 @@
 			);
 			dependencies = (
 			);
-			name = "TEA for Espresso";
+			name = "TEA for Espresso.sugar";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = "tea-for-espresso";
 			productReference = 8D5B49B6048680CD000E48DA /* TEA for Espresso.sugar */;
@@ -152,7 +150,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D5B49AC048680CD000E48DA /* TEA for Espresso */,
+				8D5B49AC048680CD000E48DA /* TEA for Espresso.sugar */,
 			);
 		};
 /* End PBXProject section */
@@ -242,8 +240,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_PATH = /Applications/Espresso.app;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_LOADER = "$(APPLICATION_PATH)/Contents/MacOS/Espresso";
+				GCC_ENABLE_OBJC_GC = supported;
 				HEADER_SEARCH_PATHS = "$(APPLICATION_PATH)/Contents/Headers";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -255,8 +254,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_PATH = /Applications/Espresso.app;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_LOADER = "$(APPLICATION_PATH)/Contents/MacOS/Espresso";
+				GCC_ENABLE_OBJC_GC = supported;
 				HEADER_SEARCH_PATHS = "$(APPLICATION_PATH)/Contents/Headers";
 				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
@@ -267,7 +267,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso" */ = {
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso.sugar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB913B08733D840010E9CD /* Debug */,

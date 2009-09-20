@@ -10,7 +10,25 @@
 #import <Python/Python.h>
 #import "TEAforEspresso.h"
 
-// This allows us to set private setters for these variables
+/*
+  We face a dilemma: how to pass a Python function an Objective-C object (context) along with
+  an NSDictionary, and receive a return value in turn?
+  
+  Using the Python C API turned out to be far more complicated than I wanted, so instead
+  I opted to abstract the actual loading functionality out to a class in Python.
+  
+  This allows us to easily use the PyObjC bridge to pass info from the Objective-C class to Python.
+*/
+
+// This forward-declares the methods in TEAPythonLoader to avoid compile errors
+@class TEAPythonLoader;
+
+@interface NSObject (MethodsThatReallyDoExist)
+- (BOOL)actInContext:(id)context withOptions:(NSDictionary *)options forAction:(id)actionObject;
+@end
+
+// This allows us to create private setters for these variables
+// I was having mad memory leaks until I switched solely to using properties; probably a better way out there, though
 @interface TEAforEspresso ()
 @property (readwrite,copy) NSString* action;
 @property (readwrite,retain) NSDictionary* options;
@@ -61,42 +79,28 @@
 		}
 		setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] UTF8String], 1);
 		
-		Py_SetProgramName("/usr/bin/python");
+		// Initialize the Python interpreter
+		Py_SetProgramName("/usr/bin/env python");
 		Py_Initialize();
-//		PySys_SetArgv(argc, (char **)argv);
+		
+		// Execute the Python loader class file to make sure it's in memory
+		// This stuff is straight out of the Python app Xcode template
+		NSString *mainPath = [[self teaPath] stringByAppendingPathComponent:@"Support/Library/TEAPythonLoader.py"];
+		
+		const char *mainPathPtr = [mainPath UTF8String];
+		FILE *mainFile = fopen(mainPathPtr, "r");
+		int result = PyRun_SimpleFile(mainFile, (char *)[[mainPath lastPathComponent] UTF8String]);
+		if ( result != 0 )
+			[NSException raise: NSInternalInconsistencyException
+						format: @"%s:%d main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, __LINE__, mainPath];
 	}
 	
-	// Find the action module
-	NSString *actionPath = [self findScript:[self action]];
-	if (actionPath == nil) {
-		NSLog(@"TEA Error: Could not find Python module %s", actionPath);
-		return NO;
-	}
+	// Now that Python and the TEAPythonLoader class are initialized, send the info to TEAPythonLoader
+	Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
+	id actionLoader = [[TEAPythonLoaderClass alloc] init];
+	BOOL actionResult = [actionLoader actInContext:context withOptions:[self options] forAction:self];
 	
-	// NEED TO FIGURE OUT:
-	// - How to call a specific Python function
-	// - How to pass keyword arguments to the Python function
-	// - How to parse the Python function's return value as a bool
-	
-	/*
-	 You may also call a function with keyword arguments by using PyObject_Call(), which supports arguments and keyword arguments.
-	 As in the above example, we use Py_BuildValue() to construct the dictionary.
-	 
-		PyObject *dict;
-		...
-		dict = Py_BuildValue("{s:i}", "name", val);
-		result = PyObject_Call(my_callback, NULL, dict);
-		Py_DECREF(dict);
-		if (result == NULL)
-		return NULL; // Pass error back
-		// Here maybe use the result
-		Py_DECREF(result);
-	 
-	 http://docs.python.org/extending/extending.html
-	 
-	 Use PyDict_New() and similar to construct the dictionary instead? Not sure how to convert from NSDictionary
-	*/
-	
+	return actionResult;	
 }
 
 @end

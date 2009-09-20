@@ -18,7 +18,7 @@
 	// Bundle path is useful for finding scripts in multiple locations
 	NSString *bundlePath;
 	// We might not be in TEA, so track the TEA path
-	NSString *teaPath
+	NSString *teaPath;
 	// This tracks the locations of Support folders we need to search
 	NSArray *supportPaths;
 }
@@ -30,6 +30,7 @@
 @property (readonly,copy) NSString* teaPath;
 @property (readonly,retain) NSArray* supportPaths;
 
+- (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)myBundlePath;
 // File locating methods
 - (NSString *)findScript:(NSString *)fileName inFolders:(NSArray *)folders;
 - (NSString *)findScript:(NSString *)fileName;

@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import "TEAGenericAction.h"
 
-@interface TEAForEspresso : TEAGenericAction {
+@interface TEAforEspresso : TEAGenericAction {
 	// TEAforEspresso properties
 	NSString *action;
 	NSDictionary *options;
