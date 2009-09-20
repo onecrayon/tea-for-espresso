@@ -24,13 +24,8 @@ def load_action(target, *roots):
     '''
     paths = []
     for idx, root in enumerate(roots):
-        paths.append(os.path.join(root, 'Support', 'Scripts'))
-        if idx == 1:
-            # First item is always the user's folder, so for backwards
-            # compatibility we have to append TEA/Scripts
-            paths.append(os.path.join(root, 'TEA', 'Scripts'))
-        else:
-            paths.append(os.path.join(root, 'TEA'))
+        paths.append(os.path.join(root, 'Scripts'))
+    
     try:
         # Is the action already loaded?
         module = sys.modules[target]

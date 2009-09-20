@@ -6,11 +6,35 @@ TEAforEspresso class
 from Foundation import *
 import objc
 
+from tea_utils import load_action
+
 class TEAPythonLoader(NSObject):
-    @objc.signature('B@:@@@')
-    def actInContext_withOptions_forAction_(self, context, options, actionObject):
+    @objc.signature('B@:@@')
+    def actInContext_forAction_(self, context, actionObject):
         '''This actually performs the Python action'''
-        # For now, just verify that the damn thing works
-        NSLog("Action fired: " + actionObject.action())
+        # Grab variables from the actionObject
+        action = actionObject.action()
+        paths = actionObject.supportPaths()
         
-        return True;
+        if actionObject.options() is not None:
+            # In order to pass dictionary as keyword arguments it has to:
+            # 1) be a Python dictionary
+            # 2) have the key encoded as a string
+            # This dictionary comprehension takes care of both issues
+            options = dict(
+                [str(arg), value] \
+                for arg, value in actionObject.options().iteritems()
+            )
+        else:
+            options = None
+        
+        # Find and run the action
+        target_module = load_action(action, *paths)
+        if target_module is None:
+            # Couldn't find the module, log the error
+            NSLog('TEA: Could not find the module ' + action)
+            return False
+        if options is not None:
+            # We've got options, pass them as keyword arguments
+            return target_module.act(context, **options)
+        return target_module.act(context)

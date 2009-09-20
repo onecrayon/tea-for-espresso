@@ -24,7 +24,7 @@
 @class TEAPythonLoader;
 
 @interface NSObject (MethodsThatReallyDoExist)
-- (BOOL)actInContext:(id)context withOptions:(NSDictionary *)options forAction:(id)actionObject;
+- (BOOL)actInContext:(id)context forAction:(id)actionObject;
 @end
 
 // This allows us to create private setters for these variables
@@ -98,7 +98,7 @@
 	// Now that Python and the TEAPythonLoader class are initialized, send the info to TEAPythonLoader
 	Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
 	id actionLoader = [[TEAPythonLoaderClass alloc] init];
-	BOOL actionResult = [actionLoader actInContext:context withOptions:[self options] forAction:self];
+	BOOL actionResult = [actionLoader actInContext:context forAction:self];
 	
 	return actionResult;	
 }
