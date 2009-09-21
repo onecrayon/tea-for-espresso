@@ -320,7 +320,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.InsertSnippet.HTMLtag" category="actions.text.HTML/tea.insertion">
+	<!--<action id="com.onecrayon.TextActions.InsertSnippet.HTMLtag" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Insert Tag</title>
 		<key-equivalent>control W</key-equivalent>
@@ -334,7 +334,7 @@
 				</dict>
 			</options>
 		</setup>
-	</action>
+	</action>-->
 	
 	<action id="com.onecrayon.TextActions.WrapInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
@@ -342,7 +342,7 @@
 		<key-equivalent>control W</key-equivalent>
 		<setup>
 			<action>selections_to_snippets</action>
-			<selection-context>one</selection-context>
+			<!-- <selection-context>one</selection-context> -->
 			<options>
 				<dict>
 					<key>first_snippet</key>
@@ -358,7 +358,7 @@
 		<key-equivalent>cmd control W</key-equivalent>
 		<setup>
 			<action>selected_lines_to_snippets</action>
-			<selection-context>one</selection-context>
+			<!-- <selection-context>one</selection-context> -->
 			<options>
 				<dict>
 					<key>first_snippet</key>
@@ -383,7 +383,7 @@
 		<key-equivalent>control L</key-equivalent>
 		<setup>
 			<action>insert_url_snippet</action>
-			<selection-context>one</selection-context>
+			<!-- <selection-context>one</selection-context> -->
 			<options>
 				<dict>
 					<key>default</key>
