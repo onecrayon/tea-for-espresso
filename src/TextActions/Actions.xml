@@ -209,6 +209,24 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.InsertText.Tab" category="actions.text.formatting/tea.insertion">
+		<class>TEAforEspresso</class>
+		<title>Insert Tab In Tab Stop</title>
+		<key-equivalent>option tab</key-equivalent>
+		<setup>
+			<action>insert_text</action>
+			<options>
+				<dict>
+					<key>default</key>
+					<string>	$TOUCH</string>
+					
+					<key>undo_name</key>
+					<string>Insert Tab</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
