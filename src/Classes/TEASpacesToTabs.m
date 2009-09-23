@@ -9,6 +9,8 @@
 //
 
 #import "TEASpacesToTabs.h"
+#import <EspressoTextActions.h>
+#import <EspressoSyntaxCore.h>
 
 // This allows me to set private getters and setters for the property
 @interface TEAGenericAction ()
@@ -21,14 +23,14 @@
 @synthesize myContext;
 
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
-	if ([self customSheet] != nil) {
+	if (customSheet != nil) {
 		[NSBundle loadNibNamed:@"TEASpacesPerTabsSheet" owner:self];
 		// Set the default number of spaces per tab from prefs
 		NSUInteger num_spaces = [[context textPreferences] numberOfSpacesForTab];
-		[[self numSpaces] setStringValue:[NSString stringWithFormat:@"%d", num_spaces]];
-		[NSApp beginSheet:[self customSheet]
+		[numSpaces setStringValue:[NSString stringWithFormat:@"%d", num_spaces]];
+		[NSApp beginSheet:customSheet
 		       modalForWindow:[context windowForSheet]
-			   modalDelegate:self,
+			   modalDelegate:self
 		       didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)
 			   contextInfo:nil
 		];
@@ -38,11 +40,11 @@
 }
 
 - (IBAction) doSubmitSheet:(id)sender {
-	[NSApp endSheet:[self customSheet] returnCode:1];
+	[NSApp endSheet:customSheet returnCode:1];
 }
 
 - (IBAction) cancel:(id)sender {
-	[NSApp endSheet:[self customSheet] returnCode:0];
+	[NSApp endSheet:customSheet returnCode:0];
 }
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
@@ -52,7 +54,7 @@
 		// Send the info to TEAPythonLoader to run the action
 		Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
 		id actionLoader = [[TEAPythonLoaderClass alloc] init];
-		(BOOL) returnValue = [actionLoader actInContext:[self myContext] forAction:self];
+		BOOL returnValue = [actionLoader actInContext:[self myContext] forAction:self];
 	}
 	
 	[sheet orderOut:self];
