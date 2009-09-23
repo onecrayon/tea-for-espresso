@@ -10,6 +10,6 @@
 
 @interface NSView (BWAdditions)
 
-- (void)bwBringToFront;
+- (void)bringToFront;
 
 @end

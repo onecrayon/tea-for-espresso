@@ -11,9 +11,9 @@
 @interface NSImage (BWAdditions)
 
 // Draw a solid color over an image - taking into account alpha. Useful for coloring template images.
-- (NSImage *)bwTintedImageWithColor:(NSColor *)tint;
+- (NSImage *)tintedImageWithColor:(NSColor *)tint;
 
 // Rotate an image 90 degrees clockwise or counterclockwise
-- (NSImage *)bwRotateImage90DegreesClockwise:(BOOL)clockwise;
+- (NSImage *)rotateImage90DegreesClockwise:(BOOL)clockwise;
 
 @end
