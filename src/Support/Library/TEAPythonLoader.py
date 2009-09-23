@@ -34,7 +34,16 @@ class TEAPythonLoader(NSObject):
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + action)
             return False
-        if options is not None:
+        
+        # We may need to pass the action object as the second argument
+        if "req_action_object" in target_module.__dict__ and \
+           target_module.req_action_object:
+            if options is not None:
+                return target_module.act(context, actionObject, **options)
+            else:
+                return target_module.act(context, actionObject)
+        elif options is not None:
             # We've got options, pass them as keyword arguments
             return target_module.act(context, **options)
-        return target_module.act(context)
+        else:
+            return target_module.act(context)
