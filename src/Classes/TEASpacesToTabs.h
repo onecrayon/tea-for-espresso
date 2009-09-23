@@ -1,16 +1,24 @@
 //
 //  TEASpacesToTabs.h
-//  tea-for-espresso
+//  TEA for Espresso.sugar
 //
-//  Created by Ian Beck on 9/23/09.
-//  Copyright 2009 One Crayon. All rights reserved.
+//  Created by Ian Beck
+//  http://onecrayon.com/tea/
+//
+//  MIT License
 //
 
 #import <Cocoa/Cocoa.h>
+#import "TEAforEspresso.h"
 
 
-@interface TEASpacesToTabs : NSObject {
-
+@interface TEASpacesToTabs : TEAforEspresso {
+	(IBOutlet) customSheet;
+	(IBOutlet) numSpaces;
+	(IBOutlet) spinner;
+	(id) myContext;
 }
+
+@property (readonly,retain) id myContext;
 
 @end

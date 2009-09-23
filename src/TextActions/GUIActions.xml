@@ -6,7 +6,13 @@
 		<class>TEASpacesToTabs</class>
 		<title>Spaces To Tabs...</title>
 		<setup>
-			<action>entab</action>
+			<action>spaces_to_tabs</action>
+			<options>
+				<dict>
+					<key>operation</key>
+					<string>entab</string>
+				</dict>
+			</options>
 		</setup>
 	</action>
 	
@@ -14,7 +20,13 @@
 		<class>TEASpacesToTabs</class>
 		<title>Tabs To Spaces...</title>
 		<setup>
-			<action>detab</action>
+			<action>spaces_to_tabs</action>
+			<options>
+				<dict>
+					<key>operation</key>
+					<string>detab</string>
+				</dict>
+			</options>
 		</setup>
 	</action>
 	

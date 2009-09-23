@@ -10,28 +10,12 @@
 #import <Python/Python.h>
 #import "TEAforEspresso.h"
 
-/*
-  We face a dilemma: how to pass a Python function an Objective-C object (context) along with
-  an NSDictionary, and receive a return value in turn?
-  
-  Using the Python C API turned out to be far more complicated than I wanted, so instead
-  I opted to abstract the actual loading functionality out to a class in Python.
-  
-  This allows us to easily use the PyObjC bridge to pass info from the Objective-C class to Python.
-*/
-
-// This forward-declares the methods in TEAPythonLoader to avoid compile errors
-@class TEAPythonLoader;
-
-@interface NSObject (MethodsThatReallyDoExist)
-- (BOOL)actInContext:(id)context forAction:(id)actionObject;
-@end
-
 // This allows us to create private setters for these variables
 // I was having mad memory leaks until I switched solely to using properties; probably a better way out there, though
 @interface TEAforEspresso ()
 @property (readwrite,copy) NSString* action;
 @property (readwrite,retain) NSDictionary* options;
+@property (readwrite) BOOL passActionObject;
 @end
 
 // The actual implementation of the class
@@ -39,6 +23,7 @@
 
 @synthesize action;
 @synthesize options;
+@synthesize passActionObject;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)myBundlePath {
 	self = [super initWithDictionary:dictionary bundlePath:myBundlePath];
@@ -59,6 +44,18 @@
 		[self setOptions:[dictionary objectForKey:@"options"]];
 	}
 	
+	// Check to see if we should be passing our action object along
+	if ([dictionary objectForKey:@"pass_action_object"] != nil) {
+		if ([[dictionary objectForKey:@"pass_action_object"] caseInsensitiveCompare:@"true"]) {
+			[self setPassActionObject:YES];
+		} else {
+			[self setPassActionObject:NO];
+		}
+	} else {
+		[self setPassActionObject:NO];
+	}
+
+	
 	// ONE-TIME INITIALIZATION ITEMS NEED TO GO HERE TO GENERATE SYMLINKS
 	
 	return self;
@@ -71,6 +68,15 @@
 		return NO;
 	}
 	
+	[self initPython];
+	
+	// Now that Python and the TEAPythonLoader class are initialized, send the info to TEAPythonLoader
+	Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
+	id actionLoader = [[TEAPythonLoaderClass alloc] init];
+	return [actionLoader actInContext:context forAction:self];
+}
+
+- (void) initPython {
 	if (!Py_IsInitialized()) {
 		// Construct the Python search paths
 		NSMutableArray *pythonPathArray = [NSMutableArray array];
@@ -94,13 +100,6 @@
 			[NSException raise: NSInternalInconsistencyException
 						format: @"%s:%d main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, __LINE__, mainPath];
 	}
-	
-	// Now that Python and the TEAPythonLoader class are initialized, send the info to TEAPythonLoader
-	Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
-	id actionLoader = [[TEAPythonLoaderClass alloc] init];
-	BOOL actionResult = [actionLoader actInContext:context forAction:self];
-	
-	return actionResult;	
 }
 
 @end
