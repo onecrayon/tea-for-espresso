@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A219FF9106B2BDA00F114B6 /* TEAPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */; };
+		7A21A029106BCA3800F114B6 /* TEAPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21A027106BCA3800F114B6 /* TEAPreferences.xib */; };
+		7A21A037106BCB4B00F114B6 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */; };
+		7A21A070106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */; };
 		7A59D8A1106A6AC10078C92C /* TEASpacesToTabs.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A59D8A0106A6AC10078C92C /* TEASpacesToTabs.m */; };
 		7A59D8A9106A6B9C0078C92C /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */; };
 		7A59D8FE106A7CB90078C92C /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A59D8FD106A7CB90078C92C /* Defaults.plist */; };
-		7A59D901106A7CD00078C92C /* TEASpacesPerTabsSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7A59D8FF106A7CD00078C92C /* TEASpacesPerTabsSheet.nib */; };
 		7AEEF40410652918006B7765 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF40310652918006B7765 /* Python.framework */; };
 		7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46310653AE8006B7765 /* TEAforEspresso.m */; };
 		7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46810653B61006B7765 /* TEAGenericAction.m */; };
@@ -36,10 +39,13 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		7A219FF7106B2BDA00F114B6 /* TEAPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAPreferences.h; path = src/Classes/TEAPreferences.h; sourceTree = "<group>"; };
+		7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAPreferences.m; path = src/Classes/TEAPreferences.m; sourceTree = "<group>"; };
+		7A21A028106BCA3800F114B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEAPreferences.xib; sourceTree = "<group>"; };
+		7A21A06F106BCC6D00F114B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEASpacesPerTabsSheet.xib; sourceTree = "<group>"; };
 		7A59D89F106A6AC10078C92C /* TEASpacesToTabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEASpacesToTabs.h; path = src/Classes/TEASpacesToTabs.h; sourceTree = "<group>"; };
 		7A59D8A0106A6AC10078C92C /* TEASpacesToTabs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEASpacesToTabs.m; path = src/Classes/TEASpacesToTabs.m; sourceTree = "<group>"; };
 		7A59D8FD106A7CB90078C92C /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = src/Resources/Defaults.plist; sourceTree = "<group>"; };
-		7A59D900106A7CD00078C92C /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = src/Resources/English.lproj/TEASpacesPerTabsSheet.nib; sourceTree = "<group>"; };
 		7AEEF40310652918006B7765 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
 		7AEEF428106531F2006B7765 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = src/Frameworks/BWToolkitFramework.framework; sourceTree = "<group>"; };
 		7AEEF46210653AE8006B7765 /* TEAforEspresso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAforEspresso.h; path = src/Classes/TEAforEspresso.h; sourceTree = "<group>"; };
@@ -55,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A21A037106BCB4B00F114B6 /* BWToolkitFramework.framework in Frameworks */,
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				7AEEF40410652918006B7765 /* Python.framework in Frameworks */,
 			);
@@ -87,7 +94,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7A59D8FF106A7CD00078C92C /* TEASpacesPerTabsSheet.nib */,
+				7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */,
+				7A21A027106BCA3800F114B6 /* TEAPreferences.xib */,
 				7A59D8FD106A7CB90078C92C /* Defaults.plist */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 			);
@@ -103,6 +111,8 @@
 				7AEEF46810653B61006B7765 /* TEAGenericAction.m */,
 				7A59D89F106A6AC10078C92C /* TEASpacesToTabs.h */,
 				7A59D8A0106A6AC10078C92C /* TEASpacesToTabs.m */,
+				7A219FF7106B2BDA00F114B6 /* TEAPreferences.h */,
+				7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -188,7 +198,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A59D8FE106A7CB90078C92C /* Defaults.plist in Resources */,
-				7A59D901106A7CD00078C92C /* TEASpacesPerTabsSheet.nib in Resources */,
+				7A21A029106BCA3800F114B6 /* TEAPreferences.xib in Resources */,
+				7A21A070106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,18 +230,27 @@
 				7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */,
 				7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */,
 				7A59D8A1106A6AC10078C92C /* TEASpacesToTabs.m in Sources */,
+				7A219FF9106B2BDA00F114B6 /* TEAPreferences.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7A59D8FF106A7CD00078C92C /* TEASpacesPerTabsSheet.nib */ = {
+		7A21A027106BCA3800F114B6 /* TEAPreferences.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7A59D900106A7CD00078C92C /* English */,
+				7A21A028106BCA3800F114B6 /* English */,
 			);
-			name = TEASpacesPerTabsSheet.nib;
+			name = TEAPreferences.xib;
+			sourceTree = "<group>";
+		};
+		7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A21A06F106BCC6D00F114B6 /* English */,
+			);
+			name = TEASpacesPerTabsSheet.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
