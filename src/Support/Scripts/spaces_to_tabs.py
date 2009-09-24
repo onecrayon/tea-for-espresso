@@ -9,10 +9,11 @@ import tea_actions as tea
 req_action_object = True
 
 def act(context, actionObject, operation='entab'):
-    # Leave sheet open with "processing" spinner
-    actionObject.spinner.startAnimation_(actionObject)
+    def replacements(match):
+        '''Utility function for replacing items'''
+        return match.group(0).replace(search, replace)
     
-    spaces = int(actionObject.numSpaces.stringValue())
+    spaces = int(actionObject.numSpaces().stringValue())
     if operation == 'entab':
         target = re.compile(r'^(\t* +\t*)+', re.MULTILINE)
         search = ' ' * spaces
@@ -36,6 +37,7 @@ def act(context, actionObject, operation='entab'):
         insertions.addReplacementString_forRange_(text, range)
     insertions.setUndoActionName_(operation.title())
     context.applyTextRecipe_(insertions)
-    actionObject.spinner.stopAnimation_(actionObject)
+    # spinner is turned on in the Objective-C action
+    actionObject.spinner().stopAnimation_(actionObject)
     
     return True

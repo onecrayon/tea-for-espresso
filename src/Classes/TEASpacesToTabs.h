@@ -13,12 +13,15 @@
 
 
 @interface TEASpacesToTabs : TEAforEspresso {
-	IBOutlet NSWindow *customSheet;
-	IBOutlet NSTextField *numSpaces;
-	IBOutlet NSProgressIndicator *spinner;
+	NSWindow *customSheet;
+	NSTextField *numSpaces;
+	NSProgressIndicator *spinner;
 	id myContext;
 }
 
+@property (readonly,retain) IBOutlet NSWindow *customSheet;
+@property (readonly,retain) IBOutlet NSTextField *numSpaces;
+@property (readonly,retain) IBOutlet NSProgressIndicator *spinner;
 @property (readonly,retain) id myContext;
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
