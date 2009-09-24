@@ -53,6 +53,7 @@
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
 	if (returnCode == 1) {
+		// Doing this here, because Python might be starting up, which could take a while
 		[[self spinner] startAnimation:self];
 		[self initPython];
 		
