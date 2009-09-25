@@ -23,6 +23,8 @@
 @property (readwrite,retain) NSArray* supportPaths;
 @end
 
+static BOOL TEAInitActionsTaken = NO;
+
 @implementation TEAGenericAction
 
 @synthesize syntaxContext;
@@ -59,6 +61,15 @@
 								[[self bundlePath] stringByAppendingPathComponent:@"Support"],
 								nil
 							   ]];
+	}
+	
+	if (!TEAInitActionsTaken) {
+		TEAInitActionsTaken = YES;
+		NSString *defaults = [[NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"] pathForResource:@"Defaults" ofType:@"plist"];
+		if (defaults != nil) {
+			[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:defaults]];
+		}
+		// IF SYMLINKS ARE STILL NECESSARY, I'LL NEED TO GENERATE THEM HERE
 	}
 	
 	return self;

@@ -54,9 +54,6 @@
 	} else {
 		[self setPassActionObject:NO];
 	}
-
-	
-	// ONE-TIME INITIALIZATION ITEMS NEED TO GO HERE TO GENERATE SYMLINKS
 	
 	return self;
 }
