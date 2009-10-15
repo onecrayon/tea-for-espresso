@@ -10,6 +10,20 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.BalanceIn" category="category.id">
+		<class>TEAforEspresso</class>
+		<title>Balance In</title>
+		<setup>
+			<action>balance</action>
+			<options>
+				<dict>
+					<key>direction</key>
+					<string>in</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
