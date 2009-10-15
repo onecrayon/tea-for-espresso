@@ -16,8 +16,8 @@ class TEASpacesToTabs(TEAforEspresso):
     numSpaces = objc.IBOutlet()
     spinner = objc.IBOutlet()
     
-    @objc.signature('B@:@')
-    def performActionWithContext_error_(self, context):
+    @objc.signature('B@:@@')
+    def performActionWithContext_error_(self, context, error):
         '''
         Gets the user's preferred number of spaces and switches the 
         indentation style accordingly

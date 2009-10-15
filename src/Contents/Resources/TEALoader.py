@@ -10,21 +10,20 @@ import os
 from Foundation import *
 import objc
 
+from TEAGenericAction import TEAGenericAction
 import tea_actions as tea
-from espresso import *
 
-# This really shouldn't be necessary thanks to the Foundation import
-# but for some reason the plugin dies without it
-NSObject = objc.lookUpClass('NSObject')
-
-class TEALoader(NSObject):
+class TEALoader(TEAGenericAction):
     '''
     Determines what info is necessary and feeds it to external scripts,
     then inserts their return value into the Espresso document
     '''
     def initWithDictionary_bundlePath_(self, dictionary, bundlePath):
         '''Required by Espresso; initializes the plugin settings'''
-        self = super(TEALoader, self).init()
+        # Call the generic action's init method
+        self = super(TEALoader, self).initWithDictionary_bundlePath_(
+            dictionary, bundlePath
+        )
         if self is None: return None
         
         # Set object's internal variables
@@ -34,34 +33,10 @@ class TEALoader(NSObject):
         self.output = dictionary['output'] if 'output' in dictionary else None
         self.undo = dictionary['undo_name'] if 'undo_name' in dictionary else None
         
-        # Set the syntax context
-        self.syntax_context = dictionary['syntax-context'] \
-                              if 'syntax-context' in dictionary else None
-        
-        # By looking up the bundle, third party sugars can call
-        # TEA for Espresso actions or include their own custom actions
-        self.bundle_path = bundlePath
-        
         return self
     
-    # Signature is necessary for Objective-C to be able to find the method
-    @objc.signature('B@:@')
-    def canPerformActionWithContext_(self, context):
-        '''Returns bool; can the action be performed in the given context'''
-        if self.syntax_context is not None:
-            ranges = context.selectedRanges()
-            range = ranges[0].rangeValue()
-            selectors = SXSelectorGroup.selectorGroupWithString_(self.syntax_context)
-            zone = context.syntaxTree().rootZone().zoneAtCharacterIndex_(range.location)
-            if selectors.matches_(zone):
-                return True
-            else:
-                return False
-        else:
-            return True
-    
-    @objc.signature('B@:@')
-    def performActionWithContext_error_(self, context):
+    @objc.signature('B@:@@')
+    def performActionWithContext_error_(self, context, error):
         '''
         Gathers the necessary info, populates the environment, and runs
         the script
@@ -105,25 +80,35 @@ class TEALoader(NSObject):
         defaults = NSUserDefaults.standardUserDefaults()
         for item in defaults.arrayForKey_('TEAShellVariables'):
             if 'variable' in item and item['variable'] != '':
-                os.putenv(item['variable'], item['value'])
+                value = item['value'] if 'value' in item else ''
+                os.putenv(item['variable'], value)
         
         # Initialize our common variables
         recipe = tea.new_recipe()
         ranges = tea.get_ranges(context)
-        # Check the user script folder for overrides
-        file = os.path.join(os.path.expanduser(
-            '~/Library/Application Support/Espresso/TEA/Scripts/'
-        ), self.script)
-        if not os.path.exists(file):
-            file = os.path.join(self.bundle_path, 'TEA', self.script)
-        if not os.path.exists(file):
-            # File doesn't exist in the bundle, either, so something is screwy
+        # Check the user script folders for overrides
+        files = [
+            os.path.join(os.path.expanduser(
+                '~/Library/Application Support/Espresso/Support/Scripts/'
+            ), self.script),
+            os.path.join(os.path.expanduser(
+                '~/Library/Application Support/Espresso/TEA/Scripts/'
+            ), self.script),
+            os.path.join(self.bundle_path, 'Support', 'Scripts', self.script),
+            os.path.join(self.bundle_path, 'TEA', self.script)
+        ]
+        file = None
+        for loc in files:
+            if os.path.exists(loc):
+                file = loc
+        if file is None:
+            # File doesn't exist anywhere, so something is screwy
             return tea.say(
                 context, 'Error: could not find script',
                 'TEA could not find the script associated with this action. '\
                 'Please contact the Sugar developer, or make sure it is '\
                 'installed here:\n\n'\
-                '~/Library/Application Support/Espresso/TEA/Scripts'
+                '~/Library/Application Support/Espresso/Support/Scripts'
             )
         
         # There's always at least one range; this thus supports multiple
@@ -193,7 +178,7 @@ class TEALoader(NSObject):
                     )
             # Log errors
             if error:
-                tea.log(str(error))
+                tea.log(error)
             # Process the output
             output = output.decode('utf-8')
             if self.output == 'document' or \

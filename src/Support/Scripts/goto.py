@@ -45,15 +45,16 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     # Trim the source
     if trim:
         if discard_indent:
-            trimmed = tea.trim(context, text, False)
+            trimmed = tea.trim(context, text, False, preserve_linebreaks=False)
         else:
-            trimmed = tea.trim(context, text, False, 'end')
+            trimmed = tea.trim(context, text, False, 'end',
+                               preserve_linebreaks=False)
         
         start = text.find(trimmed)
         if start != -1:
             start = range.location + start
         length = len(trimmed)
-        if source == 'line':
+        if source == 'line' and trimmed[-1:] in ['\r\n', '\r', '\n']:
             # We don't want the linebreak if we're trimming
             length = length - 1
         range = tea.new_range(start, length)

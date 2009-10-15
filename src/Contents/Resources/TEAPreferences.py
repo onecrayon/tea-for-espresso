@@ -22,8 +22,8 @@ class TEAPreferences(NSObject):
     def canPerformActionWithContext_(self, context):
         return True
     
-    @objc.signature('B@:@')
-    def performActionWithContext_error_(self, context):
+    @objc.signature('B@:@@')
+    def performActionWithContext_error_(self, context, error):
         '''
         Presents a preferences window for the user to set TEA-specific
         preferences

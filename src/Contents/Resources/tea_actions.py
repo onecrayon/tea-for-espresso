@@ -36,7 +36,7 @@ def log(message):
     Please make sure they are strings before you try to log them; wrap
     anything you aren't sure of in str()
     '''
-    NSLog(message)
+    NSLog(str(message))
 
 # ===============================================================
 # Preference lookup shortcuts
@@ -164,7 +164,8 @@ def entities_to_hex(text, wrap):
         return wrap[0].replace('$HEX', hex)
     return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
-def trim(context, text, lines=True, sides='both', respect_indent=False):
+def trim(context, text, lines=True, sides='both', respect_indent=False,
+		 preserve_linebreaks=True):
     '''
     Trims whitespace from the text
     
@@ -175,7 +176,7 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
     If respect_indent=True, indent characters at the start of lines will be
     left alone (specific character determined by preferences)
     '''
-    def trimit(text, sides, indent):
+    def trimit(text, sides, indent, preserve_linebreaks):
         '''Utility function for trimming the text'''
         # Preserve the indent if an indent string is passed in
         if (sides == 'both' or sides == 'start') and indent != '':
@@ -186,9 +187,9 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
                 indent_chars = ''
         else:
             indent_chars = ''
-        # Always preserve the linebreaks at the end
+        # Preserve the linebreaks at the end if needed
         match = re.search(r'[\n\r]+$', text)
-        if match:
+        if match and preserve_linebreaks:
             linebreak = match.group(0)
         else:
             linebreak = ''
@@ -209,9 +210,9 @@ def trim(context, text, lines=True, sides='both', respect_indent=False):
     finaltext = ''
     if lines:
         for line in text.splitlines(True):
-            finaltext += trimit(line, sides, indent)
+            finaltext += trimit(line, sides, indent, preserve_linebreaks)
     else:
-        finaltext = trimit(text, sides, indent)
+        finaltext = trimit(text, sides, indent, preserve_linebreaks)
     return finaltext
 
 def unix_line_endings(text):
@@ -351,7 +352,8 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-',
     If bidirectional is False, then it will only look behind the cursor
     '''
     # Helper regex for determining if line ends with a tag
-    re_tag = re.compile(r'<\/?[\w:\-]+[^>]*>$')
+    # Includes checks for ASP/PHP/JSP/ColdFusion closing delimiters
+    re_tag = re.compile(r'(<\/?[\w:\-]+[^>]*|\s*(\?|%|-{2,3}))>$')
     
     def test_word():
         # Mini-function to cut down on code bloat
