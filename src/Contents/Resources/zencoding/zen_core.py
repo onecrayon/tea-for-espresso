@@ -173,7 +173,7 @@ def replace_variables(text):
 	@param text: str
 	@return: str
 	"""
-	return re.sub(r'\$\{([\w\-]+)\}', lambda s: s.group(1) in zen_settings['variables'] and zen_settings['variables'][s.group(1)] or s, text)
+	return re.sub(r'\$\{([\w\-]+)\}', lambda s, p1: p1 in zen_settings['variables'] and zen_settings['variables'][p1] or s, text)
 
 def get_abbreviation(res_type, abbr):
 	"""
@@ -234,7 +234,7 @@ def parse_into_tree(abbr, doc_type = 'html'):
 	parent = root
 	last = None
 	res = zen_settings.has_key(doc_type) and zen_settings[doc_type] or {}
-	token = re.compile(r'([\+>])?([a-z][a-z0-9:\!\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(?:\*(\d+))?', re.IGNORECASE)
+	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(?:\*(\d+))?', re.IGNORECASE)
 	
 	def expando_replace(m):
 		ex = m.group(0)
@@ -390,6 +390,7 @@ class Tag(object):
 		self.count = count
 		self.children = []
 		self.attributes = []
+		self.__attr_hash = {}
 		self.__abbr = abbr
 		self.__res = zen_settings.has_key(doc_type) and zen_settings[doc_type] or {}
 		
@@ -399,13 +400,28 @@ class Tag(object):
 		
 	def add_attribute(self, name, value):
 		"""
-		Добавляет атрибут
-		@param name: Название атрибута
+		Add attribute to tag. If the attribute with the same name already exists,
+		it will be overwritten, but if it's name is 'class', it will be merged
+		with the existed one
+		@param name: Attribute nama
 		@type name: str
-		@param value: Значение атрибута
+		@param value: Attribute value
 		@type value: str
 		"""
-		self.attributes.append({'name': name, 'value': value})
+		if name in self.__attr_hash:
+#			attribue already exists
+			a = self.__attr_hash[name]
+			if name == 'class':
+#				'class' is a magic attribute
+				if a['value']:
+					value = ' ' + value
+				a['value'] += value
+			else:
+				a['value'] = value
+		else:
+			a = {'name': name, 'value': value}
+			self.__attr_hash[name] = a
+			self.attributes.append(a)
 		
 	def add_child(self, tag):
 		"""
