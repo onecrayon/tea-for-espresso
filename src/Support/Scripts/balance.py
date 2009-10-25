@@ -6,7 +6,10 @@ If direction == 'in', balance will attempt to move inward (select first
 balanced delimiters contained within the current delimiter) rather than
 outward.
 
-Setting force_itemizers to True will use itemizers even in HTML documents.
+mode controls what type of balancing is used:
+- auto (default): tries to detect if we're in HTML before using zen
+- zen: always uses zen coding, even if we aren't in HTML or XML
+- itemizer: always uses itemizer balancing, even in HTML
 '''
 
 from Foundation import NSValue
@@ -15,8 +18,10 @@ import tea_actions as tea
 
 from zencoding import html_matcher as html_matcher
 
-def act(context, direction='out', force_itemizers=False):
-    if tea.cursor_in_zone(context, "html, html *, xml, xml *") and not force_itemizers:
+def act(context, direction='out', mode='auto'):
+    zen_target = 'html, html *, xml, xml *'
+    if (mode.lower() == 'auto' and tea.cursor_in_zone(context, zen_target)) or \
+       mode.lower() == 'zen':
         # HTML or XML, so use Zen-coding's excellent balancing commands
         
         # Using this method rather than tea.get_single_range() is better
