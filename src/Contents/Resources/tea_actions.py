@@ -353,7 +353,7 @@ def get_word(context, range, alpha_numeric=True, extra_characters='_-',
     '''
     # Helper regex for determining if line ends with a tag
     # Includes checks for ASP/PHP/JSP/ColdFusion closing delimiters
-    re_tag = re.compile(r'(<\/?[\w:\-]+[^>]*|\s*(\?|%|-{2,3}))>$')
+    re_tag = re.compile(r'(<\/?[\w:-]+[^>]*|\s*(/|\?|%|-{2,3}))>$')
     
     def test_word():
         # Mini-function to cut down on code bloat
