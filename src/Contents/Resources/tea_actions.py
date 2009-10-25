@@ -165,7 +165,7 @@ def entities_to_hex(text, wrap):
     return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
 def trim(context, text, lines=True, sides='both', respect_indent=False,
-		 preserve_linebreaks=True):
+         preserve_linebreaks=True):
     '''
     Trims whitespace from the text
     
@@ -481,6 +481,47 @@ def select_from_zones(context, range=None, default=None, **syntaxes):
     
     # If we reach this point, there's no match
     return default
+
+def range_in_zone(context, range, selector):
+    '''
+    Tests the location of the range to see if it matches the provided
+    zone selector string
+    '''
+    target = SXSelectorGroup.selectorGroupWithString_(selector)
+    if context.string().length() == range.location:
+        zone = context.syntaxTree().rootZone()
+    else:
+        zone = context.syntaxTree().rootZone().zoneAtCharacterIndex_(
+            range.location
+        )
+    return target.matches_(zone)
+
+def cursor_in_zone(context, selector):
+    '''
+    Tests the location of the range to see if it matches the provided
+    zone selector string
+    '''
+    ranges = get_ranges(context)
+    return range_in_zone(context, ranges[0], selector)
+
+# ===============================================================
+# Itemizer methods
+# ===============================================================
+
+def get_item_for_range(context, range):
+    '''Returns the smallest item containing the given range'''
+    return context.itemizer().smallestItemContainingCharacterRange_()
+
+def get_item_parent_for_range(context, range):
+    '''Returns the parent of the item containing the given range'''
+    item = tea.get_item_from_range(context, range)
+    new_range = item.range()
+    # Select the parent if the range is the same
+    while(item.parent() and (new_range.location == range.location and \
+          new_range.length == range.length):
+        item = item.parent()
+        new_range = item.range()
+    return item
 
 # ===============================================================
 # Snippet methods
