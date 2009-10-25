@@ -515,6 +515,8 @@ def get_item_for_range(context, range):
 def get_item_parent_for_range(context, range):
     '''Returns the parent of the item containing the given range'''
     item = get_item_for_range(context, range)
+    if item is None:
+        return None
     new_range = item.range()
     # Select the parent if the range is the same
     while(item.parent() and (new_range.location == range.location and \

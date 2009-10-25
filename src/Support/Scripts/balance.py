@@ -83,8 +83,14 @@ def act(context, direction='out', mode='auto'):
                         new_range = items[0].range()
                 targets.append(new_range)
             else:
-                targets.append(tea.get_item_parent_for_range(context, range).range())
+                item = tea.get_item_parent_for_range(context, range)
+                if item is None:
+                    continue
+                targets.append(item.range())
         
         # Set the selections, and return
-        context.setSelectedRanges_([NSValue.valueWithRange_(range) for range in targets])
-        return True
+        if len(targets) > 0:
+            context.setSelectedRanges_([NSValue.valueWithRange_(range) for range in targets])
+            return True
+        else:
+            return False
