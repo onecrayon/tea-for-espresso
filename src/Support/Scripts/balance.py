@@ -5,14 +5,18 @@ their contents.
 If direction == 'in', balance will attempt to move inward (select first
 balanced delimiters contained within the current delimiter) rather than
 outward.
+
+Setting force_itemizers to True will use itemizers even in HTML documents.
 '''
+
+from Foundation import NSValue
 
 import tea_actions as tea
 
 from zencoding import html_matcher as html_matcher
 
-def act(context, direction='out'):
-    if tea.cursor_in_zone(context, "html, html *, xml, xml *"):
+def act(context, direction='out', force_itemizers=False):
+    if tea.cursor_in_zone(context, "html, html *, xml, xml *") and not force_itemizers:
         # HTML or XML, so use Zen-coding's excellent balancing commands
         
         # Using this method rather than tea.get_single_range() is better
@@ -62,9 +66,19 @@ def act(context, direction='out'):
         targets = []
         for range in ranges:
             if direction.lower() == 'in':
-                targets[] = tea.get_item_for_range(context, range).range()
+                item = tea.get_item_for_range(context, range)
+                if item is None:
+                    # No item, so jump to next iteration
+                    continue
+                new_range = item.range()
+                if new_range.location == range.location and \
+                   new_range.length == range.length:
+                    items = item.childItems()
+                    if len(items) > 0:
+                        new_range = items[0].range()
+                targets.append(new_range)
             else:
-                targets[] = tea.get_item_parent_for_range(context, range).range()
+                targets.append(tea.get_item_parent_for_range(context, range).range())
         
         # Set the selections, and return
         context.setSelectedRanges_([NSValue.valueWithRange_(range) for range in targets])

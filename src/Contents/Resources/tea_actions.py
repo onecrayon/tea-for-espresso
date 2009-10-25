@@ -510,15 +510,15 @@ def cursor_in_zone(context, selector):
 
 def get_item_for_range(context, range):
     '''Returns the smallest item containing the given range'''
-    return context.itemizer().smallestItemContainingCharacterRange_()
+    return context.itemizer().smallestItemContainingCharacterRange_(range)
 
 def get_item_parent_for_range(context, range):
     '''Returns the parent of the item containing the given range'''
-    item = tea.get_item_from_range(context, range)
+    item = get_item_for_range(context, range)
     new_range = item.range()
     # Select the parent if the range is the same
     while(item.parent() and (new_range.location == range.location and \
-          new_range.length == range.length):
+          new_range.length == range.length)):
         item = item.parent()
         new_range = item.range()
     return item
