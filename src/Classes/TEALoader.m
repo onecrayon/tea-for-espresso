@@ -113,7 +113,19 @@
 	CETextRecipe *recipe = [CETextRecipe textRecipe];
 	NSArray *ranges = [context selectedRanges];
 	
+	NSString *file = [self findScript:[self script]];
+	if (file == nil) {
+		NSLog(@"Error: TEALoader could not find script");
+		return NO;
+	}
 	
+	// Loop over the ranges and perform the script's action on each
+	// Looping allows us to handle single ranges or multiple discontiguous selections
+	for (NSValue *rangeValue in ranges) {
+		NSRange range = [rangeValue rangeValue];
+		
+		
+	}
 }
 
 - (BOOL)addObject:(id)myObject forKey:(id)myKey toDictionary:(NSMutableDictionary*)dictionary {
