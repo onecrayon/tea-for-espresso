@@ -48,10 +48,83 @@
 		return NO;
 	}
 	
-	// Set up the environment variables that don't change
-	NSDictionary *baseEnv = [NSDictionary dictionaryWithObjectsAndKeys:
-								[self bundlePath], @"E_SUGARPATH"
-							 ];
+	// Set up the base environmental variables
+	NSMutableDictionary *base_env = [NSMutableDictionary dictionary];
+	
+	// Grab the URL-based variables
+	NSURL *fileURL = [[context documentContext] fileURL];
+	NSString *e_filepath = nil;
+	NSString *e_filename = nil;
+	NSString *e_directory = nil;
+	if (fileURL != nil) {
+		e_filename = [[fileURL path] lastPathComponent];
+		if ([fileURL isFileURL]) {
+			e_directory = [[fileURL path] stringByDeletingLastPathComponent];
+			e_filepath = [fileURL path];
+		}
+	}
+	
+	// Set up the root zone selector
+	NSString *e_root_zone = nil;
+	if [[[context syntaxTree] rootZone] typeIdentifier] != nil) {
+		e_root_zone = [[[[context syntaxTree] rootZone] typeIdentifier] stringValue];
+	}
+	
+	// Set up the preference variables
+	id prefs = [context textPreferences];
+	NSString *e_soft_tabs = nil;
+	if ([prefs insertsSpacesForTab]) {
+		e_soft_tabs = @"YES";
+	} else {
+		e_soft_tabs = @"NO";
+	}
+	NSString *e_tab_size = [NSString stringWithFormat:@"%d", [prefs numberOfSpacesForTab]];
+	NSString *e_line_ending = [prefs lineEndingString];
+	
+	NSString *e_xhtml = nil;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults boolForKey:@"TEADefaultToXHTML"]) {
+		e_xhtml = @"";
+	} else {
+		e_xhtml = [defaults stringForKey:@"TEASelfClosingString"];
+	}
+	
+	// URL-based variables
+	[self addObject:[self bundlePath] forKey:@"E_SUGARPATH" toDictionary:base_env];
+	[self addObject:e_filepath forKey:@"E_FILEPATH" toDictionary:base_env];
+	[self addObject:e_filename forKey:@"E_FILENAME" toDictionary:base_env];
+	[self addObject:e_directory forKey:@"E_DIRECTORY" toDictionary:base_env];
+	
+	// Zone variables
+	[self addObject:e_root_zone forKey:@"E_ROOT_ZONE" toDictionary:base_env];
+	
+	// Preference variables
+	[self addObject:e_soft_tabs forKey:@"E_SOFT_TABS" toDictionary:base_env];
+	[self addObject:e_tab_size forKey:@"E_TAB_SIZE" toDictionary:base_env];
+	[self addObject:e_line_ending forKey:@"E_LINE_ENDING" toDictionary:base_env];
+	[self addObject:e_xhtml forKey:@"E_XHTML" toDictionary:base_env];
+	
+	// Set up the user-defined environment variables
+	for (NSString *item in [defaults arrayForKey:@"TEAShellVariables"]) {
+		[self addObject:[item objectForKey:@"value"] forKey:[item objectForKey:@"variable"] toDictionary:base_env];
+	}
+	
+	// Initialize our common variables
+	CETextRecipe *recipe = [CETextRecipe textRecipe];
+	NSArray *ranges = [context selectedRanges];
+	
+	
+}
+
+- (BOOL)addObject:(id)myObject forKey:(id)myKey toDictionary:(NSMutableDictionary*)dictionary {
+	if (myKey == nil || [myKey compare:@""] == NSOrderedSame) {
+		return NO;
+	}
+	if (myObject == nil) {
+		myObject = @"";
+	}
+	[dictionary setObject:myObject forKey:myKey];
+	return YES;
 }
 
 @end
