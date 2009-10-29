@@ -14,18 +14,18 @@
 @interface TEALoader ()
 @property (readwrite,copy) NSString* script;
 @property (readwrite,copy) NSString* input;
-@property (readwrite,copy) NSString* alt;
+@property (readwrite,copy) NSString* alternate;
 @property (readwrite,copy) NSString* output;
-@property (readwrite,copy) NSString* undo;
+@property (readwrite,copy) NSString* undo_name;
 @end
 
 @implementation TEALoader
 
 @synthesize script;
 @synthesize input;
-@synthesize alt;
+@synthesize alternate;
 @synthesize output;
-@synthesize undo;
+@synthesize undo_name;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)myBundlePath {
 	self = [super initWithDictionary:dictionary bundlePath:myBundlePath];
@@ -35,9 +35,9 @@
 	// Set loader's internal variables
 	[self setScript:[dictionary objectForKey:@"script"]];
 	[self setInput:[dictionary objectForKey:@"input"]];
-	[self setAlt:[dictionary objectForKey:@"alternate"]];
+	[self setAlternate:[dictionary objectForKey:@"alternate"]];
 	[self setOutput:[dictionary objectForKey:@"output"]];
-	[self setUndo:[dictionary objectForKey:@"undo_name"]];
+	[self setUndo_name:[dictionary objectForKey:@"undo_name"]];
 	
 	return self;
 }
@@ -49,7 +49,7 @@
 	}
 	
 	// Set up the base environmental variables
-	NSMutableDictionary *base_env = [NSMutableDictionary dictionary];
+	NSMutableDictionary *env = [NSMutableDictionary dictionary];
 	
 	// Grab the URL-based variables
 	NSURL *fileURL = [[context documentContext] fileURL];
@@ -90,23 +90,23 @@
 	}
 	
 	// URL-based variables
-	[self addObject:[self bundlePath] forKey:@"E_SUGARPATH" toDictionary:base_env];
-	[self addObject:e_filepath forKey:@"E_FILEPATH" toDictionary:base_env];
-	[self addObject:e_filename forKey:@"E_FILENAME" toDictionary:base_env];
-	[self addObject:e_directory forKey:@"E_DIRECTORY" toDictionary:base_env];
+	[self addObject:[self bundlePath] forKey:@"E_SUGARPATH" toDictionary:env];
+	[self addObject:e_filepath forKey:@"E_FILEPATH" toDictionary:env];
+	[self addObject:e_filename forKey:@"E_FILENAME" toDictionary:env];
+	[self addObject:e_directory forKey:@"E_DIRECTORY" toDictionary:env];
 	
 	// Zone variables
-	[self addObject:e_root_zone forKey:@"E_ROOT_ZONE" toDictionary:base_env];
+	[self addObject:e_root_zone forKey:@"E_ROOT_ZONE" toDictionary:env];
 	
 	// Preference variables
-	[self addObject:e_soft_tabs forKey:@"E_SOFT_TABS" toDictionary:base_env];
-	[self addObject:e_tab_size forKey:@"E_TAB_SIZE" toDictionary:base_env];
-	[self addObject:e_line_ending forKey:@"E_LINE_ENDING" toDictionary:base_env];
-	[self addObject:e_xhtml forKey:@"E_XHTML" toDictionary:base_env];
+	[self addObject:e_soft_tabs forKey:@"E_SOFT_TABS" toDictionary:env];
+	[self addObject:e_tab_size forKey:@"E_TAB_SIZE" toDictionary:env];
+	[self addObject:e_line_ending forKey:@"E_LINE_ENDING" toDictionary:env];
+	[self addObject:e_xhtml forKey:@"E_XHTML" toDictionary:env];
 	
 	// Set up the user-defined environment variables
 	for (NSString *item in [defaults arrayForKey:@"TEAShellVariables"]) {
-		[self addObject:[item objectForKey:@"value"] forKey:[item objectForKey:@"variable"] toDictionary:base_env];
+		[self addObject:[item objectForKey:@"value"] forKey:[item objectForKey:@"variable"] toDictionary:env];
 	}
 	
 	// Initialize our common variables
@@ -123,7 +123,22 @@
 	// Looping allows us to handle single ranges or multiple discontiguous selections
 	for (NSValue *rangeValue in ranges) {
 		NSRange range = [rangeValue rangeValue];
+		// Add the items that change for each range
+		[self addObject:[[context string] substringWithRange:range] forKey:@"E_SELECTED_TEXT" toDictionary:env];
+		// ADD E_CURRENT_WORD?
+		[self addObject:[[context string] substringWithRange:[[context lineStorage] lineRangeForRange:range]] forKey:@"E_CURRENT_LINE" toDictionary:env];
+		[self addObject:[[context lineStorage] lineNumberForIndex:range.location] forKey:@"E_LINENUMBER" toDictionary:env];
+		NSUInteger lineindex = range.location - [[context lineStorage] lineStartIndexForIndex:range lineNumber:nil];
+		[self addObject:[NSString stringWithFormat:@"%d", lineindex] forKey:@"E_LINEINDEX" toDictionary:env];
+		NSString *e_active_zone = nil;
+		if ([[context syntaxTree] zoneAtCharacterIndex:range.location] != nil) {
+			if ([[[context syntaxTree] zoneAtCharacterIndex:range.location] typeIdentifier] != nil) {
+				e_active_zone = [[[[context syntaxTree] zoneAtCharacterIndex:range.location] typeIdentifier] stringValue];
+			}
+		}
+		[self addObject:e_active_zone forKey:@"E_ACTIVE_ZONE" toDictionary:env];
 		
+		// Grab the contents for our STDIN
 		
 	}
 }

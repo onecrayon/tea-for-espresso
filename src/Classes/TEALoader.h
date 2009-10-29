@@ -14,16 +14,16 @@
 @interface TEALoader : TEAGenericAction {
 	NSString* script;
 	NSString* input;
-	NSString* alt;
+	NSString* alternate;
 	NSString* output;
-	NSString* undo;
+	NSString* undo_name;
 }
 
 @property (readonly,copy) NSString* script;
 @property (readonly,copy) NSString* input;
-@property (readonly,copy) NSString* alt;
+@property (readonly,copy) NSString* alternate;
 @property (readonly,copy) NSString* output;
-@property (readonly,copy) NSString* undo;
+@property (readonly,copy) NSString* undo_name;
 
 - (BOOL)addObject:(id)myObject forKey:(id)myKey toDictionary:(NSMutableDictionary*)dictionary;
 
