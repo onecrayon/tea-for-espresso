@@ -4,10 +4,13 @@ Created on Jun 14, 2009
 
 @author: sergey
 '''
+from copy import deepcopy
 
 import re
 import types
+from zen_settings import zen_settings
 
+_original_settings = deepcopy(zen_settings)
 
 TYPE_ABBREVIATION = 'zen-tag',
 TYPE_EXPANDO = 'zen-expando',
@@ -113,9 +116,12 @@ def extend(parent, child):
 	"""
 	for p, value in child.items():
 		if type(value) == types.DictType:
+			if p not in parent:
+				parent[p] = {}
 			extend(parent[p], value)
 		else:
 			parent[p] = value
+				
 
 
 def create_maps(obj):
@@ -125,11 +131,32 @@ def create_maps(obj):
 	"""
 	for p, value in obj.items():
 		if p == 'element_types':
-			for k, v in value.items(): 
-				value[k] = [el.strip() for el in v.split(',')]
+			for k, v in value.items():
+				if isinstance(v, str):
+					value[k] = [el.strip() for el in v.split(',')]
 		elif type(value) == types.DictType:
 			create_maps(value)
 
 
 if __name__ == '__main__':
 	pass
+
+def get_settings(user_settings=None):
+	"""
+	Main function that gather all settings and returns parsed dictionary
+	@param user_settings: A dictionary of user-defined settings
+	"""
+	settings = deepcopy(_original_settings)
+	create_maps(settings)
+	
+	if user_settings:
+		user_settings = deepcopy(user_settings)
+		create_maps(user_settings)
+		extend(settings, user_settings)
+	
+	# now we need to parse final set of settings
+	parse(settings)
+	
+	return settings
+	
+	

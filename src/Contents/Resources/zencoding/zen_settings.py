@@ -17,7 +17,13 @@ zen_settings = {
 		'indentation': '\t'
 	},
 	
+	# common settings are used for quick injection of user-defined snippets
+	'common': {
+		
+	},
+	
 	'css': {
+		'extends': 'common',
 		'snippets': {
 			"@i": "@import url(|);",
 			"@m": "@media print {\n\t|\n}",
@@ -493,6 +499,7 @@ zen_settings = {
 	},
 	
 	'html': {
+		'extends': 'common',
 		'snippets': {
 			'cc:ie6': '<!--[if lte IE 6]>\n\t${child}|\n<![endif]-->',
 			'cc:ie': '<!--[if IE]>\n\t${child}|\n<![endif]-->',
@@ -686,7 +693,7 @@ zen_settings = {
 	},
 	
 	'xsl': {
-		'extends': 'html', 
+		'extends': 'common,html', 
 		'abbreviations': {
 			'tm': '<xsl:template match="" mode=""></xsl:template>',
 			'tmatch': 'tm',

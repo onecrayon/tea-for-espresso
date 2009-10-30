@@ -9,7 +9,7 @@ from Foundation import *
 from AppKit import *
 from PyObjCTools import AppHelper
 import objc
-from zencoding.zen_settings import zen_settings
+from zencoding import settings_loader
 
 from TEAforEspresso import TEAforEspresso
 import tea_actions as tea
@@ -81,8 +81,9 @@ def safe_str(text):
 	return text.encode('utf-8')
 
 def wrap(context, abbr, undo_name, profile_name='xhtml'):
-	
 	# Set up the config variables
+	zen_settings = settings_loader.load_settings()
+	zen.update_settings(zen_settings)
 	zen.newline = safe_str(tea.get_line_ending(context))
 	zen_settings['variables']['indentation'] = safe_str(tea.get_indentation_string(context))
 	

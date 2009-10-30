@@ -401,6 +401,9 @@ def wrap_with_abbreviation(abbr, text, doc_type='html', profile='plain'):
 	else:
 		return None
 
+def update_settings(settings):
+	globals()['zen_settings'] = settings
+
 class Tag(object):
 	def __init__(self, name, count=1, doc_type='html'):
 		"""
@@ -739,20 +742,4 @@ setup_profile('xml', {'self_closing_tag': True, 'tag_nl': True});
 setup_profile('plain', {'tag_nl': False, 'indent': False, 'place_cursor': False});
 
 # init settings
-# first we need to expand some strings into hashes
-stparser.create_maps(zen_settings)
-if hasattr(globals(), 'my_zen_settings'):
-	my_settings = globals()['my_zen_settings']
-#	# we need to extend default settings with user's
-	stparser.create_maps(my_settings)
-	stparser.extend(zen_settings, my_settings)
-
-# now we need to parse final set of settings
-stparser.parse(zen_settings)
-
-#if __name__ == '__main__':
-#	print(parse_into_tree('ul+').to_string(True))
-#	print(parse_into_tree('span+em').to_string(True))
-#	print(parse_into_tree('tmatch', 'xml').to_string(True))
-#	print(parse_into_tree('d', 'css').to_string(True))
-#	print(parse_into_tree('cc:ie6>p+blockquote#sample$.so.many.classes*2').to_string(True))
+#zen_settings = stparser.get_settings()
