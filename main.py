@@ -28,6 +28,7 @@ THE SOFTWARE.
 # Import our main action classes so that Espresso can find them
 import TEAGenericAction
 import TEAforEspresso
+import TEAWrapWithAbbreviation
 import TEALoader
 import TEASpacesToTabs
 import TEAPreferences
