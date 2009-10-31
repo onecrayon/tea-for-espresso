@@ -2,8 +2,7 @@
 
 import tea_actions as tea
 
-from zencoding import zen_core
-from zencoding.zen_settings import zen_settings
+from zencoding import zen_core, settings_loader
 
 def act(context, default=None, alpha_numeric=True, extra_characters='',
         bidirectional=True, mode=None, close_string='', undo_name=None,
@@ -45,6 +44,10 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
     if mode == 'zen' and fullword.find(' ') < 0:
+        # Explicitly load zen settings
+        zen_settings = settings_loader.load_settings()
+        zen_core.update_settings(zen_settings)
+        
         # Set up the config variables
         zen_core.newline = tea.get_line_ending(context)
         zen_settings['variables']['indentation'] = tea.get_indentation_string(context)
