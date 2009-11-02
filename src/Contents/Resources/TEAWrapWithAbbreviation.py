@@ -34,11 +34,6 @@ class TEAWrapWithAbbreviation(TEAforEspresso):
 		if not self.customSheet:
 			NSBundle.loadNibNamed_owner_('TEAEnterAbbreviation', self)
 		
-		# Set up the default number
-#		prefs = tea.get_prefs(context)
-#		num_spaces = prefs.numberOfSpacesForTab()
-#		self.abbr.setStringValue_(num_spaces)
-		
 		NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
 			self.customSheet,
 			context.windowForSheet(),
@@ -106,16 +101,17 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
 		def is_space(char):
 			return char.isspace() or char in r'\n\r'
 		
-		# narrow down selection untill first non-space character
+		# narrow down selection until first non-space character
 		while start < end:
 			if not is_space(content[start]):
 				break
 			start += 1
-			
+		
 		while end > start:
-			if not is_space(content[end]):
-				break
 			end -= 1
+			if not is_space(content[end]):
+				end += 1
+				break
 		
 #		last = html_matcher.last_match
 #		start = last['opening_tag'].start
