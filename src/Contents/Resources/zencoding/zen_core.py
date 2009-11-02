@@ -215,7 +215,7 @@ def replace_variables(text, vars=zen_settings['variables']):
 	@param text: str
 	@return: str
 	"""
-	return re.sub(r'\$\{([\w\-]+)\}', lambda s, p1: p1 in zen_settings['variables'] and zen_settings['variables'][p1] or s, text)
+	return re.sub(r'\$\{([\w\-]+)\}', lambda m: m.group(1) in vars and vars[m.group(1)] or m.group(0), text)
 
 def get_abbreviation(res_type, abbr):
 	"""
@@ -274,7 +274,6 @@ def parse_into_tree(abbr, doc_type='html'):
 	@return: Tag
 	"""
 	root = Tag('', 1, doc_type)
-	multiply_elem = None
 	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(\*(\d*))?', re.IGNORECASE)
 	
 	if not abbr:
@@ -723,6 +722,11 @@ class Snippet(Tag):
 		# substitute attributes
 		begin = replace_variables(begin, self.attributes)
 		end = replace_variables(end, self.attributes)
+		
+		# fix indentation
+		indent = zen_settings['variables']['indentation']
+		begin = begin.replace('\\t', indent)
+		end = end.replace('\\t', indent)
 		
 		if self.get_content():
 			content = pad_string(self.get_content(), 1) + content

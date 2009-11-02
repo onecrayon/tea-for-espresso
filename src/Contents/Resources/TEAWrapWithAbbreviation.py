@@ -97,14 +97,29 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
 	text, rng = tea.get_single_selection(context)
 	if text == None:
 		# no selection, find matching tag
-		start, end = html_matcher.match(context.string(), rng.location)
+		content = context.string()
+		start, end = html_matcher.match(content, rng.location)
 		if start is None:
 			# nothing to wrap
 			return False
 		
-		last = html_matcher.last_match
-		start = last['opening_tag'].start
-		end = last['closing_tag'] and last['closing_tag'].end or last['opening_tag'].end
+		def is_space(char):
+			return char.isspace() or char in r'\n\r'
+		
+		# narrow down selection untill first non-space character
+		while start < end:
+			if not is_space(content[start]):
+				break
+			start += 1
+			
+		while end > start:
+			if not is_space(content[end]):
+				break
+			end -= 1
+		
+#		last = html_matcher.last_match
+#		start = last['opening_tag'].start
+#		end = last['closing_tag'] and last['closing_tag'].end or last['opening_tag'].end
 		
 		tea.set_selected_range(context, tea.new_range(start, end - start))
 		text, rng = tea.get_single_selection(context)

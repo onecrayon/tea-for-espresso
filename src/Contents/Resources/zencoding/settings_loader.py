@@ -2,7 +2,6 @@
 Zen settings loader that can read user-defined snippets from Espresso
 @author: Sergey Chikuyonok (serge.che@gmail.com)
 '''
-import tea_actions
 import stparser
 import os
 import plistlib
@@ -28,10 +27,11 @@ def _read_settings_from_app():
 		abbrs = {}
 		for item in data[plist_key]:
 			if 'snippetString' in item and 'title' in item:
+				abbr_name = 'triggerString' in item and item['triggerString'] or item['title']
 				if re_full_tag.match(item['snippetString']):
-					abbrs[item['title']] = item['snippetString']
+					abbrs[abbr_name] = item['snippetString']
 				else:
-					snippetes[item['title']] = item['snippetString']
+					snippetes[abbr_name] = item['snippetString']
 			
 		return {'common': {
 			'snippets': snippetes,
