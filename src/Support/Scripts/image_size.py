@@ -92,6 +92,9 @@ def get_absolute_uri(context, img_path):
 	# remove protocol
 	file_uri = re.sub(r'^\w+://\w+', '', file_uri)
 	
+	if img_path[0] == '/':
+		img_path = img_path[1:]
+	
 	while True:
 		head, tail = os.path.split(file_uri)
 		if not head or head == '/': break # reached the top
