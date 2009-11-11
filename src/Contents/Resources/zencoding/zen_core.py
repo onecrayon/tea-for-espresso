@@ -1,23 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 '''
+Core Zen Coding library. Contains various text manupulation functions:
+
+== Expand abbreviation
+Expands abbreviation like ul#nav>li*5>a into a XHTML string.
+=== How to use
+First, you have to extract current string (where cursor is) from your test 
+editor and use <code>find_abbr_in_line()</code> method to extract abbreviation. 
+If abbreviation was found, this method will return it as well as position index
+of abbreviation inside current line. If abbreation wasn't 
+found, method returns empty string. With abbreviation found, you should call
+<code>parse_into_tree()</code> method to transform abbreviation into a tag tree. 
+This method returns <code>Tag</code> object on success, None on failure. Then
+simply call <code>to_string()</code> method of returned <code>Tag</code> object
+to transoform tree into a XHTML string
+
+You can setup output profile using <code>setup_profile()</code> method 
+(see <code>default_profile</code> definition for available options) 
+
+ 
 Created on Apr 17, 2009
 
 @author: Sergey Chikuyonok (http://chikuyonok.ru)
 '''
-from zencoding.zen_settings import zen_settings
+from zen_settings import zen_settings
 import re
 import stparser
 
 newline = '\n'
-"Символ перевода строки"
+"Newline symbol"
 
 insertion_point = '|'
-"Символ, указывающий, куда нужно поставить курсор"
+"Symbol which refers to cursor position"
 
-sub_insertion_point = ''
-"Символ, указывающий, куда нужно поставить курсор (для редакторов, которые позволяют указать несколько символов)"
+sub_insertion_point = '|'
+"""@deprecated: Symbol which refers to cursor position (for editors which support multiple placeholders)"""
+
+content_placeholder = '{%::zen-content::%}'
 
 re_tag = re.compile(r'<\/?[\w:\-]+(?:\s+[\w\-:]+(?:\s*=\s*(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>\s]+))?)*\s*(\/?)>$')
 
@@ -65,17 +85,29 @@ def has_deep_key(obj, key):
 
 def is_allowed_char(ch):
 	"""
-	Проверяет, является ли символ допустимым в аббревиатуре
-	@param ch: Символ, который нужно проверить
+	Test if passed symbol is allowed in abbreviation
+	@param ch: Symbol to test
 	@type ch: str
 	@return: bool
 	"""
 	return ch.isalnum() or ch in "#.>+*:$-_!@"
 
+def split_by_lines(text, remove_empty=False):
+	"""
+	Split text into lines. Set <code>remove_empty</code> to true to filter out
+	empty lines
+	@param text: str
+	@param remove_empty: bool
+	@return list
+	"""
+	lines = text.splitlines()
+	
+	return remove_empty and [line for line in lines if line.strip()] or lines
+
 def make_map(prop):
 	"""
-	Вспомогательная функция, которая преобразовывает строковое свойство настроек в словарь
-	@param prop: Названия ключа в словаре <code>zen_settings['html']</code>
+	Helper function that transforms string into dictionary for faster search
+	@param prop: Key name in <code>zen_settings['html']</code> dictionary
 	@type prop: str
 	"""
 	obj = {}
@@ -106,17 +138,30 @@ def setup_profile(name, options = {}):
 
 def get_newline():
 	"""
-	Возвращает символ перевода строки, используемый в редакторе
+	Returns newline symbol which is used in editor. This function must be 
+	redefined to return current editor's settings 
 	@return: str
 	"""
 	return newline
 
+def string_to_hash(text):
+	"""
+	Helper function that transforms string into hash
+	@return: dict
+	"""
+	obj = {}
+	items = text.split(",")
+	for i in items:
+		obj[i] = True
+		
+	return obj
+
 def pad_string(text, pad):
 	"""
-	Отбивает текст отступами
-	@param text: Текст, который нужно отбить
+	Indents string with space characters (whitespace or tab)
+	@param text: Text to indent
 	@type text: str
-	@param pad: Количество отступов или сам отступ
+	@param pad: Indentation level (number) or indentation itself (string)
 	@type pad: int, str
 	@return: str
 	"""
@@ -137,18 +182,15 @@ def pad_string(text, pad):
 
 def is_snippet(abbr, doc_type = 'html'):
 	"""
-	Check is passed abbreviation is snippet
-	Проверяет, является ли аббревиатура сниппетом
+	Check is passed abbreviation is a snippet
 	@return bool
 	"""
 	return get_snippet(doc_type, abbr) and True or False
 
 def is_ends_with_tag(text):
 	"""
-	Проверяет, закачивается ли строка полноценным тэгом. В основном 
-	используется для проверки принадлежности символа '>' аббревиатуре 
-	или тэгу
-	@param text: Текст, который нужно проверить
+	Test is string ends with XHTML tag. This function used for testing if '<'
+	symbol belogs to tag or abbreviation 
 	@type text: str
 	@return: bool
 	"""
@@ -167,13 +209,13 @@ def get_elements_collection(resource, type):
 	else:
 		return {}
 	
-def replace_variables(text):
+def replace_variables(text, vars=zen_settings['variables']):
 	"""
 	Replace variables like ${var} in string
 	@param text: str
 	@return: str
 	"""
-	return re.sub(r'\$\{([\w\-]+)\}', lambda s, p1: p1 in zen_settings['variables'] and zen_settings['variables'][p1] or s, text)
+	return re.sub(r'\$\{([\w\-]+)\}', lambda m: m.group(1) in vars and vars[m.group(1)] or m.group(0), text)
 
 def get_abbreviation(res_type, abbr):
 	"""
@@ -221,28 +263,30 @@ def get_settings_resource(res_type, abbr, res_name):
 	return None;
 
 
-def parse_into_tree(abbr, doc_type = 'html'):
+def parse_into_tree(abbr, doc_type='html'):
 	"""
-	Преобразует аббревиатуру в дерево элементов
-	@param abbr: Аббревиатура
+	Transforms abbreviation into a simple element's tree
+	@param abbr: Abbreviation to transform
 	@type abbr: str
-	@param doc_type: Тип документа (xsl, html)
+	@param doc_type: Document type (xsl, html), a key of dictionary where to
+	search abbreviation settings
 	@type doc_type: str
 	@return: Tag
 	"""
 	root = Tag('', 1, doc_type)
-	parent = root
-	last = None
-	res = zen_settings.has_key(doc_type) and zen_settings[doc_type] or {}
-	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(?:\*(\d+))?', re.IGNORECASE)
+	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(\*(\d*))?', re.IGNORECASE)
+	
+	if not abbr:
+		return None
 	
 	def expando_replace(m):
 		ex = m.group(0)
 		a = get_abbreviation(doc_type, ex)
 		return a and a.value or ex
 		
-	def token_expander(operator, tag_name, id_attr, class_name, multiplier):
+	def token_expander(operator, tag_name, id_attr, class_name, has_multiplier, multiplier):
 		
+		multiply_by_lines = (has_multiplier and not multiplier)
 		multiplier = multiplier and int(multiplier) or 1
 		current = is_snippet(tag_name, doc_type) and Snippet(tag_name, multiplier, doc_type) or Tag(tag_name, multiplier, doc_type)
 		
@@ -251,33 +295,42 @@ def parse_into_tree(abbr, doc_type = 'html'):
 		if class_name:
 			current.add_attribute('class', class_name[1:].replace('.', ' '))
 			
-		# двигаемся вглубь дерева
+		# dive into tree
 		if operator == '>' and token_expander.last:
 			token_expander.parent = token_expander.last;
 			
 		token_expander.parent.add_child(current)
-		token_expander.last = current;
-		return '';
+		token_expander.last = current
 		
-	# заменяем разворачиваемые элементы
+		if multiply_by_lines:
+			root.multiply_elem = current
+		
+		return ''
+		
+	# replace expandos
 	abbr = re.sub(r'([a-z][a-z0-9]*)\+$', expando_replace, abbr)
 	
 	token_expander.parent = root
 	token_expander.last = None
 	
 	
-	abbr = re.sub(token, lambda m: token_expander(m.group(1), m.group(2), m.group(3), m.group(4), m.group(5)), abbr)
-	# если в abbr пустая строка — значит, вся аббревиатура без проблем 
-	# была преобразована в дерево, если нет, то аббревиатура была не валидной
+	abbr = re.sub(token, lambda m: token_expander(m.group(1), m.group(2), m.group(3), m.group(4), m.group(5), m.group(6)), abbr)
+	
+	root.last = token_expander.last
+	
+	# empty 'abbr' variable means that abbreviation was expanded successfully, 
+	# non-empty variable means there was a syntax error
 	return not abbr and root or None;
 
 def find_abbr_in_line(line, index = 0):
 	"""
-	Ищет аббревиатуру в строке и возвращает ее
-	@param line: Строка, в которой нужно искать
+	Search for abbreviation inside line of code and returns it
+	@param line: Line of code
 	@type line: str
-	@param index: Позиция каретки в строке
+	
+	@param index: Caret position inside line (where to start searching)
 	@type index: int
+	
 	@return: str
 	"""
 	start_index = 0
@@ -293,91 +346,71 @@ def find_abbr_in_line(line, index = 0):
 
 def expand_abbreviation(abbr, doc_type = 'html', profile_name = 'plain'):
 	"""
-	Разворачивает аббревиатуру
-	@param abbr: Аббревиатура
+	Expands abbreviation into a XHTML tag string
+	
 	@type abbr: str
 	@return: str
 	"""
 	tree = parse_into_tree(abbr, doc_type)
 	if tree:
-		result = tree.to_string(profile_name)
-		if result:
-			result = re.sub('\|', insertion_point, result, 1)
-			return  replace_variables(re.sub('\|', sub_insertion_point, result))
+		return replace_variables(re.sub('\|', insertion_point, tree.to_string(profile_name) or ''))
 		
 	return ''
 
-def get_pair_range(text, cursor_pos):
-	"""
-	Returns range that indicates starting and ending pair tags nearest 
-	to cursor position.
-	@param text: Full document
-	@type text: str
-	@param cursor_pos: Caret position inside document
-	@type cursor_pos: int
-	@return: list of start and end indices. If pair wasn't found, returns (-1, -1)
-	"""
+def is_inside_tag(html, cursor_pos):
+	re_tag = re.compile(r'^<\/?\w[\w\:\-]*.*?>')
 	
-	import htmlparser
+	# search left to find opening brace
+	pos = cursor_pos
+	while pos > -1:
+		if html[pos] == '<': break
+		pos -= 1
 	
-	tags = {}
-	ranges = []
-	result = [-1, -1]
 	
-	handler = {'stop': False}
-	
-	def in_range(start, end):
-		return cursor_pos > start and cursor_pos <= end
-	
-	def start_h(name, attrs, unary, ix_start, ix_end):
-		if unary and in_range(ix_start, ix_end):
-			result[0] = ix_start
-			result[1] = ix_end
-			handler['stop'] = True
-		else:
-			if name not in tags:
-				tags[name] = []
-			
-			tags[name].append(ix_start)
-			
-	def end_h(name, ix_start, ix_end):
-		if name in tags:
-			start = tags[name].pop()
-			if in_range(start, ix_end):
-				ranges.append([start, ix_end])
-	
-	def comment_h(data, ix_start, ix_end):
-		if in_range(ix_start, ix_end):
-			result[0] = ix_start
-			result[1] = ix_end
-			handler['stop'] = True
-			
-	handler['start'] = start_h
-	handler['end'] = end_h
-	handler['comment'] = comment_h
-	
-	try:
-		htmlparser.parse(text, handler)
-	except RuntimeError:
-		pass
-	
-	if result[0] == -1 and len(ranges):
-#		because we have overlaped ranges only, we have to sort array by 
-#		length: the shorter range length, the most probable match
-		ranges.sort(lambda a, b: (a[1] - a[0]) - (b[1] - b[0]))
-		result = ranges[0]
-		
-	return result
+	if pos != -1:
+		m = re_tag.match(html[pos:]);
+		if m and cursor_pos > pos and cursor_pos < pos + len(m.group(0)):
+			return True
 
+	return False
+
+def wrap_with_abbreviation(abbr, text, doc_type='html', profile='plain'):
+	"""
+	Wraps passed text with abbreviation. Text will be placed inside last
+	expanded element
+	@param abbr: Abbreviation
+	@type abbr: str
+	
+	@param text: Text to wrap
+	@type text: str
+	
+	@param doc_type: Document type (html, xml, etc.)
+	@type doc_type: str
+	
+	@param profile: Output profile's name.
+	@type profile: str
+	@return {String}
+	"""
+	tree = parse_into_tree(abbr, doc_type)
+	if tree:
+		repeat_elem = tree.multiply_elem or tree.last
+		repeat_elem.set_content(text)
+		repeat_elem.repeat_by_lines = bool(tree.multiply_elem)
+		return replace_variables(re.sub('\|', insertion_point, tree.to_string(profile) or ''))
+	else:
+		return None
+
+def update_settings(settings):
+	globals()['zen_settings'] = settings
 
 class Tag(object):
-	def __init__(self, name, count = 1, doc_type = 'html'):
+	def __init__(self, name, count=1, doc_type='html'):
 		"""
-		@param name: Имя тэга
+		@param name: Tag name
 		@type name: str
-		@param count:  Сколько раз вывести тэг
+		@param count:  How many times this tag must be outputted
 		@type count: int
-		@param doc_type: Тип документа (xsl, html)
+		@param doc_type: Document type (xsl, html)
 		@type doc_type: str
 		"""
 		name = name.lower()
@@ -390,14 +423,24 @@ class Tag(object):
 		self.count = count
 		self.children = []
 		self.attributes = []
+		self.multiply_elem = None
 		self.__attr_hash = {}
 		self.__abbr = abbr
+		self.__content = ''
+		self.repeat_by_lines = False
 		self.__res = zen_settings.has_key(doc_type) and zen_settings[doc_type] or {}
 		
+		# add default attributes
 		if self.__abbr and 'attributes' in self.__abbr.value:
 			for a in self.__abbr.value['attributes']:
 				self.add_attribute(a['name'], a['value'])
 		
+	def get_content(self):
+		return self.__content
+	
+	def set_content(self, value):
+		self.__content = value
+
 	def add_attribute(self, name, value):
 		"""
 		Add attribute to tag. If the attribute with the same name already exists,
@@ -425,7 +468,7 @@ class Tag(object):
 		
 	def add_child(self, tag):
 		"""
-		Добавляет нового потомка
+		Add new child
 		@param tag: Потомок
 		@type tag: Tag
 		"""
@@ -440,7 +483,8 @@ class Tag(object):
 	
 	def is_empty(self):
 		"""
-		Проверяет, является ли текущий элемент пустым
+		Test if current XHTML element is an empty (must not contain any children) 
+		element
 		@return: bool
 		"""
 		
@@ -449,32 +493,66 @@ class Tag(object):
 	
 	def is_inline(self):
 		"""
-		Проверяет, является ли текущий элемент строчным
+		Test if current XHTML element is an inline element
 		@return: bool
 		"""
 		return self.name in get_elements_collection(self.__res, 'inline_level')
 	
 	def is_block(self):
 		"""
-		Проверяет, является ли текущий элемент блочным
+		Test if current element is a block-level element
 		@return: bool
 		"""
 		return self.name in get_elements_collection(self.__res, 'block_level')
 	
+	def has_tags_in_content(self):
+		"""
+		This function tests if current tags' content contains XHTML tags. 
+	 	This function is mostly used for output formatting
+		"""
+		return self.get_content() and re_tag.search(self.get_content())
+	
+	
 	def has_block_children(self):
 		"""
-		Проверяет, есть ли блочные потомки у текущего тэга. 
-		Используется для форматирования
+		Test if current tag contains block-level elements. Used for output 
+		formatting
 		@return: bool
 		"""
+		if self.has_tags_in_content() and self.is_block():
+			return True
+		
 		for tag in self.children:
 			if tag.is_block():
 				return True
 		return False
 	
+	def set_content(self, content):
+		self.__content = content
+		
+	def get_content(self):
+		return self.__content
+	
+	def find_deepest_child(self):
+		"""
+		Search for deepest and latest child of current element.
+		Returns None if there's no children
+	 	@return Tag or None 
+		"""
+		if not self.children:
+			return None
+			
+		deepest_child = self
+		while True:
+			deepest_child = deepest_child.children[-1]
+			if not deepest_child.children:
+				break
+		
+		return deepest_child
+	
 	def output_children(self, profile_name):
 		"""
-		Выводит всех потомков в виде строки
+		Output all children as a string
 		@type profile_name: str
 		@return: str
 		"""
@@ -492,16 +570,16 @@ class Tag(object):
 	
 	def to_string(self, profile_name):
 		"""
-		Преобразует тэг в строку. Если будет передан аргумент 
-		<code>format</code> — вывод будет отформатирован согласно настройкам
-		в <code>zen_settings</code>. Также в этом случае будет ставится 
-		символ «|», означающий место вставки курсора. Курсор будет ставится
-		в пустых атрибутах и элементах без потомков
+		Transforms tag into a string using <code>profile_name</code> settings
 		@type profile_name: string
 		@return: str
 		"""
 		
-		profile = profile = profile_name in profiles and profiles[profile_name] or profiles['plain']
+		if profile_name not in profiles:
+			profile_name = 'plain'
+			
+		result = []
+		profile = profiles[profile_name]
 		attrs = '' 
 		content = '' 
 		start_tag = '' 
@@ -515,7 +593,10 @@ class Tag(object):
 		elif profile['self_closing_tag'] == True:
 			self_closing = '/'
 			
-		# делаем строку атрибутов
+		def allow_newline(tag):
+			return (profile['tag_nl'] is True) or (profile['tag_nl'] == 'decide' and tag.is_block())
+			
+		# make attribute string
 		for a in self.attributes:
 			if profile['attr_case'] == 'upper':
 				attr_name = a['name'].upper()
@@ -524,10 +605,21 @@ class Tag(object):
 				
 			attrs += ' %s=%s%s%s' % (attr_name, attr_quote, a['value'] or cursor, attr_quote)
 		
-		# выводим потомков
+		deepest_child = self.find_deepest_child()
+		
+		# output children
 		if not self.is_empty():
-			content = self.output_children(profile_name)
+			if deepest_child and self.repeat_by_lines:
+				deepest_child.set_content(content_placeholder)
 			
+			for i, child in enumerate(self.children):
+				content += child.to_string(profile_name)
+				
+				if child != self.children[-1] and \
+					(allow_newline(child) or allow_newline(self.children[i + 1])):
+					content += get_newline()
+		
+		# define opening and closing tags
 		if self.name:
 			tag_name = profile['tag_case'] == 'upper' and self.name.upper() or self.name.lower()
 			if self.is_empty():
@@ -535,8 +627,7 @@ class Tag(object):
 			else:
 				start_tag, end_tag = '<%s%s>' % (tag_name, attrs), '</%s>' % tag_name
 				
-		# форматируем вывод
-		glue = ''
+		# output formatting
 		if profile['tag_nl'] != False:
 			if self.name and (profile['tag_nl'] == True or self.has_block_children()):
 				if not self.is_empty():
@@ -547,26 +638,47 @@ class Tag(object):
 			if self.name:
 				if content:
 					content = pad_string(content, profile['indent'] and 1 or 0)
-				else:
+				elif not self.is_empty():
 					start_tag += cursor
 		
-			if profile['tag_nl'] == True or self.is_block():
-				glue = get_newline()
+		# repeat tag by lines count
+		cur_content = ''
+		if self.repeat_by_lines:
+			lines = split_by_lines(self.get_content().strip(), True)
+			for j, line in enumerate(lines):
+				if deepest_child: cur_content = ''
+				else: cur_content = content_placeholder
+				
+				if content and not deepest_child:
+					cur_content += get_newline()
+					
+				elem_str = start_tag.replace('$', str(j + 1)) + cur_content + content + end_tag
+				result.append(elem_str.replace(content_placeholder, line.strip()))
 		
+		# repeat tag output
+		if not result:
+			if self.get_content():
+				pad = (profile['tag_nl'] is True or (self.has_tags_in_content() and self.is_block())) and 1 or 0
+				content = pad_string(self.get_content(), pad) + content
+			
+			for i in range(self.count):
+				result.append(start_tag.replace('$', str(i + 1)) + content + end_tag)
 		
-		result = [start_tag.replace('$', str(i + 1)) + content + end_tag for i in range(self.count)]
+		glue = ''
+		if allow_newline(self):
+			glue = get_newline()
+			
 		return glue.join(result)
 	
 class Snippet(Tag):
-	def __init__(self, name, count = 1, doc_type = 'html'):
-		self.name = name
-		self.count = count
-		self.children = []
+	def __init__(self, name, count=1, doc_type='html'):
+		super(Snippet, self).__init__(name, count, doc_type)
 		self.value = get_snippet(doc_type, name)
+		self.attributes = {'id': '|', 'class': '|'}
 		self.__res = zen_settings[doc_type]
 		
-	def add_attribute(self, name = '', value = ''):
-		pass
+	def add_attribute(self, name='', value=''):
+		self.attributes[name] = value
 	
 	def is_block(self):
 		return True
@@ -578,7 +690,6 @@ class Snippet(Tag):
 		data = self.value
 		begin = ''
 		end = ''
-		glue = ''
 		child_padding = ''
 		child_token = '${child}'
 		child_indent = re.compile(r'(^\s+)')
@@ -593,19 +704,39 @@ class Snippet(Tag):
 						child_padding = m and m.group(1) or ''
 						break
 					
-				glue = get_newline()
-			
 			if child_token in data:
 				begin, end = data.split(child_token, 1)
 			else:
 				begin = data
 				
-			content = self.output_children(profile_name)
-			
-			if child_padding:
-				content = pad_string(content, child_padding)
+		for child in self.children:
+			content += child.to_string(profile_name)
+			if child != self.children[-1] and \
+				(profile['tag_nl'] == True or \
+					(profile['tag_nl'] == 'decide' and child.is_block())):
+				content += get_newline();
 		
-		return glue.join([begin.replace(r'\$', str(i + 1)) + content + end for i in range(self.count)])
+		if child_padding:
+			content = pad_string(content, child_padding)
+			
+		# substitute attributes
+		begin = replace_variables(begin, self.attributes)
+		end = replace_variables(end, self.attributes)
+		
+		# fix indentation
+		indent = zen_settings['variables']['indentation']
+		begin = begin.replace('\\t', indent)
+		end = end.replace('\\t', indent)
+		
+		if self.get_content():
+			content = pad_string(self.get_content(), 1) + content
+		
+		# multiply output
+		result += [begin + content + end for i in range(self.count)]
+		
+		glue = profile['tag_nl'] != False and get_newline() or ''
+		
+		return glue.join(result)
 	
 		
 # create default profiles
@@ -615,19 +746,4 @@ setup_profile('xml', {'self_closing_tag': True, 'tag_nl': True});
 setup_profile('plain', {'tag_nl': False, 'indent': False, 'place_cursor': False});
 
 # init settings
-# first we need to expand some strings into hashes
-stparser.create_maps(zen_settings)
-if hasattr(globals(), 'my_zen_settings'):
-#	# we need to extend default settings with user's
-	stparser.create_maps(my_zen_settings)
-	stparser.extend(zen_settings, my_zen_settings)
-
-# now we need to parse final set of settings
-stparser.parse(zen_settings)
-
-#if __name__ == '__main__':
-#	print(parse_into_tree('ul+').to_string(True))
-#	print(parse_into_tree('span+em').to_string(True))
-#	print(parse_into_tree('tmatch', 'xml').to_string(True))
-#	print(parse_into_tree('d', 'css').to_string(True))
-#	print(parse_into_tree('cc:ie6>p+blockquote#sample$.so.many.classes*2').to_string(True))
+#zen_settings = stparser.get_settings()

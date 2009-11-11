@@ -18,4 +18,13 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.wrapping">
+		<class>TEAWrapWithAbbreviation</class>
+		<title>Wrap With Abbreviation</title>
+		<key-equivalent>cmd W</key-equivalent>
+		<setup>
+			<action>wrap</action>
+		</setup>
+	</action>
+	
 </action-recipes>

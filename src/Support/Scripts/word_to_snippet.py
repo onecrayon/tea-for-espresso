@@ -2,7 +2,7 @@
 
 import tea_actions as tea
 
-from zencoding import zen_core as zen
+from zencoding import zen_core, settings_loader
 
 def act(context, default=None, alpha_numeric=True, extra_characters='',
         bidirectional=True, mode=None, close_string='', undo_name=None,
@@ -44,27 +44,21 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
     if mode == 'zen' and fullword.find(' ') < 0:
+        # Explicitly load zen settings
+        zen_settings = settings_loader.load_settings()
+        zen_core.update_settings(zen_settings)
+        
         # Set up the config variables
-        zen.newline = tea.get_line_ending(context)
+        zen_core.newline = tea.get_line_ending(context)
+        zen_settings['variables']['indentation'] = tea.get_indentation_string(context)
+        
         # This allows us to use smart incrementing tab stops in zen snippets
-        global point_ix
-        point_ix = 0
+        point_ix = [0]
         def place_ins_point(text):
-            globals()['point_ix'] += 1
-            return '$%s' % point_ix
-        zen.insertion_point = place_ins_point
-        zen.sub_insertion_point = place_ins_point
-        
-        # Setup the settings overrides
-        my_zen_settings = {
-            'variables': {
-                'indentation': tea.get_indentation_string(context)
-            }
-        }
-        # Extend the settings tables
-        zen.stparser.create_maps(my_zen_settings)
-        zen.stparser.extend(zen.zen_settings, my_zen_settings)
-        
+            point_ix[0] += 1
+            return '$%s' % point_ix[0]
+        zen_core.insertion_point = place_ins_point
+    
         # Detect the type of document we're working with
         zones = {
             'css, css *': 'css',
@@ -87,7 +81,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         zen.setup_profile('tea_profile', profile)
         
         # Prepare the snippet
-        snippet = zen.expand_abbreviation(fullword, doc_type, 'tea_profile')
+        snippet = zen_core.expand_abbreviation(fullword, doc_type, 'tea_profile')
     elif (mode == 'zen' or mode == 'html') and tea.is_selfclosing(word):
         # Self-closing, so construct the snippet from scratch
         snippet = '<' + fullword

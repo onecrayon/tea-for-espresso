@@ -470,6 +470,16 @@
 		</setup>
 	</action>
 	
+	<action id="com.onecrayon.TextActions.UpdateImage" category="actions.text.HTML">
+		<class>TEAforEspresso</class>
+		<title>Update &lt;img&gt; Size</title>
+		<key-equivalent>control i</key-equivalent>
+		<setup>
+			<action>image_size</action>
+			<!-- <selection-context>one</selection-context> -->
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.HTMLTagDocLookup" category="actions.text.HTML/tea.footer">
 		<class>TEAforEspresso</class>
 		<title>Documentation For Tag</title>
