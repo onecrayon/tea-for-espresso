@@ -83,6 +83,29 @@ class Comment():
 		self.end = end
 		self.type = 'comment'
 
+def make_range(opening_tag=None, closing_tag=None, ix=0):
+	"""
+	Makes selection ranges for matched tag pair
+	@type opening_tag: Tag
+    @type closing_tag: Tag
+    @type ix: int
+    @return list
+	"""
+	start_ix, end_ix = -1, -1
+	
+	if opening_tag and not closing_tag: # unary element
+		start_ix = opening_tag.start
+		end_ix = opening_tag.end
+	elif opening_tag and closing_tag: # complete element
+		if (opening_tag.start < ix and opening_tag.end > ix) or (closing_tag.start <= ix and closing_tag.end > ix):
+			start_ix = opening_tag.start
+			end_ix = closing_tag.end;
+		else:
+			start_ix = opening_tag.end
+			end_ix = closing_tag.start
+	
+	return start_ix, end_ix
+
 def save_match(opening_tag=None, closing_tag=None, ix=0):
 	"""
 	Save matched tag for later use and return found indexes
@@ -94,31 +117,40 @@ def save_match(opening_tag=None, closing_tag=None, ix=0):
 	last_match['opening_tag'] = opening_tag; 
 	last_match['closing_tag'] = closing_tag;
 	
-	if opening_tag and not closing_tag: # unary element
-		last_match['start_ix'] = opening_tag.start
-		last_match['end_ix'] = opening_tag.end
-	elif opening_tag and closing_tag: # complete element
-		if (opening_tag.start < ix and opening_tag.end > ix) or (closing_tag.start <= ix and closing_tag.end > ix):
-			last_match['start_ix'] = opening_tag.start
-			last_match['end_ix'] = closing_tag.end;
-		else:
-			last_match['start_ix'] = opening_tag.end
-			last_match['end_ix'] = closing_tag.start
-	else:
-		last_match['start_ix'] = last_match['end_ix'] = -1
-	
+	last_match['start_ix'], last_match['end_ix'] = make_range(opening_tag, closing_tag, ix)
 	
 	return last_match['start_ix'] != -1 and (last_match['start_ix'], last_match['end_ix']) or None
 
 def match(html, start_ix):
 	"""
 	Search for matching tags in <code>html</code>, starting from
+	<code>start_ix</code> position. The result is automatically saved
+	in <code>last_match</code> property
+	"""
+	return _find_pair(html, start_ix, save_match)
+
+def find(html, start_ix):
+	"""
+	Search for matching tags in <code>html</code>, starting from
+	<code>start_ix</code> position.
+	"""
+	return _find_pair(html, start_ix)
+
+def _find_pair(html, start_ix, action=make_range):
+	"""
+	Search for matching tags in <code>html</code>, starting from
 	<code>start_ix</code> position
+	
 	@param html: Code to search
 	@type html: str
+	
 	@param start_ix: Character index where to start searching pair
 	(commonly, current caret position)
 	@type start_ix: int
+	
+	@param action: Function that creates selection range
+	@type action: function
+	
 	@return: list
 	"""
 
@@ -163,7 +195,7 @@ def match(html, start_ix):
 					tmp_tag = Tag(m, ix);
 					if tmp_tag.unary:
 						if tmp_tag.start < start_ix and tmp_tag.end > start_ix: # exact match
-							return save_match(tmp_tag, None, start_ix)
+							return action(tmp_tag, None, start_ix)
 					elif backward_stack and backward_stack[-1].name == tmp_tag.name:
 						backward_stack.pop()
 					else: # found nearest unclosed tag
@@ -172,7 +204,7 @@ def match(html, start_ix):
 				elif check_str.startswith('<!--'): # found comment start
 					end_ix = check_str.find('-->') + ix + 3;
 					if ix < start_ix and end_ix >= start_ix:
-						return save_match(Comment(ix, end_ix))
+						return action(Comment(ix, end_ix))
 		elif ch == '-' and has_match('-->'): # found comment end
 			# search left until comment start is reached
 			ix = find_comment_start(ix)
@@ -180,7 +212,7 @@ def match(html, start_ix):
 		ix -= 1
 		
 	if not opening_tag:
-		return save_match(None)
+		return action(None)
 	
 	# find closing tag
 	if not closing_tag:
@@ -210,8 +242,8 @@ def match(html, start_ix):
 				# looks like cursor was inside comment with invalid HTML
 				if not forward_stack or forward_stack[-1].type != 'comment':
 					end_ix = ix + 3
-					return save_match(Comment( find_comment_start(ix), end_ix ))
+					return action(Comment( find_comment_start(ix), end_ix ))
 				
 			ix += 1
 	
-	return save_match(opening_tag, closing_tag, start_ix)
+	return action(opening_tag, closing_tag, start_ix)
