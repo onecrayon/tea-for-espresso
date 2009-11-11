@@ -2,28 +2,6 @@
 <action-recipes>
 	<!-- Commands are in menu order, because that's how I roll -->
 	
-	<action id="com.onecrayon.TextActions.Balance" category="category.id">
-		<class>TEAforEspresso</class>
-		<title>Balance</title>
-		<setup>
-			<action>balance</action>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.BalanceIn" category="category.id">
-		<class>TEAforEspresso</class>
-		<title>Balance In</title>
-		<setup>
-			<action>balance</action>
-			<options>
-				<dict>
-					<key>direction</key>
-					<string>in</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
 	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
@@ -467,16 +445,6 @@
 					<string>"$SELECTED_TEXT":${1:$URL}$0</string>
 				</dict>
 			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.UpdateImage" category="actions.text.HTML">
-		<class>TEAforEspresso</class>
-		<title>Update &lt;img&gt; Size</title>
-		<key-equivalent>control i</key-equivalent>
-		<setup>
-			<action>image_size</action>
-			<!-- <selection-context>one</selection-context> -->
 		</setup>
 	</action>
 	
