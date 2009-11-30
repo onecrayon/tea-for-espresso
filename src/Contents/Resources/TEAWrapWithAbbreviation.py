@@ -89,8 +89,8 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
         return '$%s' % point_ix[0]
     zen.insertion_point = place_ins_point
     
-    text, rng = tea.get_single_selection(context)
-    if text == None:
+    rng = tea.get_first_range(context)
+    if rng.length == 0:
         # no selection, find matching tag
         content = context.string()
         start, end = html_matcher.match(content, rng.location)
@@ -113,13 +113,9 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
                 end += 1
                 break
         
-#       last = html_matcher.last_match
-#       start = last['opening_tag'].start
-#       end = last['closing_tag'] and last['closing_tag'].end or last['opening_tag'].end
-        
-        tea.set_selected_range(context, tea.new_range(start, end - start))
-        text, rng = tea.get_single_selection(context)
-        
+        rng = tea.new_range(start, end - start)
+    
+    text = tea.get_selection(context, rng)
     # Detect the type of document we're working with
     zones = {
         'css, css *': 'css',

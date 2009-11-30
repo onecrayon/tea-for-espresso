@@ -78,7 +78,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         elif doc_type == 'xml':
             profile = {'self_closing_tag': True, 'tag_nl': True}
         
-        zen.setup_profile('tea_profile', profile)
+        zen_core.setup_profile('tea_profile', profile)
         
         # Prepare the snippet
         snippet = zen_core.expand_abbreviation(fullword, doc_type, 'tea_profile')

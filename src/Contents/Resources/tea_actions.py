@@ -279,6 +279,14 @@ def get_ranges(context):
     ranges = context.selectedRanges()
     return [range.rangeValue() for range in ranges]
 
+def get_first_range(context):
+    '''
+    Shortcut function to snag the first selection in the document;
+    guaranteed to be at least one because the cursor is a range
+    '''
+    ranges = get_ranges(context)
+    return ranges[0]
+
 def get_selection(context, range):
     '''Convenience function; returns selected text within a given range'''
     return context.string().substringWithRange_(range)
