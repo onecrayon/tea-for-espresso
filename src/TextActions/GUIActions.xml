@@ -18,10 +18,10 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.wrapping">
+	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAWrapWithAbbreviation</class>
 		<title>Wrap With Abbreviation</title>
-		<key-equivalent>cmd W</key-equivalent>
+		<key-equivalent>control shift a</key-equivalent>
 		<setup>
 			<action>wrap</action>
 		</setup>
