@@ -14,7 +14,7 @@
 				</dict>
 			</options>
 			<nib>TEASpacesPerTabsSheet</nib>
-			<default_input>SPACESPERTABS</default_input>
+			<default_input>SPACESPERTAB</default_input>
 		</setup>
 	</action>
 	
@@ -30,7 +30,7 @@
 				</dict>
 			</options>
 			<nib>TEASpacesPerTabsSheet</nib>
-			<default_input>SPACESPERTABS</default_input>
+			<default_input>SPACESPERTAB</default_input>
 		</setup>
 	</action>
 	

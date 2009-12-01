@@ -30,6 +30,10 @@
 @property (readonly,retain) IBOutlet NSArrayController *arrayController;
 @property (readonly,retain) IBOutlet NSTableView *tableView;
 
+- (IBAction)addListItem:(id)sender;
+- (IBAction) toggleUserActions:(id)sender;
+- (IBAction) customActionsHelp:(id)sender;
+
 @end
 
 // ==========================================================
