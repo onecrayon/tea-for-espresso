@@ -507,8 +507,8 @@ zen_settings = {
 			'html:4t': '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n' +
 					'<html lang="${lang}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta http-equiv="Content-Type" content="text/html;charset=${charset}">\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>',
@@ -516,8 +516,8 @@ zen_settings = {
 			'html:4s': '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">\n' +
 					'<html lang="${lang}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta http-equiv="Content-Type" content="text/html;charset=${charset}">\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>',
@@ -525,8 +525,8 @@ zen_settings = {
 			'html:xt': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n' +
 					'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta http-equiv="Content-Type" content="text/html;charset=${charset}" />\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>',
@@ -534,8 +534,8 @@ zen_settings = {
 			'html:xs': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n' +
 					'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta http-equiv="Content-Type" content="text/html;charset=${charset}" />\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>',
@@ -543,8 +543,8 @@ zen_settings = {
 			'html:xxs': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">\n' +
 					'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta http-equiv="Content-Type" content="text/html;charset=${charset}" />\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>',
@@ -552,8 +552,8 @@ zen_settings = {
 			'html:5': '<!DOCTYPE HTML>\n' +
 					'<html lang="${locale}">\n' +
 					'<head>\n' +
-					'	<title></title>\n' +
 					'	<meta charset="${charset}">\n' +
+					'	<title></title>\n' +
 					'</head>\n' +
 					'<body>\n\t${child}|\n</body>\n' +
 					'</html>'
