@@ -15,7 +15,7 @@
 // This allows me to set private getters and setters for the property
 @interface TEAUserInput ()
 @property (readwrite,copy) NSString *nib;
-@property (readwrite,copy) NSString *defaultInput
+@property (readwrite,copy) NSString *defaultInput;
 @property (readwrite,retain) id myContext;
 @end
 

@@ -16,7 +16,7 @@ from zencoding import html_matcher
 # passed the actionObject as the second parameter
 req_action_object = True
 
-def act(context, actionObject, undo_name=None):
+def act(context, actionObject, profile_name='xhtml', undo_name=None):
     abbr = actionObject.userInput().stringValue()
     # Set up the config variables
     zen_settings = settings_loader.load_settings()

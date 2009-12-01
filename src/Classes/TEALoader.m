@@ -8,6 +8,8 @@
 //  MIT License
 
 #import "TEALoader.h"
+#import <EspressoTextActions.h>
+#import <EspressoTextCore.h>
 
 
 // Private setters
@@ -66,7 +68,7 @@
 	
 	// Set up the root zone selector
 	NSString *e_root_zone = nil;
-	if [[[context syntaxTree] rootZone] typeIdentifier] != nil) {
+	if ([[[context syntaxTree] rootZone] typeIdentifier] != nil) {
 		e_root_zone = [[[[context syntaxTree] rootZone] typeIdentifier] stringValue];
 	}
 	
@@ -105,7 +107,7 @@
 	[self addObject:e_xhtml forKey:@"E_XHTML" toDictionary:env];
 	
 	// Set up the user-defined environment variables
-	for (NSString *item in [defaults arrayForKey:@"TEAShellVariables"]) {
+	for (NSDictionary *item in [defaults arrayForKey:@"TEAShellVariables"]) {
 		[self addObject:[item objectForKey:@"value"] forKey:[item objectForKey:@"variable"] toDictionary:env];
 	}
 	
@@ -127,8 +129,8 @@
 		[self addObject:[[context string] substringWithRange:range] forKey:@"E_SELECTED_TEXT" toDictionary:env];
 		// ADD E_CURRENT_WORD?
 		[self addObject:[[context string] substringWithRange:[[context lineStorage] lineRangeForRange:range]] forKey:@"E_CURRENT_LINE" toDictionary:env];
-		[self addObject:[[context lineStorage] lineNumberForIndex:range.location] forKey:@"E_LINENUMBER" toDictionary:env];
-		NSUInteger lineindex = range.location - [[context lineStorage] lineStartIndexForIndex:range lineNumber:nil];
+		[self addObject:[NSString stringWithFormat:@"%d", [[context lineStorage] lineNumberForIndex:range.location]] forKey:@"E_LINENUMBER" toDictionary:env];
+		NSUInteger lineindex = range.location - [[context lineStorage] lineStartIndexForIndex:range.location lineNumber:nil];
 		[self addObject:[NSString stringWithFormat:@"%d", lineindex] forKey:@"E_LINEINDEX" toDictionary:env];
 		NSString *e_active_zone = nil;
 		if ([[context syntaxTree] zoneAtCharacterIndex:range.location] != nil) {
@@ -143,7 +145,7 @@
 	}
 }
 
-- (BOOL)addObject:(id)myObject forKey:(id)myKey toDictionary:(NSMutableDictionary*)dictionary {
+- (BOOL)addObject:(id)myObject forKey:(NSString *)myKey toDictionary:(NSMutableDictionary*)dictionary {
 	if (myKey == nil || [myKey compare:@""] == NSOrderedSame) {
 		return NO;
 	}
