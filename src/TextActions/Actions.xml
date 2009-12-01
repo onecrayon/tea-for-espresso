@@ -70,7 +70,7 @@
 	<action id="com.onecrayon.TextActions.SelectLine" category="actions.text.generic/actions.text.selection/2">
 		<class>TEAforEspresso</class>
 		<title>Line</title>
-		<key-equivalent>cmd L</key-equivalent>
+		<key-equivalent>command shift l</key-equivalent>
 		<setup>
 			<action>goto</action>
 			<options>
@@ -85,7 +85,7 @@
 	<action id="com.onecrayon.TextActions.SelectLineContents" category="actions.text.generic/actions.text.selection/3">
 		<class>TEAforEspresso</class>
 		<title>Line Contents</title>
-		<key-equivalent>cmd option l</key-equivalent>
+		<key-equivalent>command option l</key-equivalent>
 		<setup>
 			<action>goto</action>
 			<options>
@@ -254,7 +254,7 @@
 	<action id="com.onecrayon.TextActions.FormatText.Em" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Emphasize</title>
-		<key-equivalent>cmd I</key-equivalent>
+		<key-equivalent>command shift i</key-equivalent>
 		<setup>
 			<action>selections_to_text</action>
 			<options>
@@ -279,7 +279,7 @@
 	<action id="com.onecrayon.TextActions.FormatText.Strong" category="actions.text.formatting">
 		<class>TEAforEspresso</class>
 		<title>Strong</title>
-		<key-equivalent>cmd b</key-equivalent>
+		<key-equivalent>command b</key-equivalent>
 		<setup>
 			<action>selections_to_text</action>
 			<options>
@@ -397,7 +397,7 @@
 	<action id="com.onecrayon.TextActions.WrapLinesInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selected Lines In Tag</title>
-		<key-equivalent>cmd control W</key-equivalent>
+		<key-equivalent>command control shift w</key-equivalent>
 		<setup>
 			<action>selected_lines_to_snippets</action>
 			<!-- <selection-context>one</selection-context> -->
@@ -422,7 +422,7 @@
 	<action id="com.onecrayon.TextActions.WrapSelectionInLink" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Link</title>
-		<key-equivalent>control L</key-equivalent>
+		<key-equivalent>control shift l</key-equivalent>
 		<setup>
 			<action>insert_url_snippet</action>
 			<!-- <selection-context>one</selection-context> -->

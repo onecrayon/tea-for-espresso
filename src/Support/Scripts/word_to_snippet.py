@@ -2,8 +2,7 @@
 
 import tea_actions as tea
 
-from zencoding import zen_core
-from zencoding.settings import zen_settings
+from zencoding import zen_core, settings_loader
 
 def act(context, default=None, alpha_numeric=True, extra_characters='',
         bidirectional=True, mode=None, close_string='', undo_name=None,
@@ -45,18 +44,21 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
     if mode == 'zen' and fullword.find(' ') < 0:
+        # Explicitly load zen settings
+        zen_settings = settings_loader.load_settings()
+        zen_core.update_settings(zen_settings)
+        
         # Set up the config variables
         zen_core.newline = tea.get_line_ending(context)
+        zen_settings['variables']['indentation'] = tea.get_indentation_string(context)
+        
         # This allows us to use smart incrementing tab stops in zen snippets
-        global point_ix
-        point_ix = 0
+        point_ix = [0]
         def place_ins_point(text):
-            globals()['point_ix'] += 1
-            return '$%s' % point_ix
+            point_ix[0] += 1
+            return '$%s' % point_ix[0]
         zen_core.insertion_point = place_ins_point
-        zen_core.sub_insertion_point = place_ins_point
-        zen_core.selfclosing_string = tea.get_tag_closestring(context)
-        zen_settings['indentation'] = tea.get_indentation_string(context)
+    
         # Detect the type of document we're working with
         zones = {
             'css, css *': 'css',
@@ -65,8 +67,21 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         }
         doc_type = tea.select_from_zones(context, range, 'html', **zones)
         
+        # Setup the zen profile based on doc_type and XHTML status
+        profile = {}
+        if doc_type == 'html':
+            close_string = tea.get_tag_closestring(context)
+            if close_string == '/':
+                profile['self_closing_tag'] = True
+            elif close_string != ' /':
+                profile['self_closing_tag'] = False
+        elif doc_type == 'xml':
+            profile = {'self_closing_tag': True, 'tag_nl': True}
+        
+        zen.setup_profile('tea_profile', profile)
+        
         # Prepare the snippet
-        snippet = zen_core.expand_abbr(fullword, doc_type)
+        snippet = zen_core.expand_abbreviation(fullword, doc_type, 'tea_profile')
     elif (mode == 'zen' or mode == 'html') and tea.is_selfclosing(word):
         # Self-closing, so construct the snippet from scratch
         snippet = '<' + fullword
