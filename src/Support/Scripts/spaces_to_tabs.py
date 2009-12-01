@@ -13,7 +13,7 @@ def act(context, actionObject, operation='entab'):
         '''Utility function for replacing items'''
         return match.group(0).replace(search, replace)
     
-    spaces = int(actionObject.numSpaces().stringValue())
+    spaces = int(actionObject.userInput().stringValue())
     if operation == 'entab':
         target = re.compile(r'^(\t* +\t*)+', re.MULTILINE)
         search = ' ' * spaces

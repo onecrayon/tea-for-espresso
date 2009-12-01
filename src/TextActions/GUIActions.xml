@@ -40,6 +40,12 @@
 		<key-equivalent>control shift a</key-equivalent>
 		<setup>
 			<action>wrap_with_abbreviation</action>
+			<options>
+				<dict>
+					<key>undo_name</key>
+					<string>Wrap With Abbreviation</string>
+				</dict>
+			</options>
 			<nib>TEAEnterAbbreviationSheet</nib>
 			<default_input>div</default_input>
 		</setup>

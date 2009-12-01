@@ -5,77 +5,19 @@
 
 import re
 
-from Foundation import *
-from AppKit import *
-from PyObjCTools import AppHelper
-import objc
 from zencoding import settings_loader
 
-from TEAforEspresso import TEAforEspresso
 import tea_actions as tea
 
 from zencoding import zen_core as zen
-from zencoding import html_matcher as html_matcher
+from zencoding import html_matcher
 
-class TEAWrapWithAbbreviation(TEAforEspresso):
-    '''Class for entabbing and detabbing current document or selection'''
-    customSheet = objc.IBOutlet()
-    abbr = objc.IBOutlet()
-    spinner = objc.IBOutlet()
-    
-    undo_name = 'Wrap with Abbreviation'
-    
-    @objc.signature('B@:@@')
-    def performActionWithContext_error_(self, context, error):
-        '''
-        Gets the user's abbreviation
-        '''
-        # Load the sheet
-        if not self.customSheet:
-            NSBundle.loadNibNamed_owner_('TEAEnterAbbreviation', self)
-        
-        NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-            self.customSheet,
-            context.windowForSheet(),
-            self,
-            'didEndSheet:returnCode:contextInfo:',
-            None
-        )
-        # Save the context for later reference (once the sheet is complete)
-        self.context = context
-        # Because this gets passed through to Obj-C, using int prevents beeping
-        return True
-    
-    @objc.IBAction
-    def doSubmitSheet_(self, sender):
-        NSApp.endSheet_returnCode_(self.customSheet, 1)
-    
-    @objc.IBAction
-    def cancel_(self, sender):
-        NSApp.endSheet_returnCode_(self.customSheet, 0)
-    
-    @AppHelper.endSheetMethod
-    def didEndSheet_returnCode_contextInfo_(self, sheet, code, info):
-        def replacements(match):
-            '''Utility function for replacing items'''
-            return match.group(0).replace(self.search, self.replace)
-        
-        if code == 1:
-            # Leave sheet open with "processing" spinner
-            self.spinner.startAnimation_(self)
-            wrap(self.context, self.abbr.stringValue(), self.undo_name)
-            self.spinner.stopAnimation_(self)
-        
-        sheet.orderOut_(self)
-        
+# This is a special variable; if it exists in a module, the module will be
+# passed the actionObject as the second parameter
+req_action_object = True
 
-def safe_str(text):
-    """
-    Creates safe string representation to deal with Python's encoding issues
-    """
-    return text.encode('utf-8')
-
-def wrap(context, abbr, undo_name, profile_name='xhtml'):
+def act(context, actionObject, undo_name=None):
+    abbr = actionObject.userInput().stringValue()
     # Set up the config variables
     zen_settings = settings_loader.load_settings()
     zen.update_settings(zen_settings)
@@ -132,7 +74,12 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
     result = unicode(result, 'utf-8')
     
     result = tea.indent_snippet(context, result, rng)
-    return tea.insert_snippet_over_range(context, result, rng, undo_name)
+    tea.insert_snippet_over_range(context, result, rng, undo_name)
+    
+    # spinner is turned on in the Objective-C action
+    actionObject.spinner().stopAnimation_(actionObject)
+    
+    return True
 
 def get_current_line_padding(context):
     """
@@ -157,3 +104,9 @@ def unindent(context, text):
             lines[i] = line[len(pad):]
     
     return zen.get_newline().join(lines)
+
+def safe_str(text):
+    """
+    Creates safe string representation to deal with Python's encoding issues
+    """
+    return text.encode('utf-8')
