@@ -1,5 +1,5 @@
 //
-//  TEASpacesToTabs.m
+//  TEAUserInput.m
 //  TEA for Espresso.sugar
 //
 //  Created by Ian Beck
@@ -8,30 +8,54 @@
 //  MIT License
 //
 
-#import "TEASpacesToTabs.h"
+#import "TEAUserInput.h"
 #import <EspressoTextActions.h>
 #import <EspressoSyntaxCore.h>
 
 // This allows me to set private getters and setters for the property
-@interface TEASpacesToTabs ()
+@interface TEAUserInput ()
+@property (readwrite,copy) NSString *nib;
+@property (readwrite,copy) NSString *defaultInput
 @property (readwrite,retain) id myContext;
 @end
 
 
-@implementation TEASpacesToTabs
+@implementation TEAUserInput
 
 @synthesize customSheet;
-@synthesize numSpaces;
+@synthesize userInput;
 @synthesize spinner;
+@synthesize nib;
+@synthesize defaultInput;
 @synthesize myContext;
+
+- (id)initWithDictionary:(NSDictionary *)dictionary bundlePath:(NSString *)myBundlePath {
+	self = [super initWithDictionary:dictionary bundlePath:myBundlePath];
+	if (self == nil)
+		return nil;
+	
+	// Grab the target nib
+	[self setNib:[dictionary objectForKey:@"nib"]];
+	// Grab the default input
+	[self setDefaultInput:[dictionary objectForKey:@"default_input"]];
+	
+	return self;
+}
 
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
 	if ([self customSheet] == nil) {
-		[NSBundle loadNibNamed:@"TEASpacesPerTabsSheet" owner:self];
+		[NSBundle loadNibNamed:[self nib] owner:self];
 	}
-	// Set the default number of spaces per tab from prefs
-	NSUInteger num_spaces = [[context textPreferences] numberOfSpacesForTab];
-	[[self numSpaces] setStringValue:[NSString stringWithFormat:@"%d", num_spaces]];
+	// Set the default string in the user input
+	if ([[self defaultInput] caseInsensitiveCompare:@"spacespertab"] == NSOrderedSame) {
+		// Set the default number of spaces per tab from prefs
+		NSUInteger num_spaces = [[context textPreferences] numberOfSpacesForTab];
+		[self setDefaultInput:[NSString stringWithFormat:@"%d", num_spaces]];
+	} else if ([self defaultInput] == nil) {
+		[self setDefaultInput:@""];
+	}
+	[[self userInput] setStringValue:[self defaultInput]];
+	
 	[NSApp beginSheet:[self customSheet]
 		   modalForWindow:[context windowForSheet]
 		   modalDelegate:self

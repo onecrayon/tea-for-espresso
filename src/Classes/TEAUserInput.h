@@ -1,5 +1,5 @@
 //
-//  TEASpacesToTabs.h
+//  TEAUserInput.h
 //  TEA for Espresso.sugar
 //
 //  Created by Ian Beck
@@ -12,18 +12,24 @@
 #import "TEAforEspresso.h"
 
 
-@interface TEASpacesToTabs : TEAforEspresso {
+@interface TEAUserInput : TEAforEspresso {
 	NSWindow *customSheet;
-	NSTextField *numSpaces;
+	NSTextField *userInput;
 	NSProgressIndicator *spinner;
+	NSString *nib;
+	NSString *defaultInput;
 	id myContext;
 }
 
 @property (readonly,retain) IBOutlet NSWindow *customSheet;
-@property (readonly,retain) IBOutlet NSTextField *numSpaces;
+@property (readonly,retain) IBOutlet NSTextField *userInput;
 @property (readonly,retain) IBOutlet NSProgressIndicator *spinner;
+@property (readonly,copy) NSString *nib;
+@property (readonly,copy) NSString *defaultInput;
 @property (readonly,retain) id myContext;
 
+- (IBAction) doSubmitSheet:(id)sender;
+- (IBAction) cancel:(id)sender;
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 
 @end
