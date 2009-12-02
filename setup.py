@@ -11,7 +11,7 @@ import os
 
 # Update this info by hand; defines the required Info.plist elements
 info = dict(
-    CFBundleVersion = '1.0.3',
+    CFBundleVersion = '1.0.4b1',
     CFBundleIdentifier = 'com.onecrayon.tea.espresso',
     NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
 )
