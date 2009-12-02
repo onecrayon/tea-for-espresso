@@ -90,10 +90,14 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
     zen.insertion_point = place_ins_point
     
     rng = tea.get_first_range(context)
-    if rng.length == 0:
+    # Until Serge figures out what is wrong with html_matcher, only fire for HTML
+    zen_target = 'html, html *, xml, xml *'
+    if rng.length == 0 and tea.cursor_in_zone(context, zen_target):
         # no selection, find matching tag
         content = context.string()
+        tea.log('entering html_matcher')
         start, end = html_matcher.match(content, rng.location)
+        tea.log('start: ' + str(start) + '; end: ' + str(end))
         if start is None:
             # nothing to wrap
             return False
@@ -114,6 +118,8 @@ def wrap(context, abbr, undo_name, profile_name='xhtml'):
                 break
         
         rng = tea.new_range(start, end - start)
+    else:
+        text, rng = tea.get_word(context, rng)
     
     text = tea.get_selection(context, rng)
     # Detect the type of document we're working with
