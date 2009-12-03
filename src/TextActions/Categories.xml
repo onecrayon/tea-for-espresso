@@ -13,9 +13,6 @@
 	<category id="actions.snippets" show="sub">
 		<title>Snippets</title>
 	</category>
-	<category id="actions.tea.internal" show="sub">
-		<title>TEA</title>
-	</category>
 	<category id="actions.text.whitespace" show="inline"></category>
 	<category id="actions.text.generic" show="inline separated"></category>
 	<category id="actions.text.sorting" show="sub">
