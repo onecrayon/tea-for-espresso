@@ -48,7 +48,7 @@ static BOOL TEAInitActionsTaken = NO;
 	[self setTeaPath:[[NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"] bundlePath]];
 	
 	// Sets up supportPaths, which tracks the possible locations of Support folders
-	if ([[self bundlePath] compare:[self teaPath]] != NSOrderedSame) {
+	if (![[self bundlePath] isEqualToString:[self teaPath]]) {
 		[self setSupportPaths:[NSArray arrayWithObjects:
 								[@"~/Library/Application Support/Espresso/Support" stringByExpandingTildeInPath],
 								[[self bundlePath] stringByAppendingPathComponent:@"Support"],
@@ -73,6 +73,16 @@ static BOOL TEAInitActionsTaken = NO;
 	}
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	[self setSyntaxContext:nil];
+	[self setSelectionContext:nil];
+	[self setBundlePath:nil];
+	[self setTeaPath:nil];
+	[self setSupportPaths:nil];
+	[super dealloc];
 }
 
 - (BOOL)canPerformActionWithContext:(id)context {
@@ -118,9 +128,9 @@ static BOOL TEAInitActionsTaken = NO;
 
 - (NSString *)findScript:(NSString *)fileName inFolders:(NSArray *)folders {
 	// Make sure the script has .py on the end
-	if ([[fileName pathExtension] compare:@"py"] != NSOrderedSame) {
-		// Is there a memory leak here?
-		fileName = [fileName stringByAppendingString:@".py"];
+	if ([[fileName pathExtension] isEqualToString:@"py"]) {
+		// The caller has the responsibility for the memory management of parameters, this is correct.
+		fileName = [fileName stringByAppendingPathExtension:@"py"];
 	}
 	// Iterate over the array and check if the paths exist
 	NSString *path = nil;

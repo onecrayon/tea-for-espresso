@@ -37,9 +37,7 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
     if rng.length == 0 and tea.cursor_in_zone(context, zen_target):
         # no selection, find matching tag
         content = context.string()
-        tea.log('entering html_matcher')
         start, end = html_matcher.match(content, rng.location)
-        tea.log('start: ' + str(start) + '; end: ' + str(end))
         if start is None:
             # nothing to wrap
             return False

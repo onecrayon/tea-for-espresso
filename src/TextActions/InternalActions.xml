@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<action-recipes>
-	
-	<action id="com.onecrayon.SugarActions.Preferences" category="actions.tea.internal">
-		<class>TEAPreferences</class>
-		<title>Preferences...</title>
-	</action>
-	
-</action-recipes>

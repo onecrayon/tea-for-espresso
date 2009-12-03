@@ -31,31 +31,33 @@
 		return nil;
 	
 	// Grab the target action
-	if ([dictionary objectForKey:@"target_action"] != nil) {
-		[self setAction:[dictionary objectForKey:@"target_action"]];
+	NSString *targetAction = [dictionary objectForKey:@"target_action"];
+	if (targetAction != nil) {
+		[self setAction:targetAction];
 	} else {
 		[self setAction:[dictionary objectForKey:@"action"]];
 	}
 	
 	// Grab the list of options
-	if ([dictionary objectForKey:@"arguments"] != nil) {
-		[self setOptions:[dictionary objectForKey:@"argument"]];
+	NSDictionary *arguments = [dictionary objectForKey:@"arguments"];
+	if (arguments != nil) {
+		[self setOptions:arguments];
 	} else {
 		[self setOptions:[dictionary objectForKey:@"options"]];
 	}
 	
 	// Check to see if we should be passing our action object along
-	if ([dictionary objectForKey:@"pass_action_object"] != nil) {
-		if ([[dictionary objectForKey:@"pass_action_object"] caseInsensitiveCompare:@"true"]) {
-			[self setPassActionObject:YES];
-		} else {
-			[self setPassActionObject:NO];
-		}
-	} else {
-		[self setPassActionObject:NO];
-	}
+	// NOTE: objectForKey returns nil if pass_action_object is not defined and methods sent to nil always return NO
+	[self setPassActionObject:[[dictionary objectForKey:@"pass_action_object"] caseInsensitiveCompare:@"true"]];
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	[self setAction:nil];
+	[self setOptions:nil];
+	[super dealloc];
 }
 
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
@@ -92,7 +94,11 @@
 		
 		const char *mainPathPtr = [mainPath UTF8String];
 		FILE *mainFile = fopen(mainPathPtr, "r");
+		if (mainFile == NULL)
+			return;
+		
 		int result = PyRun_SimpleFile(mainFile, (char *)[[mainPath lastPathComponent] UTF8String]);
+		fclose(mainFile);
 		if ( result != 0 )
 			[NSException raise: NSInternalInconsistencyException
 						format: @"%s:%d main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, __LINE__, mainPath];

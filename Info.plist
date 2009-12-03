@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>TEA for Espresso</string>
+	<key>PluginPreferencesViewController</key>
+	<string>TEAPreferencesViewController</string>
+	<key>PluginPreferencesNibName</key>
+	<string>TEAPreferencesView</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleIdentifier</key>

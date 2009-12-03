@@ -21,9 +21,9 @@
 	id myContext;
 }
 
-@property (readonly,retain) IBOutlet NSWindow *customSheet;
-@property (readonly,retain) IBOutlet NSTextField *userInput;
-@property (readonly,retain) IBOutlet NSProgressIndicator *spinner;
+@property (retain) IBOutlet NSWindow *customSheet;
+@property (retain) IBOutlet NSTextField *userInput;
+@property (retain) IBOutlet NSProgressIndicator *spinner;
 @property (readonly,copy) NSString *nib;
 @property (readonly,copy) NSString *defaultInput;
 @property (readonly,retain) id myContext;

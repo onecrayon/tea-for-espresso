@@ -42,6 +42,17 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	[self setCustomSheet:nil];
+	[self setUserInput:nil];
+	[self setSpinner:nil];
+	[self setNib:nil];
+	[self setDefaultInput:nil];
+	[self setMyContext:nil];
+	[super dealloc];
+}
+
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
 	if ([self customSheet] == nil) {
 		[NSBundle loadNibNamed:[self nib] owner:self];
@@ -83,8 +94,13 @@
 		
 		// Send the info to TEAPythonLoader to run the action
 		Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
+		
+		// NOTE: in init, the instance gets a retain count of 1
 		id actionLoader = [[TEAPythonLoaderClass alloc] init];
 		BOOL returnValue = [actionLoader actInContext:[self myContext] forAction:self];
+		
+		// NOTE: release the actionLoader, decrementing its retain count to 0, which leads to its deallocation
+		[actionLoader release];
 	}
 	
 	[sheet orderOut:self];

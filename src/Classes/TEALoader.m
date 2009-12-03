@@ -44,6 +44,16 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	[self setScript:nil];
+	[self setInput:nil];
+	[self setAlternate:nil];
+	[self setOutput:nil];
+	[self setUndo_name:nil];
+	[super dealloc];
+}
+
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
 	if ([self script] == nil) {
 		NSLog(@"TEA Error: no script found for TEALoader to invoke");
@@ -129,9 +139,9 @@
 		[self addObject:[[context string] substringWithRange:range] forKey:@"E_SELECTED_TEXT" toDictionary:env];
 		// ADD E_CURRENT_WORD?
 		[self addObject:[[context string] substringWithRange:[[context lineStorage] lineRangeForRange:range]] forKey:@"E_CURRENT_LINE" toDictionary:env];
-		[self addObject:[NSString stringWithFormat:@"%d", [[context lineStorage] lineNumberForIndex:range.location]] forKey:@"E_LINENUMBER" toDictionary:env];
+		[self addObject:[NSString stringWithFormat:@"%lu", (unsigned long)[[context lineStorage] lineNumberForIndex:range.location]] forKey:@"E_LINENUMBER" toDictionary:env];
 		NSUInteger lineindex = range.location - [[context lineStorage] lineStartIndexForIndex:range.location lineNumber:nil];
-		[self addObject:[NSString stringWithFormat:@"%d", lineindex] forKey:@"E_LINEINDEX" toDictionary:env];
+		[self addObject:[NSString stringWithFormat:@"%lu", (unsigned long)lineindex] forKey:@"E_LINEINDEX" toDictionary:env];
 		NSString *e_active_zone = nil;
 		if ([[context syntaxTree] zoneAtCharacterIndex:range.location] != nil) {
 			if ([[[context syntaxTree] zoneAtCharacterIndex:range.location] typeIdentifier] != nil) {
@@ -146,7 +156,8 @@
 }
 
 - (BOOL)addObject:(id)myObject forKey:(NSString *)myKey toDictionary:(NSMutableDictionary*)dictionary {
-	if (myKey == nil || [myKey compare:@""] == NSOrderedSame) {
+	// If myKey is nil, sending it the length method will return 0
+	if (myKey.length == 0) {
 		return NO;
 	}
 	if (myObject == nil) {
