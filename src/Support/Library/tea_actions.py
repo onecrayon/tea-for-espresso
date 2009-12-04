@@ -558,6 +558,8 @@ def construct_snippet(text, snippet):
 
 def indent_snippet(context, snippet, range):
     '''
+    DEPRECATED: PLEASE USE ESPRESSO'S BUILT-IN SNIPPET INDENTATION INSTEAD
+    
     Sets a snippet's indentation level to match that of the line starting
     at the location of range
     '''

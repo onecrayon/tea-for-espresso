@@ -19,8 +19,6 @@ def act(context, default=None, undo_name=None, **syntaxes):
     text, range = tea.get_single_selection(context)
     # Check for root-zone specific override
     snippet = tea.select_from_zones(context, range, default, **syntaxes)
-    # Indent the snippet
-    snippet = tea.indent_snippet(context, snippet, range)
     # Construct the snippet
     snippet = tea.construct_snippet(text, snippet)
     # Insert that snippet!

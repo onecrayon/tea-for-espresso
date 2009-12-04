@@ -77,7 +77,6 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
     result = zen.wrap_with_abbreviation(safe_str(abbr), safe_str(text), doc_type, profile_name)
     result = unicode(result, 'utf-8')
     
-    result = tea.indent_snippet(context, result, rng)
     tea.insert_snippet_over_range(context, result, rng, undo_name)
     
     # spinner is turned on in the Objective-C action
