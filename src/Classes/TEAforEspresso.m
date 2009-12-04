@@ -101,7 +101,7 @@
 		fclose(mainFile);
 		if ( result != 0 )
 			[NSException raise: NSInternalInconsistencyException
-						format: @"%s:%d main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, __LINE__, mainPath];
+						format: @"%s:%lu main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, (unsigned long)__LINE__, mainPath];
 	}
 }
 

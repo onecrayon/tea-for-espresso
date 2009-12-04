@@ -16,12 +16,25 @@
 // If enabled, add new files, otherwise remove all symlinks
 -(void)rebuild {
 	if ([self customActionsEnabled]) {
+		NSLog(@"Parsing folders");
 		[self parseSupportFolders];
 	} else {
 		// Remove all symlinks
 		NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"];
 		NSString *symFolder = [[bundle bundlePath] stringByAppendingPathComponent:@"TextActions"];
-		// TODO: loop over all files, check if symlink and destroy if so
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		// Grab the contents of the TextActions folder
+		NSArray *contents = [fileManager contentsOfDirectoryAtPath:symFolder error:NULL];
+		// Process the symlinks
+		for (NSString *path in contents) {
+			NSLog(@"Working on path: %@", [symFolder stringByAppendingPathComponent:path]);
+			if ([[[fileManager attributesOfItemAtPath:[symFolder stringByAppendingPathComponent:path] error:NULL] fileType] isEqualToString:NSFileTypeSymbolicLink]) {
+				NSError *error = nil;
+				if (![fileManager removeItemAtPath:[symFolder stringByAppendingPathComponent:path] error:&error]) {
+					NSLog(@"Error removing symlink: %@ for %@", [error localizedDescription], path);
+				}
+			}
+		}
 	}
 
 }
@@ -46,7 +59,15 @@
 		NSDirectoryEnumerator *dirEnumerator = [fileManager enumeratorAtPath:directory];
 		
 		NSString *file;
-		while ((file = [dirEnumerator nextObject])) {
+		BOOL keepRunning = YES;
+		// Using keepRunning instead of standard iterator setup to prevent autorelease memory problem:
+		// http://www.cocoadev.com/index.pl?NSDirectoryEnumerator (near the bottom)
+		while (keepRunning) {
+			file = [dirEnumerator nextObject];
+			if (file == nil) {
+				keepRunning = NO;
+				break;
+			}
 			if ([[file pathExtension] isEqualToString:@"xml"]) {
 				// Create an autorelease pool so we can reinstantiate all these variables each loop
 				NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -64,12 +85,15 @@
 					} else {
 						// Otherwise, bump our number up and try again
 						[fileStub release];
-						fileStub = [[NSString stringWithFormat:@"%d", count] stringByAppendingString:basename];
+						fileStub = [[NSString stringWithFormat:@"%lu", (unsigned long)count] stringByAppendingString:basename];
 						count = count + 1;
 					}
 				}
 				if (!priorLink) {
-					[fileManager createSymbolicLinkAtPath:[symFolder stringByAppendingString:fileStub] withDestinationPath:file error:NULL];
+					NSError *error = nil;
+					if (![fileManager createSymbolicLinkAtPath:[symFolder stringByAppendingPathComponent:fileStub] withDestinationPath:[directory stringByAppendingPathComponent:file] error:&error]) {
+						NSLog(@"Error creating symlink: %@ for %@ => %@", [error localizedDescription], [symFolder stringByAppendingPathComponent:fileStub], [directory stringByAppendingPathComponent:file]);
+					}
 				}
 				// Release the pool
 				[pool drain];
@@ -86,6 +110,7 @@
 // Test if custom actions are enabled at this time
 -(BOOL)customActionsEnabled {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSLog(@"TEAEnableUserActions: %d", [defaults boolForKey:@"TEAEnableUserActions"]);
 	return [defaults boolForKey:@"TEAEnableUserActions"];
 }
 

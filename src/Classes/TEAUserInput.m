@@ -61,7 +61,7 @@
 	if ([[self defaultInput] caseInsensitiveCompare:@"spacespertab"] == NSOrderedSame) {
 		// Set the default number of spaces per tab from prefs
 		NSUInteger num_spaces = [[context textPreferences] numberOfSpacesForTab];
-		[self setDefaultInput:[NSString stringWithFormat:@"%d", num_spaces]];
+		[self setDefaultInput:[NSString stringWithFormat:@"%lu", (unsigned long)num_spaces]];
 	} else if ([self defaultInput] == nil) {
 		[self setDefaultInput:@""];
 	}

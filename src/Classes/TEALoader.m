@@ -90,7 +90,7 @@
 	} else {
 		e_soft_tabs = @"NO";
 	}
-	NSString *e_tab_size = [NSString stringWithFormat:@"%d", [prefs numberOfSpacesForTab]];
+	NSString *e_tab_size = [NSString stringWithFormat:@"%lu", (unsigned long)[prefs numberOfSpacesForTab]];
 	NSString *e_line_ending = [prefs lineEndingString];
 	
 	NSString *e_xhtml = nil;
