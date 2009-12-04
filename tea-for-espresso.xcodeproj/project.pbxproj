@@ -12,6 +12,7 @@
 		7A21A070106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */; };
 		7A38EEF91095F09B008DD984 /* TEALoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A38EEF81095F09B008DD984 /* TEALoader.m */; };
 		7A59D8FE106A7CB90078C92C /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A59D8FD106A7CB90078C92C /* Defaults.plist */; };
+		7A91067A10C8D134004BF837 /* TEASymlinkHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A91067910C8D134004BF837 /* TEASymlinkHandler.m */; };
 		7AEBC32B10C4C17B00A05230 /* TEAUserInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */; };
 		7AEBC33110C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AEBC32F10C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib */; };
 		7AEEF40410652918006B7765 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF40310652918006B7765 /* Python.framework */; };
@@ -45,6 +46,8 @@
 		7A38EEF71095F09B008DD984 /* TEALoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEALoader.h; path = src/Classes/TEALoader.h; sourceTree = "<group>"; };
 		7A38EEF81095F09B008DD984 /* TEALoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEALoader.m; path = src/Classes/TEALoader.m; sourceTree = "<group>"; };
 		7A59D8FD106A7CB90078C92C /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = src/Resources/Defaults.plist; sourceTree = "<group>"; };
+		7A91067810C8D134004BF837 /* TEASymlinkHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEASymlinkHandler.h; path = src/Classes/TEASymlinkHandler.h; sourceTree = "<group>"; };
+		7A91067910C8D134004BF837 /* TEASymlinkHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEASymlinkHandler.m; path = src/Classes/TEASymlinkHandler.m; sourceTree = "<group>"; };
 		7AEBC32910C4C17B00A05230 /* TEAUserInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAUserInput.h; path = src/Classes/TEAUserInput.h; sourceTree = "<group>"; };
 		7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAUserInput.m; path = src/Classes/TEAUserInput.m; sourceTree = "<group>"; };
 		7AEBC33010C4C43A00A05230 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEAEnterAbbreviationSheet.xib; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 				7A38EEF81095F09B008DD984 /* TEALoader.m */,
 				7AEBC32910C4C17B00A05230 /* TEAUserInput.h */,
 				7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */,
+				7A91067810C8D134004BF837 /* TEASymlinkHandler.h */,
+				7A91067910C8D134004BF837 /* TEASymlinkHandler.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				7A219FF9106B2BDA00F114B6 /* TEAPreferences.m in Sources */,
 				7A38EEF91095F09B008DD984 /* TEALoader.m in Sources */,
 				7AEBC32B10C4C17B00A05230 /* TEAUserInput.m in Sources */,
+				7A91067A10C8D134004BF837 /* TEASymlinkHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

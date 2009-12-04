@@ -9,6 +9,7 @@
 //
 
 #import "TEAGenericAction.h"
+#import "TEASymlinkHandler.h"
 
 #import <EspressoTextActions.h>
 #import <EspressoSyntaxCore.h>
@@ -69,7 +70,10 @@ static BOOL TEAInitActionsTaken = NO;
 		if (defaults != nil) {
 			[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:defaults]];
 		}
-		// IF SYMLINKS ARE STILL NECESSARY, I'LL NEED TO GENERATE THEM HERE
+		TEASymlinkHandler *symController; 
+		symController = [[TEASymlinkHandler alloc] init];
+		[symController refresh];
+		[symController dealloc];
 	}
 	
 	return self;

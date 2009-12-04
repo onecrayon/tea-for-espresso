@@ -9,6 +9,7 @@
 //
 
 #import "TEAPreferences.h"
+#import "TEASymlinkHandler.h"
 
 // ==========================================================
 
@@ -70,10 +71,10 @@
 
 - (IBAction)toggleUserActions:(id)sender
 {
-	// TODO: Figure out if I need this action at all
 	// Performs the symlink refresh when user actions are toggled
-	NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"];
-	// Use the bundle to refresh symlinks; Python original: refresh_symlinks(bundle.bundlePath(), True)
+	TEASymlinkHandler *symController = [[TEASymlinkHandler alloc] init];
+	[symController rebuild];
+	[symController dealloc];
 }
 
 - (IBAction)customActionsHelp:(id)sender
