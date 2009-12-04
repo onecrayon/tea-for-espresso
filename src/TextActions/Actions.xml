@@ -2,6 +2,38 @@
 <action-recipes>
 	<!-- Commands are in menu order, because that's how I roll -->
 	
+	<action id="com.onecrayon.TextActions.Entab" category="actions.text.generic/actions.text.whitespace/1">
+		<class>TEAUserInput</class>
+		<title>Spaces To Tabs...</title>
+		<setup>
+			<action>spaces_to_tabs</action>
+			<options>
+				<dict>
+					<key>operation</key>
+					<string>entab</string>
+				</dict>
+			</options>
+			<nib>TEASpacesPerTabsSheet</nib>
+			<default_input>SPACESPERTAB</default_input>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.Detab" category="actions.text.generic/actions.text.whitespace/2">
+		<class>TEAUserInput</class>
+		<title>Tabs To Spaces...</title>
+		<setup>
+			<action>spaces_to_tabs</action>
+			<options>
+				<dict>
+					<key>operation</key>
+					<string>detab</string>
+				</dict>
+			</options>
+			<nib>TEASpacesPerTabsSheet</nib>
+			<default_input>SPACESPERTAB</default_input>
+		</setup>
+	</action>
+	
 	<action id="com.onecrayon.TextActions.TrimLines" category="actions.text.generic/actions.text.whitespace">
 		<class>TEAforEspresso</class>
 		<title>Trim Line(s)</title>
@@ -359,6 +391,23 @@
 					<string>Expand Abbreviation</string>
 				</dict>
 			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.insertion">
+		<class>TEAUserInput</class>
+		<title>Wrap With Abbreviation</title>
+		<key-equivalent>control shift a</key-equivalent>
+		<setup>
+			<action>wrap_with_abbreviation</action>
+			<options>
+				<dict>
+					<key>undo_name</key>
+					<string>Wrap With Abbreviation</string>
+				</dict>
+			</options>
+			<nib>TEAEnterAbbreviationSheet</nib>
+			<default_input>div</default_input>
 		</setup>
 	</action>
 	
