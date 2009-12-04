@@ -259,7 +259,7 @@
 	<action id="com.onecrayon.TextActions.HTMLTagDocLookup" category="actions.text.HTML/tea.footer">
 		<class>TEAforEspresso</class>
 		<title>Documentation For Tag</title>
-		<key-equivalent>control h</key-equivalent>
+		<key-equivalent>command shift h</key-equivalent>
 		<setup>
 			<action>visit_url</action>
 			<syntax-context>tag.html, tag.html *</syntax-context>
