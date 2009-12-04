@@ -16,7 +16,6 @@
 // If enabled, add new files, otherwise remove all symlinks
 -(void)rebuild {
 	if ([self customActionsEnabled]) {
-		NSLog(@"Parsing folders");
 		[self parseSupportFolders];
 	} else {
 		// Remove all symlinks
@@ -27,7 +26,6 @@
 		NSArray *contents = [fileManager contentsOfDirectoryAtPath:symFolder error:NULL];
 		// Process the symlinks
 		for (NSString *path in contents) {
-			NSLog(@"Working on path: %@", [symFolder stringByAppendingPathComponent:path]);
 			if ([[[fileManager attributesOfItemAtPath:[symFolder stringByAppendingPathComponent:path] error:NULL] fileType] isEqualToString:NSFileTypeSymbolicLink]) {
 				NSError *error = nil;
 				if (![fileManager removeItemAtPath:[symFolder stringByAppendingPathComponent:path] error:&error]) {
@@ -110,7 +108,6 @@
 // Test if custom actions are enabled at this time
 -(BOOL)customActionsEnabled {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSLog(@"TEAEnableUserActions: %d", [defaults boolForKey:@"TEAEnableUserActions"]);
 	return [defaults boolForKey:@"TEAEnableUserActions"];
 }
 
