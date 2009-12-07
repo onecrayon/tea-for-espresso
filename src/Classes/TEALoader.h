@@ -25,6 +25,6 @@
 @property (readonly,copy) NSString* output;
 @property (readonly,copy) NSString* undo_name;
 
-- (BOOL)addObject:(id)myObject forKey:(id)myKey toDictionary:(NSMutableDictionary*)dictionary;
+- (BOOL)addObject:(id)myObject forKey:(NSString *)myKey toDictionary:(NSMutableDictionary*)dictionary;
 
 @end
