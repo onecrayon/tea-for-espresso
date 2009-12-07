@@ -10,6 +10,7 @@
 #import "TEALoader.h"
 #import <EspressoTextActions.h>
 #import <EspressoTextCore.h>
+#import <NSString+MRFoundation.h>
 
 
 // Private setters
@@ -124,6 +125,7 @@
 	// Initialize our common variables
 	CETextRecipe *recipe = [CETextRecipe textRecipe];
 	NSArray *ranges = [context selectedRanges];
+	NSString *outString;
 	
 	NSString *file = [self findScript:[self script]];
 	if (file == nil) {
@@ -151,8 +153,118 @@
 		[self addObject:e_active_zone forKey:@"E_ACTIVE_ZONE" toDictionary:env];
 		
 		// Grab the contents for our STDIN
+		NSString *source = @"input";
+		NSString *inputStr;
+		if ([[self input] isEqualToString:@"selection"]) {
+			inputStr = [[context string] substringWithRange:range];
+			if ([inputStr isEqualToString:@""]) {
+				if ([[self alternate] isEqualToString:@"document"]) {
+					// Use the document's context as the input
+					[inputStr release];
+					inputStr = [context string];
+				} else if ([[self alternate] isEqualToString:@"line"]) {
+					// Use the current line's content as the input
+					NSRange linerange = [[context lineStorage] lineRangeForIndex:range.location];
+					// Discard the linebreak at the end of the line
+					range = NSMakeRange(linerange.location, linerange.length - 1);
+					[inputStr release];
+					inputStr = [[context string] substringWithRange:range];
+				} else if ([[self alternate] isEqualToString:@"word"]) {
+					// Use the current word as the input
+					// TODO: figure out how to port the word checking to Objective-C
+					NSLog(@"TEALoader Error: Using words as the alternate input is temporarily disabled.");
+				} else if ([[self alternate] isEqualToString:@"character"]) {
+					// Use the current character as the input if possible
+					if (range.location > 0) {
+						range = NSMakeRange(range.location - 1, 1);
+						[inputStr release];
+						inputStr = [[context string] substringWithRange:range];
+					}
+				}
+				// Set our source appropriately
+				[source release];
+				source = @"alt";
+			}
+		} else if ([[self input] isEqualToString:@"document"]) {
+			inputStr = [context string];
+		} else {
+			inputStr = @"";
+		}
 		
+		// Run the actual script
+		NSTask *task = [[NSTask alloc] init];
+		NSPipe *inPipe = [NSPipe pipe], *outPipe = [NSPipe pipe];
+		
+		// Set up the STDIN
+		// TODO: grab the encoding from the Espresso API?
+		NSFileHandle *fh = [inPipe fileHandleForWriting];  
+		[fh writeData:[inputStr dataUsingEncoding:NSUTF8StringEncoding]];  
+		[fh closeFile];
+		
+		[task setLaunchPath:file];
+		[task setStandardOutput:outPipe];
+		[task setStandardError:outPipe];
+		[task setStandardInput:inPipe];
+		[task setEnvironment:env];
+		
+		[task launch];
+		
+		NSData *data;
+		data = [[outPipe fileHandleForReading] readDataToEndOfFile];
+		outString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		
+		[task waitUntilExit];
+		[task release];
+		
+		// Insert the output
+		if ([[self output] isEqualToString:@"document"] || ([source isEqualToString:@"alt"] && [[self alternate] isEqualToString:@"document"])) {
+			// Replace the document
+			NSRange docrange = NSMakeRange(0, [[context string] length]);
+			[recipe addReplacementString:outString forRange:docrange];
+			// Since we replaced the document, jump out of the loop in case there are other ranges
+			break;
+		} else if ([[self output] isEqualToString:@"text"]) {
+			[recipe addReplacementString:outString forRange:range];
+		} else if ([[self output] isEqualToString:@"snippet"]) {
+			[recipe addDeletedRange:range];
+			// We can only insert a single snippet, so break out of the loop
+			break;
+		}
 	}
+	
+	if ([self output] == nil) {
+		// If we don't have an output specified, no need to go further
+		return YES;
+	}
+	
+	// Apply the recipe
+	if ([self undo_name] != nil) {
+		[recipe setUndoActionName:[self undo_name]];
+	}
+	[recipe prepare];
+	BOOL response = YES;
+	if ([recipe numberOfChanges] > 0) {
+		response = [context applyTextRecipe:recipe];
+	}
+	if ([[self output] isEqualToString:@"snippet"]) {
+		// Grab the XHTML close string
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		BOOL useXHTML = [defaults boolForKey:@"TEADefaultToXHTML"];
+		NSString *xhtmlStr;
+		if (!useXHTML) {
+			xhtmlStr = @"";
+		} else {
+			xhtmlStr = [defaults stringForKey:@"TEASelfClosingString"];
+		}
+		// Replace the $E_XHTML placeholder if it exists
+		NSMutableString *snippetStr = [outString copy];
+		[snippetStr replaceOccurrencesOfString:@"$E_XHTML" withString:xhtmlStr];
+		// Convert to snippet
+		CETextSnippet *snippet = [CETextSnippet snippetWithString:snippetStr];
+		// Insert that sucker!
+		response = [context insertTextSnippet:snippet];
+	}
+	return response;
 }
 
 - (BOOL)addObject:(id)myObject forKey:(NSString *)myKey toDictionary:(NSMutableDictionary*)dictionary {
