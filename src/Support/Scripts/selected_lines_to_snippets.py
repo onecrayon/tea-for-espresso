@@ -22,6 +22,8 @@ def act(context, first_snippet='', following_snippet='',
     lines = text.splitlines(True)
     # Compile the regex for quicker action on lots of lines
     parser = re.compile(r'(\s*)(.*?)(\s*(\r|\r\n|\n)|$)')
+    first = first_snippet
+    following = following_snippet
     # Loop over lines and construct the snippet
     snippet = ''
     # This is the number of snippets processed, not lines

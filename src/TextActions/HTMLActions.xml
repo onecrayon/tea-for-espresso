@@ -187,7 +187,7 @@
 	<action id="com.onecrayon.TextActions.WrapInSnippet.tag" category="actions.text.HTML/tea.wrapping">
 		<class>TEAforEspresso</class>
 		<title>Wrap Selection In Tag</title>
-		<key-equivalent>control W</key-equivalent>
+		<key-equivalent>control shift W</key-equivalent>
 		<setup>
 			<action>selections_to_snippets</action>
 			<!-- <selection-context>one</selection-context> -->
