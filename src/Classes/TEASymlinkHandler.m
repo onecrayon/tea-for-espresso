@@ -13,6 +13,11 @@
 
 @implementation TEASymlinkHandler
 
+- (NSBundle *)TEABundle
+{
+	return [NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"];
+}
+
 + (void)load
 {
 	[super load];
@@ -36,11 +41,6 @@
 	if (sharedHandler == nil)
 		sharedHandler = [[self alloc] init];
 	return sharedHandler;
-}
-
-- (NSBundle *)TEABundle
-{
-	return [NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"];
 }
 
 // Test if custom actions are enabled at this time

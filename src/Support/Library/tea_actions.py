@@ -601,7 +601,7 @@ def insert_text_over_range(context, text, range, undo_name=None):
         insertions.setUndoActionName_(undo_name)
     return context.applyTextRecipe_(insertions)
 
-def insert_snippet(context, snippet):
+def insert_snippet(context, snippet, indent=True):
     '''
     Convenience function to insert a text snippet
     
@@ -611,9 +611,12 @@ def insert_snippet(context, snippet):
     snippet = snippet.replace('$E_XHTML', get_tag_closestring(context))
     if type(snippet) in StringTypes:
         snippet = new_snippet(snippet)
-    return context.insertTextSnippet_(snippet)
+    if indent:
+        return context.insertTextSnippet_(snippet)
+    else:
+        return context.insertTextSnippet_options_(snippet, 0)
 
-def insert_snippet_over_range(context, snippet, range, undo_name=None):
+def insert_snippet_over_range(context, snippet, range, undo_name=None, indent=True):
     '''Replaces text at range with a text snippet'''
     if range.length is not 0:
         # Need to first delete the text under the range
@@ -624,4 +627,4 @@ def insert_snippet_over_range(context, snippet, range, undo_name=None):
         # Apply the deletions
         context.applyTextRecipe_(deletions)
     # Insert the snippet
-    return insert_snippet(context, snippet)
+    return insert_snippet(context, snippet, indent)
