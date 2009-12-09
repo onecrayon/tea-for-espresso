@@ -86,7 +86,8 @@
 	[NSApp endSheet:[self customSheet] returnCode:0];
 }
 
-- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
 	if (returnCode == 1) {
 		// Doing this here, because Python might be starting up, which could take a while
 		[[self spinner] startAnimation:self];
@@ -98,6 +99,11 @@
 		// NOTE: in init, the instance gets a retain count of 1
 		id actionLoader = [[TEAPythonLoaderClass alloc] init];
 		BOOL returnValue = [actionLoader actInContext:[self myContext] forAction:self];
+		//if (returnValue == NO)
+		//	NSBeep();
+		
+		// Turn off the spinner
+		[[self spinner] stopAnimation:self];
 		
 		// NOTE: release the actionLoader, decrementing its retain count to 0, which leads to its deallocation
 		[actionLoader release];

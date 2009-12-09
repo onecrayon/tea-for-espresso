@@ -72,9 +72,7 @@
 - (IBAction)toggleUserActions:(id)sender
 {
 	// Performs the symlink refresh when user actions are toggled
-	TEASymlinkHandler *symController = [[TEASymlinkHandler alloc] init];
-	[symController rebuild];
-	[symController dealloc];
+	[[TEASymlinkHandler sharedHandler] rebuild];
 }
 
 - (IBAction)customActionsHelp:(id)sender

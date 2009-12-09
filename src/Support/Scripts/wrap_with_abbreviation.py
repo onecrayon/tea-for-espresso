@@ -79,9 +79,6 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
     
     tea.insert_snippet_over_range(context, result, rng, undo_name)
     
-    # spinner is turned on in the Objective-C action
-    actionObject.spinner().stopAnimation_(actionObject)
-    
     return True
 
 def get_current_line_padding(context):

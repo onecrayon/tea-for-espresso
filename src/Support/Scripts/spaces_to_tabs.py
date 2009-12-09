@@ -37,7 +37,5 @@ def act(context, actionObject, operation='entab'):
         insertions.addReplacementString_forRange_(text, range)
     insertions.setUndoActionName_(operation.title())
     context.applyTextRecipe_(insertions)
-    # spinner is turned on in the Objective-C action
-    actionObject.spinner().stopAnimation_(actionObject)
     
     return True

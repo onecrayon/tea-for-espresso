@@ -71,7 +71,7 @@
 	
 	// Now that Python and the TEAPythonLoader class are initialized, send the info to TEAPythonLoader
 	Class TEAPythonLoaderClass = NSClassFromString(@"TEAPythonLoader");
-	id actionLoader = [[TEAPythonLoaderClass alloc] init];
+	id actionLoader = [[[TEAPythonLoaderClass alloc] init] autorelease];
 	return [actionLoader actInContext:context forAction:self];
 }
 

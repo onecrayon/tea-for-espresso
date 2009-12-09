@@ -15,10 +15,9 @@
 
 }
 
--(void)rebuild;
--(void)refresh;
--(void)parseSupportFolders;
--(BOOL)symlink:(NSString *)link isValidForPath:(NSString *)path;
--(BOOL)customActionsEnabled;
++ (TEASymlinkHandler *)sharedHandler;
+
+- (void)rebuild;
+- (void)refresh;
 
 @end

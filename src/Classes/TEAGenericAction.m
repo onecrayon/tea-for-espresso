@@ -70,10 +70,8 @@ static BOOL TEAInitActionsTaken = NO;
 		if (defaults != nil) {
 			[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:defaults]];
 		}
-		TEASymlinkHandler *symController; 
-		symController = [[TEASymlinkHandler alloc] init];
-		[symController refresh];
-		[symController dealloc];
+		
+		[[TEASymlinkHandler sharedHandler] refresh];
 	}
 	
 	return self;

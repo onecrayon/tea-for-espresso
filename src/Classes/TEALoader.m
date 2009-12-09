@@ -125,7 +125,7 @@
 	// Initialize our common variables
 	CETextRecipe *recipe = [CETextRecipe textRecipe];
 	NSArray *ranges = [context selectedRanges];
-	NSString *outString;
+	NSString *outString = nil;
 	
 	NSString *file = [self findScript:[self script]];
 	if (file == nil) {
@@ -160,14 +160,12 @@
 			if ([inputStr isEqualToString:@""]) {
 				if ([[self alternate] isEqualToString:@"document"]) {
 					// Use the document's context as the input
-					[inputStr release];
 					inputStr = [context string];
 				} else if ([[self alternate] isEqualToString:@"line"]) {
 					// Use the current line's content as the input
 					NSRange linerange = [[context lineStorage] lineRangeForIndex:range.location];
 					// Discard the linebreak at the end of the line
 					range = NSMakeRange(linerange.location, linerange.length - 1);
-					[inputStr release];
 					inputStr = [[context string] substringWithRange:range];
 				} else if ([[self alternate] isEqualToString:@"word"]) {
 					// Use the current word as the input
@@ -177,12 +175,10 @@
 					// Use the current character as the input if possible
 					if (range.location > 0) {
 						range = NSMakeRange(range.location - 1, 1);
-						[inputStr release];
 						inputStr = [[context string] substringWithRange:range];
 					}
 				}
 				// Set our source appropriately
-				[source release];
 				source = @"alt";
 			}
 		} else if ([[self input] isEqualToString:@"document"]) {
@@ -211,7 +207,7 @@
 		
 		NSData *data;
 		data = [[outPipe fileHandleForReading] readDataToEndOfFile];
-		outString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		outString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 		
 		[task waitUntilExit];
 		[task release];
@@ -257,7 +253,7 @@
 			xhtmlStr = [defaults stringForKey:@"TEASelfClosingString"];
 		}
 		// Replace the $E_XHTML placeholder if it exists
-		NSMutableString *snippetStr = [outString copy];
+		NSMutableString *snippetStr = [[outString mutableCopy] autorelease];
 		[snippetStr replaceOccurrencesOfString:@"$E_XHTML" withString:xhtmlStr];
 		// Convert to snippet
 		CETextSnippet *snippet = [CETextSnippet snippetWithString:snippetStr];
