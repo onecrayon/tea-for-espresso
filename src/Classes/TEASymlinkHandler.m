@@ -18,8 +18,15 @@
 	[super load];
 	
 	// This is really a bit of a hacky way to approach this, but it works...
+	// Runs one-time initialization code upon bundle load
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	[[self sharedHandler] rebuild];
+	// Setup the default preferences, in case they've never been modified
+	NSString *defaults = [[[self sharedHandler] TEABundle] pathForResource:@"Defaults" ofType:@"plist"];
+	if (defaults != nil) {
+		[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:defaults]];
+	}
+	// Refresh the symlinks to make sure they're accurate
+	[[self sharedHandler] refresh];
 	[pool drain];
 }
 
