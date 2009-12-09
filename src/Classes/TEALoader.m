@@ -55,6 +55,99 @@
 	[super dealloc];
 }
 
+// Tests if the unichar character is alphanumeric or one of these punctuation marks: _-#.>+*:$!@
+- (BOOL) isWordCharacter:(unichar)character {
+	NSCharacterSet *alphaNumericChars = [NSCharacterSet alphanumericCharacterSet];
+	NSCharacterSet *punctuation = [NSCharacterSet characterSetWithCharactersInString:@"_-#.>+*:$!@"];
+	
+	return ([alphaNumericChars characterIsMember:character] || [punctuation characterIsMember:character]);
+}
+
+// Tests from start of the line to index to see if index is part of an HTML tag
+- (BOOL) lineToIndexEndsWithTag:(NSUInteger)index inContext:(id)context {
+	unichar character = [[context string] characterAtIndex:index];
+	// Impossible for the line to the index to be an HTML tag if the character isn't a caret
+	if (character != '>') {
+		return NO;
+	}
+	NSUInteger linestart = [[context lineStorage] lineStartIndexLessThanIndex:index];
+	NSString *text = [[context string] substringWithRange:NSMakeRange(linestart, index - linestart + 1)];
+	// I don't know which (if any) regex libraries are included in Espresso, so here's a hack with NSPredicate
+	// NSPredicate regex test courtesy of: http://www.stiefels.net/2007/01/24/regular-expressions-for-nsstring/
+	// Using double backslashes to escape them
+	NSString *regex = @".*(<\\/?[\\w:-]+[^>]*|\\s*(/|\\?|%|-{2,3}))>";
+	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	
+	return [regextest evaluateWithObject:text];
+}
+
+// Get the word in the current context around the given index; the range is returned by reference
+// Usage: NSRange my_range; [self getWordAtIndex:index inContext:context forRange:&my_range];
+- (NSString *)getWordAtIndex:(NSUInteger)cursor inContext:(id)context forRange:(NSRange *)range {
+	NSMutableString *word = [NSMutableString stringWithString:@""];
+	NSUInteger maxlength = [[context string] length];
+	unichar character;
+	BOOL inword = NO;
+	NSUInteger index = cursor;
+	NSUInteger firstindex, lastindex;
+	if (index != maxlength) {
+		// Check if index is mid-word
+		character = [[context string] characterAtIndex:index+1];
+		if ([self isWordCharacter:character]) {
+			inword = TRUE;
+			// Parse forward until we hit the end of the word or document
+			while (inword) {
+				character = [[context string] characterAtIndex:index];
+				// If word character, append and advance
+				if ([self isWordCharacter:character]) {
+					[word appendFormat:@"%C", character];
+				} else {
+					inword = NO;
+				}
+				index = index + 1;
+				// End it if we're at the document end
+				if (index == maxlength) {
+					inword = NO;
+				}
+			}
+		} else {
+			// Although we haven't advanced any, lastindex logic assumes we've
+			// been incrementing as we go, so bump it up one to compensate
+			index = index + 1;
+		}
+	}
+	// Set the last index of the word
+	if (index < maxlength) {
+		lastindex = index - 1;
+	} else {
+		lastindex = index;
+	}
+	// Ready to go backward, so reset index to one less than cursor location
+	index = cursor - 1;
+	// Only walk backwards if we aren't at the beginning of the document
+	if (index >= 0) {
+		inword = YES;
+		while (inword) {
+			character = [[context string] characterAtIndex:index];
+			if ([self isWordCharacter:character] && ![self lineToIndexEndsWithTag:index inContext:context]) {
+				[word insertString:[NSString stringWithFormat:@"%C", character] atIndex:0];
+				index = index - 1;
+			} else {
+				inword = NO;
+			}
+			if (index < 0) {
+				inword = NO;
+			}
+		}
+	}
+	// Since index is left-aligned and we've overcompensated, need to increment +1
+	firstindex = index + 1;
+	// Switch last index to length for use in range
+    lastindex = lastindex - firstindex;
+	*range = NSMakeRange(firstindex, lastindex);
+	return [NSString stringWithString:word];
+}
+
 - (BOOL)performActionWithContext:(id)context error:(NSError **)outError {
 	if ([self script] == nil) {
 		NSLog(@"TEA Error: no script found for TEALoader to invoke");
@@ -139,7 +232,10 @@
 		NSRange range = [rangeValue rangeValue];
 		// Add the items that change for each range
 		[self addObject:[[context string] substringWithRange:range] forKey:@"E_SELECTED_TEXT" toDictionary:env];
-		// ADD E_CURRENT_WORD?
+		// Determine the current word
+		NSRange word_range;
+		NSString *current_word = [self getWordAtIndex:range.location inContext:context forRange:&word_range];
+		[self addObject:current_word forKey:@"E_CURRENT_WORD" toDictionary:env];
 		[self addObject:[[context string] substringWithRange:[[context lineStorage] lineRangeForRange:range]] forKey:@"E_CURRENT_LINE" toDictionary:env];
 		[self addObject:[NSString stringWithFormat:@"%lu", (unsigned long)[[context lineStorage] lineNumberForIndex:range.location]] forKey:@"E_LINENUMBER" toDictionary:env];
 		NSUInteger lineindex = range.location - [[context lineStorage] lineStartIndexForIndex:range.location lineNumber:nil];
@@ -169,8 +265,8 @@
 					inputStr = [[context string] substringWithRange:range];
 				} else if ([[self alternate] isEqualToString:@"word"]) {
 					// Use the current word as the input
-					// TODO: figure out how to port the word checking to Objective-C
-					NSLog(@"TEALoader Error: Using words as the alternate input is temporarily disabled.");
+					range = word_range;
+					inputStr = current_word;
 				} else if ([[self alternate] isEqualToString:@"character"]) {
 					// Use the current character as the input if possible
 					if (range.location > 0) {
@@ -263,6 +359,7 @@
 	return response;
 }
 
+// Easier way to add empty strings to the environment dictionary
 - (BOOL)addObject:(id)myObject forKey:(NSString *)myKey toDictionary:(NSMutableDictionary*)dictionary {
 	// If myKey is nil, sending it the length method will return 0
 	if (myKey.length == 0) {
