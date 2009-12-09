@@ -71,7 +71,7 @@
 				NSString *filePath = [directoryWithXML stringByAppendingPathComponent:subpath];
 				
 				BOOL hasValidSymbolicLink = NO;
-				NSUInteger numericSuffix = 1;
+				NSUInteger numericPrefix = 1;
 				while ([fileManager fileExistsAtPath:[symbolicLinksFolder stringByAppendingPathComponent:fileName]]) {
 					
 					// See if we already have a valid symbolic link for the file we want to point to
@@ -82,8 +82,8 @@
 						break;
 					}
 					else {
-						fileName = [NSString stringWithFormat:@"%@ %lu", fileName, (unsigned long)numericSuffix];
-						numericSuffix++;
+						fileName = [NSString stringWithFormat:@"%lu-%@", (unsigned long)numericPrefix, fileName];
+						numericPrefix++;
 					}
 				}
 				

@@ -226,6 +226,14 @@
 		return NO;
 	}
 	
+	// Make sure the script is executable
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	if (![fileManager isExecutableFileAtPath:file]) {
+		NSArray *chmodArguments = [NSArray arrayWithObjects:@"775", file, nil];
+		NSTask *chmod = [NSTask launchedTaskWithLaunchPath:@"/bin/chmod" arguments:chmodArguments];
+		[chmod waitUntilExit];
+	}
+	
 	// Loop over the ranges and perform the script's action on each
 	// Looping allows us to handle single ranges or multiple discontiguous selections
 	for (NSValue *rangeValue in ranges) {
