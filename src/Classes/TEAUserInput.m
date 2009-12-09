@@ -99,8 +99,8 @@
 		// NOTE: in init, the instance gets a retain count of 1
 		id actionLoader = [[TEAPythonLoaderClass alloc] init];
 		BOOL returnValue = [actionLoader actInContext:[self myContext] forAction:self];
-		//if (returnValue == NO)
-		//	NSBeep();
+		if (returnValue == NO)
+			NSBeep();
 		
 		// Turn off the spinner
 		[[self spinner] stopAnimation:self];
