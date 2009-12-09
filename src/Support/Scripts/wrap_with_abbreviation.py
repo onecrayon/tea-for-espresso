@@ -5,6 +5,8 @@
 
 import re
 
+from AppKit import NSBeep
+
 from zencoding import settings_loader
 
 import tea_actions as tea
@@ -75,6 +77,12 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
     # Damn Python's encodings! Have to convert string to ascii before wrapping 
     # and then back to utf-8
     result = zen.wrap_with_abbreviation(safe_str(abbr), safe_str(text), doc_type, profile_name)
+    # Exit with error if no results
+    if result is None:
+        NSBeep()
+        tea.log('Zen Wrap With Abbreviation failed: check abbreviation syntax.')
+        return False
+    
     result = unicode(result, 'utf-8')
     
     tea.insert_snippet_over_range(context, result, rng, undo_name)
