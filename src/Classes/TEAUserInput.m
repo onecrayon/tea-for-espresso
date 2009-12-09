@@ -109,6 +109,7 @@
 		[actionLoader release];
 	}
 	
+	// This is after the action processing so that we can run a spinner in the sheet while the action takes place
 	[sheet orderOut:self];
 }
 
