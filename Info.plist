@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.1b3</string>
+	<string>1.1b4</string>
 	<key>NSPrincipalClass</key>
 	<string>TEAforEspresso</string>
 	<key>NSHumanReadableCopyright</key>
