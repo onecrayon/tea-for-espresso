@@ -53,6 +53,13 @@
 
 @synthesize arrayController;
 @synthesize tableView;
+@synthesize versionInfo;
+
+- (void)awakeFromNib
+{
+	NSString *version = [[NSBundle bundleWithIdentifier:@"com.onecrayon.tea.espresso"] objectForInfoDictionaryKey:@"CFBundleVersion"];
+	[versionInfo setStringValue:[NSString stringWithFormat:@"version %@", version]];
+}
 
 - (IBAction)addListItem:(id)sender
 {

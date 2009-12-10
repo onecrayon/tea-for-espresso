@@ -31,10 +31,12 @@
 {
 	NSArrayController *arrayController;
 	NSTableView *tableView;
+	NSTextField *versionInfo;
 }
 
 @property (readonly,retain) IBOutlet NSArrayController *arrayController;
 @property (readonly,retain) IBOutlet NSTableView *tableView;
+@property (readonly,retain) IBOutlet NSTextField *versionInfo;
 
 - (IBAction)addListItem:(id)sender;
 - (IBAction)toggleUserActions:(id)sender;

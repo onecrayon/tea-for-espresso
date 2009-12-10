@@ -43,6 +43,37 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSTextField" id="595765118">
+						<reference key="NSNextResponder" ref="1005"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{129, 20}, {179, 17}}</string>
+						<reference key="NSSuperview" ref="1005"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="356134079">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">138413056</int>
+							<string key="NSContents">version 1.1</string>
+							<object class="NSFont" key="NSSupport" id="988373643">
+								<string key="NSName">LucidaGrande</string>
+								<double key="NSSize">13</double>
+								<int key="NSfFlags">1044</int>
+							</object>
+							<reference key="NSControlView" ref="595765118"/>
+							<object class="NSColor" key="NSBackgroundColor" id="351456959">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">controlColor</string>
+								<object class="NSColor" key="NSColor" id="945467562">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+								</object>
+							</object>
+							<object class="NSColor" key="NSTextColor">
+								<int key="NSColorSpace">1</int>
+								<bytes key="NSRGB">MCAwIDAgMC41MQA</bytes>
+							</object>
+						</object>
+					</object>
 					<object class="NSTextField" id="548215214">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
@@ -59,15 +90,7 @@
 								<int key="NSfFlags">16</int>
 							</object>
 							<reference key="NSControlView" ref="548215214"/>
-							<object class="NSColor" key="NSBackgroundColor" id="351456959">
-								<int key="NSColorSpace">6</int>
-								<string key="NSCatalogName">System</string>
-								<string key="NSColorName">controlColor</string>
-								<object class="NSColor" key="NSColor" id="945467562">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
-								</object>
-							</object>
+							<reference key="NSBackgroundColor" ref="351456959"/>
 							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">1</int>
 								<bytes key="NSRGB">MCAwIDAgMC41MQA</bytes>
@@ -84,11 +107,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
 							<string key="NSContents"/>
-							<object class="NSFont" key="NSSupport" id="988373643">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
-							</object>
+							<reference key="NSSupport" ref="988373643"/>
 							<reference key="NSControlView" ref="369396258"/>
 							<int key="NSButtonFlags">-2038415105</int>
 							<int key="NSButtonFlags2">161</int>
@@ -678,6 +697,14 @@
 					</object>
 					<int key="connectionID">93</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">versionInfo</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="595765118"/>
+					</object>
+					<int key="connectionID">96</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -722,6 +749,7 @@
 							<reference ref="794985652"/>
 							<reference ref="812280295"/>
 							<reference ref="369396258"/>
+							<reference ref="595765118"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -940,6 +968,20 @@
 						<reference key="object" ref="731896280"/>
 						<reference key="parent" ref="548215214"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">94</int>
+						<reference key="object" ref="595765118"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="356134079"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">95</int>
+						<reference key="object" ref="356134079"/>
+						<reference key="parent" ref="595765118"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -980,13 +1022,17 @@
 					<string>79.IBPluginDependency</string>
 					<string>85.IBPluginDependency</string>
 					<string>86.IBPluginDependency</string>
+					<string>94.IBPluginDependency</string>
+					<string>95.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{321, 314}, {444, 367}}</string>
+					<string>{{355, 356}, {444, 367}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1035,7 +1081,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">93</int>
+			<int key="maxID">96</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1071,11 +1117,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>arrayController</string>
 							<string>tableView</string>
+							<string>versionInfo</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSArrayController</string>
 							<string>NSTableView</string>
+							<string>NSTextField</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
