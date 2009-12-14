@@ -2,14 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>TEA for Espresso</string>
-	<key>PluginPreferencesViewController</key>
-	<string>TEAPreferencesViewController</string>
-	<key>PluginPreferencesNibName</key>
-	<string>TEAPreferencesView</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>TEA for Espresso</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.onecrayon.tea.espresso</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -17,10 +13,14 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.1b5</string>
-	<key>NSPrincipalClass</key>
-	<string>TEAforEspresso</string>
+	<string>1.1</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>(c) 2009 Ian Beck under the MIT license</string>
+	<key>NSPrincipalClass</key>
+	<string>TEAforEspresso</string>
+	<key>PluginPreferencesNibName</key>
+	<string>TEAPreferencesView</string>
+	<key>PluginPreferencesViewController</key>
+	<string>TEAPreferencesViewController</string>
 </dict>
 </plist>
