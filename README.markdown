@@ -23,19 +23,19 @@ Building from source
 ====================
 
 Since you're here, odds are you want to mess around with TEA's source code. 
-To compile TEA:
+To compile TEA first clone it from GitHub (if you don't have Git installed,
+[download it instead][4]):
 
     git clone git://github.com/onecrayon/tea-for-espresso.git
-    cd tea-for-espresso
-    python setup.py py2app
 
-If you wish to create a development version, you can run this instead:
+In order to compile, TEA for Espresso needs to know where your Espresso
+installation lives.  By default it will look in your `/Applications` folder,
+but if you have Espresso installed somewhere else, you can create a
+symbolic link to it that the compiler will follow like this:
 
-    python setup.py py2app -A
+    ln -s /path/to/Espresso.app /Applications/Espresso.app
 
-This will create a normal version of the TEA plugin, but symlink all the 
-internal files so that you don't have to rebuild the Sugar to try out changes 
-(you'll still need to relaunch Espresso between changes, though).
+To compile, just open the Xcode project and hit the build button!
 
 To override the bundled version of TEA in Espresso, make sure to increment 
-the CFBundleVersion in setup.py before compiling TEA.
+the CFBundleVersion in Info.plist before compiling TEA.
