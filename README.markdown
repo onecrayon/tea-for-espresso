@@ -28,6 +28,8 @@ To compile TEA first clone it from GitHub (if you don't have Git installed,
 
     git clone git://github.com/onecrayon/tea-for-espresso.git
 
+   [4]: http://code.google.com/p/git-osx-installer/
+
 In order to compile, TEA for Espresso needs to know where your Espresso
 installation lives.  By default it will look in your `/Applications` folder,
 but if you have Espresso installed somewhere else, you can create a
