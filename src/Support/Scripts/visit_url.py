@@ -16,7 +16,7 @@ def act(context, input=None, default=None, **syntaxes):
     - word
     - line
     
-    default and syntaxes will replace $SELECTED_TEXT with a URL escaped version
+    default and syntaxes will replace $EDITOR_SELECTION with a URL escaped version
     of the selected text (or input, if no selected text)
     '''
     text, range = tea.get_single_selection(context)

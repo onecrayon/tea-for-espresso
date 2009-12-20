@@ -548,7 +548,7 @@ def sanitize_for_snippet(text):
 
 def construct_snippet(text, snippet, parse_new_vars=False):
     '''
-    Constructs a simple snippet by replacing $SELECTED_TEXT with
+    Constructs a simple snippet by replacing $EDITOR_SELECTION with
     sanitized text
     '''
     if text is None:

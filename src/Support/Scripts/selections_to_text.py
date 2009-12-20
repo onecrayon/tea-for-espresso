@@ -12,7 +12,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
     Required action method
     
     default parameter is not a snippet, but should contain the
-    $SELECTED_TEXT placeholder
+    $EDITOR_SELECTION placeholder
     '''
     # Get the selected ranges
     ranges = tea.get_ranges(context)

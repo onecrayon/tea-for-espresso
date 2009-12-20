@@ -14,7 +14,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     to the cursor) into a snippet (or processes it using zen-coding)
     
     The snippet offers two placeholders:
-    $SELECTED_TEXT: replaced with the word, or any selected text
+    $EDITOR_SELECTION: replaced with the word, or any selected text
     $WORD: if text is selected, replaced just with the first word
     '''
     

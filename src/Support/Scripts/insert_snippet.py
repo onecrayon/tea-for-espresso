@@ -9,7 +9,7 @@ def act(context, default=None, undo_name=None, **syntaxes):
     Inserts an arbitrary text snippet after the cursor with provisions for
     syntax-specific alternatives
     
-    Accepts $SELECTED_TEXT placeholder
+    Accepts $EDITOR_SELECTION placeholder
     
     This method requires at least the snippet default to be defined in the XML
     '''
