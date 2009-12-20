@@ -33,7 +33,9 @@ def act(context, input=None, default=None, **syntaxes):
     text = urllib.quote_plus(text)
     url = tea.select_from_zones(context, range, default, **syntaxes)
     # Got the URL, let's run the URL
+    # DEPRECATED: please use $EDITOR_SELECTION instead
     url = url.replace('$SELECTED_TEXT', text)
+    url = url.replace('$EDITOR_SELECTION', text)
     NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
     # Because this gets passed through to Obj-C, using int prevents beeping
     return True

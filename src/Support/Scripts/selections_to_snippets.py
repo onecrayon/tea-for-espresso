@@ -23,4 +23,4 @@ def act(context, first_snippet='', following_snippet='',
     else:
         indent = True
     snippet = tea.construct_snippet(text, first_snippet + final_append)
-    return tea.insert_snippet_over_range(context, snippet, range, undo_name, indent)
+    return tea.insert_snippet(context, snippet, indent)

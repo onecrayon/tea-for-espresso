@@ -12,12 +12,12 @@
 				<dict>
 					<key>default</key>
 					<string><![CDATA[
-	${1:$SELECTED_TEXT}$0
+	${1:$EDITOR_SELECTION}$0
 ]]></string>
 					
 					<key>python, python *</key>
 					<string><![CDATA[
-	${1:$SELECTED_TEXT}$0]]></string>
+	${1:$EDITOR_SELECTION}$0]]></string>
 					
 					<key>undo_name</key>
 					<string>Insert Indented Line</string>
@@ -86,17 +86,17 @@
 			<options>
 				<dict>
 					<key>default</key>
-					<string>&lt;em>$SELECTED_TEXT&lt;/em></string>
+					<string>&lt;em>$EDITOR_SELECTION&lt;/em></string>
 					
 					<key>undo_name</key>
 					<string>Emphasize</string>
 					
 					<!-- Syntax-specific overrides -->
 					<key>markdown, markdown structural, markdown stylistic</key>
-					<string>*$SELECTED_TEXT*</string>
+					<string>*$EDITOR_SELECTION*</string>
 					
 					<key>textile</key>
-					<string>_$SELECTED_TEXT_</string>
+					<string>_$EDITOR_SELECTION_</string>
 				</dict>
 			</options>
 		</setup>
@@ -111,17 +111,17 @@
 			<options>
 				<dict>
 					<key>default</key>
-					<string>&lt;strong>$SELECTED_TEXT&lt;/strong></string>
+					<string>&lt;strong>$EDITOR_SELECTION&lt;/strong></string>
 					
 					<key>undo_name</key>
 					<string>Strong</string>
 					
 					<!-- Syntax-specific overrides -->
 					<key>markdown, markdown structural, markdown stylistic</key>
-					<string>**$SELECTED_TEXT**</string>
+					<string>**$EDITOR_SELECTION**</string>
 					
 					<key>textile</key>
-					<string>*$SELECTED_TEXT*</string>
+					<string>*$EDITOR_SELECTION*</string>
 				</dict>
 			</options>
 		</setup>

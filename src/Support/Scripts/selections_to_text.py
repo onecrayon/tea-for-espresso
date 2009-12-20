@@ -23,21 +23,22 @@ def act(context, default=None, undo_name=None, **syntaxes):
         # Make sure the range is actually a selection
         if range.length > 0:
             text = tea.get_selection(context, range)
-            snippet = '${1:' + insertion.replace('$SELECTED_TEXT',
-                                                 '${2:$SELECTED_TEXT}') + '}$0'
+            snippet = '${1:' + insertion.replace('$EDITOR_SELECTION',
+                                                 '${2:$EDITOR_SELECTION}') + '}$0'
         else:
             # Not a selection, just wrap the cursor
             text = ''
-            snippet = insertion.replace('$SELECTED_TEXT', '$1') + '$0'
+            snippet = insertion.replace('$EDITOR_SELECTION', '$1') + '$0'
         snippet = tea.construct_snippet(text, snippet)
-        return tea.insert_snippet_over_range(context, snippet, range,
-                                                 undo_name)
+        return tea.insert_snippet(context, snippet)
     # Since we're here, it must not have been a single selection
     insertions = tea.new_recipe()
     for range in ranges:
         insertion = tea.select_from_zones(context, range, default, **syntaxes)
         text = tea.get_selection(context, range)
+        # DEPRECATED: $SELECTED_TEXT will go away in future; don't use it
         text = insertion.replace('$SELECTED_TEXT', text)
+        text = insertion.replace('$EDITOR_SELECTION', text)
         insertions.addReplacementString_forRange_(text, range)
     if undo_name is not None:
         insertions.setUndoActionName_(undo_name)

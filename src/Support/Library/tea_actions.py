@@ -546,7 +546,7 @@ def sanitize_for_snippet(text):
     text = text.replace('}', '\}')
     return text.replace('`', '\`')
 
-def construct_snippet(text, snippet):
+def construct_snippet(text, snippet, parse_new_vars=False):
     '''
     Constructs a simple snippet by replacing $SELECTED_TEXT with
     sanitized text
@@ -554,6 +554,8 @@ def construct_snippet(text, snippet):
     if text is None:
         text = ''
     text = sanitize_for_snippet(text)
+    if parse_new_vars:
+        snippet = snippet.replace('$EDITOR_SELECTION', text)
     return snippet.replace('$SELECTED_TEXT', text)
 
 def indent_snippet(context, snippet, range):

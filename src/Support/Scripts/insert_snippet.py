@@ -22,4 +22,4 @@ def act(context, default=None, undo_name=None, **syntaxes):
     # Construct the snippet
     snippet = tea.construct_snippet(text, snippet)
     # Insert that snippet!
-    return tea.insert_snippet_over_range(context, snippet, range, undo_name)
+    return tea.insert_snippet(context, snippet)

@@ -62,7 +62,9 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     
     if target is not None and text:
         if search_string is not None:
+            # DEPRECATED: Please use $EDITOR_SELECTION instead
             search = search_string.replace('$SELECTED_TEXT', text)
+            search = search_string.replace('$EDITOR_SELECTION', text)
         else:
             search = text
         # Find the start and end points of the substring

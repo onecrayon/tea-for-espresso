@@ -33,9 +33,9 @@ def act(context, first_snippet='', following_snippet='',
         # Only wrap the line if there's some content
         if content.group(2) != '':
             if count == 1:
-                segment = tea.construct_snippet(content.group(2), first)
+                segment = tea.construct_snippet(content.group(2), first, True)
             else:
-                segment = tea.construct_snippet(content.group(2), following)
+                segment = tea.construct_snippet(content.group(2), following, True)
             snippet += content.group(1) + segment + content.group(3)
             count += 1
         else:

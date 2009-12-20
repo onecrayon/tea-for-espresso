@@ -134,7 +134,7 @@
 			<options>
 				<dict>
 					<key>default</key>
-					<string>&lt;$SELECTED_TEXT>$1&lt;/$WORD>$0</string>
+					<string>&lt;$EDITOR_SELECTION>$1&lt;/$WORD>$0</string>
 					
 					<key>extra_characters</key>
 					<string>_-#.>+*:$!@</string>
@@ -194,7 +194,7 @@
 			<options>
 				<dict>
 					<key>first_snippet</key>
-					<string>&lt;${1:p}>$SELECTED_TEXT&lt;/${1/\s.*//}>$0</string>
+					<string>&lt;${1:p}>$EDITOR_SELECTION&lt;/${1/\s.*//}>$0</string>
 				</dict>
 			</options>
 		</setup>
@@ -210,10 +210,10 @@
 			<options>
 				<dict>
 					<key>first_snippet</key>
-					<string>&lt;${1:li}>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
+					<string>&lt;${1:li}>$EDITOR_SELECTION&lt;/${1/\s.*//}></string>
 					
 					<key>following_snippet</key>
-					<string>&lt;$1>$SELECTED_TEXT&lt;/${1/\s.*//}></string>
+					<string>&lt;$1>$EDITOR_SELECTION&lt;/${1/\s.*//}></string>
 					
 					<key>final_append</key>
 					<string>$0</string>
@@ -235,7 +235,7 @@
 			<options>
 				<dict>
 					<key>default</key>
-					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$SELECTED_TEXT&lt;/a>$0</string>
+					<string>&lt;a href="${1:$URL}"${2: title="$3"}>$EDITOR_SELECTION&lt;/a>$0</string>
 					
 					<key>fallback_url</key>
 					<string>http://</string>
@@ -245,10 +245,10 @@
 					
 					<!-- Syntax-specific overrides -->
 					<key>markdown, markdown structural, markdown stylistic</key>
-					<string>[$SELECTED_TEXT](${1:$URL})$0</string>
+					<string>[$EDITOR_SELECTION](${1:$URL})$0</string>
 					
 					<key>textile</key>
-					<string>"$SELECTED_TEXT":${1:$URL}$0</string>
+					<string>"$EDITOR_SELECTION":${1:$URL}$0</string>
 				</dict>
 			</options>
 		</setup>
@@ -269,11 +269,11 @@
 					<string>word</string>
 					
 					<key>default</key>
-					<string><![CDATA[http://google.com/search?q=$SELECTED_TEXT+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F]]></string>
+					<string><![CDATA[http://google.com/search?q=$EDITOR_SELECTION+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F]]></string>
 					
 
 					<key>entity.name</key>
-					<string><![CDATA[http://google.com/search?q=$SELECTED_TEXT+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F&btnI=745]]></string>
+					<string><![CDATA[http://google.com/search?q=$EDITOR_SELECTION+site%3Ahttp%3A%2F%2Fhtmlhelp.com%2Freference%2Fhtml40%2F&btnI=745]]></string>
 				</dict>
 			</options>
 		</setup>
