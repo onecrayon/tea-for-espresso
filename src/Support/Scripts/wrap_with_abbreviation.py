@@ -32,6 +32,7 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
     zen.insertion_point = place_ins_point
     
     rng = tea.get_first_range(context)
+    
     # Until Serge figures out what is wrong with html_matcher, only fire for HTML
     zen_target = 'html, html *, xml, xml *'
     if rng.length == 0 and tea.cursor_in_zone(context, zen_target):
@@ -58,10 +59,11 @@ def act(context, actionObject, profile_name='xhtml', undo_name=None):
                 break
         
         rng = tea.new_range(start, end - start)
-    else:
+    elif rng.length == 0:
         text, rng = tea.get_word(context, rng)
     
     text = tea.get_selection(context, rng)
+    
     # Detect the type of document we're working with
     zones = {
         'css, css *': 'css',
