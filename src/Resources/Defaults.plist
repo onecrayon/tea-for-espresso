@@ -4,10 +4,12 @@
 <dict>
 	<key>TEADefaultToXHTML</key>
 	<true/>
-	<key>TEAEnableUserActions</key>
-	<false/>
 	<key>TEASelfClosingString</key>
 	<string> /</string>
+	<key>TEAEnableUserActions</key>
+	<false/>
+	<key>TEAConvertUserSnippetsToZen</key>
+	<false/>
 	<key>TEAShellVariables</key>
 	<array>
 		<dict>
