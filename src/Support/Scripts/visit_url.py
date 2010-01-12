@@ -16,7 +16,7 @@ def act(context, input=None, default=None, **syntaxes):
     - word
     - line
     
-    default and syntaxes will replace $SELECTED_TEXT with a URL escaped version
+    default and syntaxes will replace $EDITOR_SELECTION with a URL escaped version
     of the selected text (or input, if no selected text)
     '''
     text, range = tea.get_single_selection(context)
@@ -33,7 +33,9 @@ def act(context, input=None, default=None, **syntaxes):
     text = urllib.quote_plus(text)
     url = tea.select_from_zones(context, range, default, **syntaxes)
     # Got the URL, let's run the URL
+    # DEPRECATED: please use $EDITOR_SELECTION instead
     url = url.replace('$SELECTED_TEXT', text)
+    url = url.replace('$EDITOR_SELECTION', text)
     NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
     # Because this gets passed through to Obj-C, using int prevents beeping
     return True

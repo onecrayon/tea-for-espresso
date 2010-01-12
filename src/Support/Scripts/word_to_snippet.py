@@ -14,7 +14,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     to the cursor) into a snippet (or processes it using zen-coding)
     
     The snippet offers two placeholders:
-    $SELECTED_TEXT: replaced with the word, or any selected text
+    $EDITOR_SELECTION: replaced with the word, or any selected text
     $WORD: if text is selected, replaced just with the first word
     '''
     
@@ -67,16 +67,27 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
         }
         doc_type = tea.select_from_zones(context, range, 'html', **zones)
         
+        # Setup the zen profile based on doc_type and XHTML status
+        profile = {}
+        if doc_type == 'html':
+            close_string = tea.get_tag_closestring(context)
+            if close_string == '/':
+                profile['self_closing_tag'] = True
+            elif close_string != ' /':
+                profile['self_closing_tag'] = False
+        elif doc_type == 'xml':
+            profile = {'self_closing_tag': True, 'tag_nl': True}
+        
+        zen_core.setup_profile('tea_profile', profile)
+        
         # Prepare the snippet
-        snippet = zen_core.expand_abbreviation(fullword, doc_type, 'xhtml')
+        snippet = zen_core.expand_abbreviation(fullword, doc_type, 'tea_profile')
     elif (mode == 'zen' or mode == 'html') and tea.is_selfclosing(word):
         # Self-closing, so construct the snippet from scratch
         snippet = '<' + fullword
         if fullword == word and not fullword in ['br', 'hr']:
             snippet += ' $1'
         snippet += '$E_XHTML>$0'
-    # Indent the snippet
-    snippet = tea.indent_snippet(context, snippet, new_range)
     # Special replacement in case we're using $WORD
     snippet = snippet.replace('$WORD', word)
     # Construct the snippet

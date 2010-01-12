@@ -9,7 +9,6 @@
 		<selector>actions.text.formatting</selector>
 		<selector>actions.text.HTML</selector>
 		<selector>actions.text.entities</selector>
-		<selector>actions.tea.internal</selector>
 		<selector>tea.conversion</selector>
 		<selector>tea.insertion</selector>
 		<selector>tea.wrapping</selector>

@@ -27,8 +27,7 @@ def act(context, direction='out', mode='auto'):
         # Using this method rather than tea.get_single_range() is better
         # because it won't cause the action to fail if there's more than
         # one selection
-        ranges = tea.get_ranges(context)
-        rng = ranges[0]
+        rng = tea.get_first_range(context)
         cursor = rng.location + rng.length
         range_start, range_end = rng.location, rng.location + rng.length
         content = context.string()

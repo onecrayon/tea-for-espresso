@@ -22,9 +22,8 @@ def act(context, first_snippet='', following_snippet='',
     lines = text.splitlines(True)
     # Compile the regex for quicker action on lots of lines
     parser = re.compile(r'(\s*)(.*?)(\s*(\r|\r\n|\n)|$)')
-    # Indent the snippets
-    first = tea.indent_snippet(context, first_snippet, range)
-    following = tea.indent_snippet(context, following_snippet, range)
+    first = first_snippet
+    following = following_snippet
     # Loop over lines and construct the snippet
     snippet = ''
     # This is the number of snippets processed, not lines
@@ -34,12 +33,12 @@ def act(context, first_snippet='', following_snippet='',
         # Only wrap the line if there's some content
         if content.group(2) != '':
             if count == 1:
-                segment = tea.construct_snippet(content.group(2), first)
+                segment = tea.construct_snippet(content.group(2), first, True)
             else:
-                segment = tea.construct_snippet(content.group(2), following)
+                segment = tea.construct_snippet(content.group(2), following, True)
             snippet += content.group(1) + segment + content.group(3)
             count += 1
         else:
             snippet += line
     snippet += final_append
-    return tea.insert_snippet_over_range(context, snippet, range, undo_name)
+    return tea.insert_snippet_over_range(context, snippet, range, undo_name, False)

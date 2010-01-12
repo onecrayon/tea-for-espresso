@@ -17,7 +17,10 @@ def act(context, first_snippet='', following_snippet='',
     text, range = tea.get_single_selection(context)
     if text == None:
         text = ''
-    # Indent the snippet
-    snippet = tea.indent_snippet(context, first_snippet + final_append, range)
-    snippet = tea.construct_snippet(text, snippet)
-    return tea.insert_snippet_over_range(context, snippet, range, undo_name)
+    # Only indent the snippet if there aren't multiple lines in the selected text
+    if len(text.splitlines()) > 1:
+        indent = False
+    else:
+        indent = True
+    snippet = tea.construct_snippet(text, first_snippet + final_append)
+    return tea.insert_snippet(context, snippet, indent)

@@ -1,0 +1,375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3B86F9AD10C7E3A900C5CF8D /* TEAPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86F9AB10C7E3A900C5CF8D /* TEAPreferencesView.xib */; };
+		3DF9526E10CEAAA800C51C0D /* TEASymlinkHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF9526D10CEAAA800C51C0D /* TEASymlinkHandler.m */; };
+		7A219FF9106B2BDA00F114B6 /* TEAPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */; };
+		7A21A070106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */; };
+		7A38EEF91095F09B008DD984 /* TEALoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A38EEF81095F09B008DD984 /* TEALoader.m */; };
+		7A59D8FE106A7CB90078C92C /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A59D8FD106A7CB90078C92C /* Defaults.plist */; };
+		7AEBC32B10C4C17B00A05230 /* TEAUserInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */; };
+		7AEBC33110C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AEBC32F10C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib */; };
+		7AEEF40410652918006B7765 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF40310652918006B7765 /* Python.framework */; };
+		7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46310653AE8006B7765 /* TEAforEspresso.m */; };
+		7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEEF46810653B61006B7765 /* TEAGenericAction.m */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7A59D8E2106A6BAF0078C92C /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF630370AF2F00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		3B86F9AC10C7E3A900C5CF8D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEAPreferencesView.xib; sourceTree = "<group>"; };
+		3DF9526C10CEAAA800C51C0D /* TEASymlinkHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEASymlinkHandler.h; path = src/Classes/TEASymlinkHandler.h; sourceTree = "<group>"; };
+		3DF9526D10CEAAA800C51C0D /* TEASymlinkHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEASymlinkHandler.m; path = src/Classes/TEASymlinkHandler.m; sourceTree = "<group>"; };
+		7A219FF7106B2BDA00F114B6 /* TEAPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAPreferences.h; path = src/Classes/TEAPreferences.h; sourceTree = "<group>"; };
+		7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAPreferences.m; path = src/Classes/TEAPreferences.m; sourceTree = "<group>"; };
+		7A21A06F106BCC6D00F114B6 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEASpacesPerTabsSheet.xib; sourceTree = "<group>"; };
+		7A38EEF71095F09B008DD984 /* TEALoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEALoader.h; path = src/Classes/TEALoader.h; sourceTree = "<group>"; };
+		7A38EEF81095F09B008DD984 /* TEALoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEALoader.m; path = src/Classes/TEALoader.m; sourceTree = "<group>"; };
+		7A59D8FD106A7CB90078C92C /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = src/Resources/Defaults.plist; sourceTree = "<group>"; };
+		7AEBC32910C4C17B00A05230 /* TEAUserInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAUserInput.h; path = src/Classes/TEAUserInput.h; sourceTree = "<group>"; };
+		7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAUserInput.m; path = src/Classes/TEAUserInput.m; sourceTree = "<group>"; };
+		7AEBC33010C4C43A00A05230 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = src/Resources/English.lproj/TEAEnterAbbreviationSheet.xib; sourceTree = "<group>"; };
+		7AEEF40310652918006B7765 /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
+		7AEEF46210653AE8006B7765 /* TEAforEspresso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAforEspresso.h; path = src/Classes/TEAforEspresso.h; sourceTree = "<group>"; };
+		7AEEF46310653AE8006B7765 /* TEAforEspresso.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAforEspresso.m; path = src/Classes/TEAforEspresso.m; sourceTree = "<group>"; };
+		7AEEF46710653B61006B7765 /* TEAGenericAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TEAGenericAction.h; path = src/Classes/TEAGenericAction.h; sourceTree = "<group>"; };
+		7AEEF46810653B61006B7765 /* TEAGenericAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TEAGenericAction.m; path = src/Classes/TEAGenericAction.m; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* TEA for Espresso.sugar */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TEA for Espresso.sugar"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				7AEEF40410652918006B7765 /* Python.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* tea-for-espresso */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = "tea-for-espresso";
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7AEBC32F10C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib */,
+				7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */,
+				3B86F9AB10C7E3A900C5CF8D /* TEAPreferencesView.xib */,
+				7A59D8FD106A7CB90078C92C /* Defaults.plist */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7AEEF46210653AE8006B7765 /* TEAforEspresso.h */,
+				7AEEF46310653AE8006B7765 /* TEAforEspresso.m */,
+				7AEEF46710653B61006B7765 /* TEAGenericAction.h */,
+				7AEEF46810653B61006B7765 /* TEAGenericAction.m */,
+				7A219FF7106B2BDA00F114B6 /* TEAPreferences.h */,
+				7A219FF8106B2BDA00F114B6 /* TEAPreferences.m */,
+				7A38EEF71095F09B008DD984 /* TEALoader.h */,
+				7A38EEF81095F09B008DD984 /* TEALoader.m */,
+				3DF9526C10CEAAA800C51C0D /* TEASymlinkHandler.h */,
+				3DF9526D10CEAAA800C51C0D /* TEASymlinkHandler.m */,
+				7AEBC32910C4C17B00A05230 /* TEAUserInput.h */,
+				7AEBC32A10C4C17B00A05230 /* TEAUserInput.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7AEEF40310652918006B7765 /* Python.framework */,
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* TEA for Espresso.sugar */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* TEA for Espresso.sugar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso.sugar" */;
+			buildPhases = (
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+				7A59D8E2106A6BAF0078C92C /* Copy Frameworks */,
+				7AEEF4151065318D006B7765 /* Copy Support Folders */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TEA for Espresso.sugar";
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = "tea-for-espresso";
+			productReference = 8D5B49B6048680CD000E48DA /* TEA for Espresso.sugar */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "tea-for-espresso" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* tea-for-espresso */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* TEA for Espresso.sugar */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A59D8FE106A7CB90078C92C /* Defaults.plist in Resources */,
+				7A21A070106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib in Resources */,
+				7AEBC33110C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib in Resources */,
+				3B86F9AD10C7E3A900C5CF8D /* TEAPreferencesView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7AEEF4151065318D006B7765 /* Copy Support Folders */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Support Folders";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "cp -Rf \"$SRCROOT\"/src/Support \"$TARGET_BUILD_DIR/$TARGET_NAME/\";\ncp -Rf \"$SRCROOT\"/src/TextActions \"$TARGET_BUILD_DIR/$TARGET_NAME/\";";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7AEEF46410653AE8006B7765 /* TEAforEspresso.m in Sources */,
+				7AEEF46910653B61006B7765 /* TEAGenericAction.m in Sources */,
+				7A219FF9106B2BDA00F114B6 /* TEAPreferences.m in Sources */,
+				7A38EEF91095F09B008DD984 /* TEALoader.m in Sources */,
+				7AEBC32B10C4C17B00A05230 /* TEAUserInput.m in Sources */,
+				3DF9526E10CEAAA800C51C0D /* TEASymlinkHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3B86F9AB10C7E3A900C5CF8D /* TEAPreferencesView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B86F9AC10C7E3A900C5CF8D /* English */,
+			);
+			name = TEAPreferencesView.xib;
+			sourceTree = "<group>";
+		};
+		7A21A06E106BCC6D00F114B6 /* TEASpacesPerTabsSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A21A06F106BCC6D00F114B6 /* English */,
+			);
+			name = TEASpacesPerTabsSheet.xib;
+			sourceTree = "<group>";
+		};
+		7AEBC32F10C4C43A00A05230 /* TEAEnterAbbreviationSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7AEBC33010C4C43A00A05230 /* English */,
+			);
+			name = TEAEnterAbbreviationSheet.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/src/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "TEA for Espresso";
+				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = sugar;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/src/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "TEA for Espresso";
+				SDKROOT = macosx10.5;
+				WRAPPER_EXTENSION = sugar;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_PATH = /Applications/Espresso.app;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(APPLICATION_PATH)/Contents/MacOS/Espresso";
+				GCC_ENABLE_OBJC_GC = supported;
+				HEADER_SEARCH_PATHS = "$(APPLICATION_PATH)/Contents/Headers";
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/src/Classes/";
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_PATH = /Applications/Espresso.app;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				BUNDLE_LOADER = "$(APPLICATION_PATH)/Contents/MacOS/Espresso";
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = "$(APPLICATION_PATH)/Contents/Headers";
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/src/Classes/";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "TEA for Espresso.sugar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "tea-for-espresso" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

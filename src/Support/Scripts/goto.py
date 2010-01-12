@@ -26,7 +26,7 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     to be trimmed (unnecessary unless trim=True)
     
     search_string will set the string to search for if target is text or zone
-    - $SELECTED_TEXT will be replaced with the source text
+    - $EDITOR_SELECTION will be replaced with the source text
     
     Setting regex=True will cause search_string to be evaluated as regex
     '''
@@ -62,7 +62,9 @@ def act(context, target=None, source=None, trim=False, discard_indent=False,
     
     if target is not None and text:
         if search_string is not None:
+            # DEPRECATED: Please use $EDITOR_SELECTION instead
             search = search_string.replace('$SELECTED_TEXT', text)
+            search = search_string.replace('$EDITOR_SELECTION', text)
         else:
             search = text
         # Find the start and end points of the substring
