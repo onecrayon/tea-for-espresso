@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-Core Zen Coding library. Contains various text manupulation functions:
+Core Zen Coding library. Contains various text manipulation functions:
 
 == Expand abbreviation
 Expands abbreviation like ul#nav>li*5>a into a XHTML string.
@@ -9,7 +9,7 @@ Expands abbreviation like ul#nav>li*5>a into a XHTML string.
 First, you have to extract current string (where cursor is) from your test 
 editor and use <code>find_abbr_in_line()</code> method to extract abbreviation. 
 If abbreviation was found, this method will return it as well as position index
-of abbreviation inside current line. If abbreation wasn't 
+of abbreviation inside current line. If abbreviation wasn't 
 found, method returns empty string. With abbreviation found, you should call
 <code>parse_into_tree()</code> method to transform abbreviation into a tag tree. 
 This method returns <code>Tag</code> object on success, None on failure. Then
@@ -90,7 +90,7 @@ def is_allowed_char(ch):
 	@type ch: str
 	@return: bool
 	"""
-	return ch.isalnum() or ch in "#.>+*:$-_!@"
+	return ch.isalnum() or ch in "#.>+*:$-_!@[]"
 
 def split_by_lines(text, remove_empty=False):
 	"""
@@ -143,6 +143,13 @@ def get_newline():
 	@return: str
 	"""
 	return newline
+
+def set_newline(char):
+	"""
+	Sets newline character used in Zen Coding
+	"""
+	global newline
+	newline = char
 
 def string_to_hash(text):
 	"""
@@ -262,6 +269,122 @@ def get_settings_resource(res_type, abbr, res_name):
 					return zen_settings[v][res_name][abbr]
 	return None;
 
+def get_word(ix, text):
+	"""
+	Get word, starting at <code>ix</code> character of <code>text</code>
+	@param ix: int
+	@param text: str
+	"""
+	m = re.match(r'^[\w\-:\$]+', text[ix:])
+	return m.group(0) if m else ''
+	
+def extract_attributes(attr_set):
+	"""
+	Extract attributes and their values from attribute set 
+ 	@param attr_set: str
+	"""
+	attr_set = attr_set.strip()
+	loop_count = 100 # endless loop protection
+	re_string = r'^(["\'])((?:(?!\1)[^\\]|\\.)*)\1'
+	result = []
+		
+	while attr_set and loop_count:
+		loop_count -= 1
+		attr_name = get_word(0, attr_set)
+		attr = None
+		if attr_name:
+			attr = {'name': attr_name, 'value': ''}
+			
+			# let's see if attribute has value
+			ch = attr_set[len(attr_name)] if len(attr_set) > len(attr_name) else ''
+			if ch == '=':
+				ch2 = attr_set[len(attr_name) + 1]
+				if ch2 in '"\'':
+					# we have a quoted string
+					m = re.match(re_string, attr_set[len(attr_name) + 1:])
+					if m:
+						attr['value'] = m.group(2)
+						attr_set = attr_set[len(attr_name) + len(m.group(0)) + 1:].strip()
+					else:
+						# something wrong, break loop
+						attr_set = ''
+				else:
+					# unquoted string
+					m = re.match(r'^(.+?)(\s|$)', attr_set[len(attr_name) + 1:])
+					if m:
+						attr['value'] = m.group(1)
+						attr_set = attr_set[len(attr_name) + len(m.group(1)) + 1:].strip()
+					else:
+						# something wrong, break loop
+						attr_set = ''
+				
+			else:
+				attr_set = attr_set[len(attr_name):].strip()
+		else:
+			# something wrong, can't extract attribute name
+			break
+		
+		if attr: result.append(attr)
+		
+	return result
+
+def parse_attributes(text):
+	"""
+	Parses tag attributes extracted from abbreviation
+	"""
+	
+#	Example of incoming data:
+#	#header
+#	.some.data
+#	.some.data#header
+#	[attr]
+#	#item[attr=Hello other="World"].class
+
+	result = []
+	class_name = None
+	char_map = {'#': 'id', '.': 'class'}
+	
+	# walk char-by-char
+	i = 0
+	il = len(text)
+		
+	while i < il:
+		ch = text[i]
+		
+		if ch == '#': # id
+			val = get_word(i, text[1:])
+			result.append({'name': char_map[ch], 'value': val})
+			i += len(val) + 1
+			
+		elif ch == '.': #class
+			val = get_word(i, text[1:])
+			if not class_name:
+				# remember object pointer for value modification
+				class_name = {'name': char_map[ch], 'value': ''}
+				result.append(class_name)
+			
+			if class_name['value']:
+				class_name['value'] += ' ' + val
+			else:
+				class_name['value'] = val
+			
+			i += len(val) + 1
+				
+		elif ch == '[': # begin attribute set
+			# search for end of set
+			end_ix = text.find(']', i)
+			if end_ix == -1:
+				# invalid attribute set, stop searching
+				i = len(text)
+			else:
+				result.extend(extract_attributes(text[i + 1:end_ix]))
+				i = end_ix
+		else:
+			i += 1
+		
+		
+	return result
+
 
 def parse_into_tree(abbr, doc_type='html'):
 	"""
@@ -274,7 +397,8 @@ def parse_into_tree(abbr, doc_type='html'):
 	@return: Tag
 	"""
 	root = Tag('', 1, doc_type)
-	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(\*(\d*))?', re.IGNORECASE)
+#	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)(#[\w\-\$]+)?((?:\.[\w\-\$]+)*)(\*(\d*))?(\+$)?', re.IGNORECASE)
+	token = re.compile(r'([\+>])?([a-z@\!][a-z0-9:\-]*)((?:(?:[#\.][\w\-\$]+)|(?:\[[^\]]+\]))+)?(\*(\d*))?(\+$)?', re.IGNORECASE)
 	
 	if not abbr:
 		return None
@@ -284,16 +408,20 @@ def parse_into_tree(abbr, doc_type='html'):
 		a = get_abbreviation(doc_type, ex)
 		return a and a.value or ex
 		
-	def token_expander(operator, tag_name, id_attr, class_name, has_multiplier, multiplier):
+	def token_expander(operator, tag_name, attrs, has_multiplier, multiplier, has_expando):
 		
 		multiply_by_lines = (has_multiplier and not multiplier)
 		multiplier = multiplier and int(multiplier) or 1
+		
+		if has_expando:
+			tag_name += '+'
+		
 		current = is_snippet(tag_name, doc_type) and Snippet(tag_name, multiplier, doc_type) or Tag(tag_name, multiplier, doc_type)
 		
-		if id_attr:
-			current.add_attribute('id', id_attr[1:])
-		if class_name:
-			current.add_attribute('class', class_name[1:].replace('.', ' '))
+		if attrs:
+			attrs = parse_attributes(attrs)
+			for attr in attrs:
+				current.add_attribute(attr['name'], attr['value'])
 			
 		# dive into tree
 		if operator == '>' and token_expander.last:
@@ -314,7 +442,9 @@ def parse_into_tree(abbr, doc_type='html'):
 	token_expander.last = None
 	
 	
-	abbr = re.sub(token, lambda m: token_expander(m.group(1), m.group(2), m.group(3), m.group(4), m.group(5), m.group(6)), abbr)
+#	abbr = re.sub(token, lambda m: token_expander(m.group(1), m.group(2), m.group(3), m.group(4), m.group(5), m.group(6), m.group(7)), abbr)
+	# Issue from Einar Egilsson
+	abbr = token.sub(lambda m: token_expander(m.group(1), m.group(2), m.group(3), m.group(4), m.group(5), m.group(6)), abbr)
 	
 	root.last = token_expander.last
 	
@@ -356,6 +486,25 @@ def expand_abbreviation(abbr, doc_type = 'html', profile_name = 'plain'):
 		return replace_variables(re.sub('\|', insertion_point, tree.to_string(profile_name) or ''))
 		
 	return ''
+
+def extract_abbreviation(text):
+	cur_offset = len(text)
+	start_index = -1
+	
+	while True:
+		cur_offset -= 1
+		if cur_offset < 0:
+			# moved at string start
+			start_index = 0;
+			break
+		
+		ch = text[cur_offset]
+		
+		if not is_allowed_char(ch) or (ch == '>' and is_ends_with_tag(text[0, cur_offset + 1])):
+			start_index = cur_offset + 1
+			break
+	
+	return text[start_index] if start_index != -1 else ''
 
 def is_inside_tag(html, cursor_pos):
 	re_tag = re.compile(r'^<\/?\w[\w\:\-]*.*?>')
@@ -402,6 +551,9 @@ def wrap_with_abbreviation(abbr, text, doc_type='html', profile='plain'):
 
 def update_settings(settings):
 	globals()['zen_settings'] = settings
+	
+def set_insertion_point(ins_point):
+	globals()['insertion_point'] = ins_point
 
 class Tag(object):
 	def __init__(self, name, count=1, doc_type='html'):
@@ -416,10 +568,11 @@ class Tag(object):
 		name = name.lower()
 		
 		abbr = get_abbreviation(doc_type, name)
+		
 		if abbr and abbr.type == stparser.TYPE_REFERENCE:
 			abbr = get_abbreviation(doc_type, abbr.value)
 		
-		self.name = abbr and abbr.value['name'] or name
+		self.name = abbr and abbr.value['name'] or name.replace('+', '')
 		self.count = count
 		self.children = []
 		self.attributes = []
@@ -527,10 +680,10 @@ class Tag(object):
 				return True
 		return False
 	
-	def set_content(self, content):
+	def set_content(self, content): #@DuplicatedSignature
 		self.__content = content
 		
-	def get_content(self):
+	def get_content(self): #@DuplicatedSignature
 		return self.__content
 	
 	def find_deepest_child(self):
@@ -588,6 +741,9 @@ class Tag(object):
 		cursor = profile['place_cursor'] and '|' or ''
 		self_closing = ''
 		
+		is_empty = self.is_empty() and not self.children
+		
+		
 		if profile['self_closing_tag'] == 'xhtml':
 			self_closing = ' /'
 		elif profile['self_closing_tag'] == True:
@@ -608,7 +764,7 @@ class Tag(object):
 		deepest_child = self.find_deepest_child()
 		
 		# output children
-		if not self.is_empty():
+		if not is_empty:
 			if deepest_child and self.repeat_by_lines:
 				deepest_child.set_content(content_placeholder)
 			
@@ -622,7 +778,7 @@ class Tag(object):
 		# define opening and closing tags
 		if self.name:
 			tag_name = profile['tag_case'] == 'upper' and self.name.upper() or self.name.lower()
-			if self.is_empty():
+			if is_empty:
 				start_tag = '<%s%s%s>' % (tag_name, attrs, self_closing)
 			else:
 				start_tag, end_tag = '<%s%s>' % (tag_name, attrs), '</%s>' % tag_name
@@ -638,7 +794,7 @@ class Tag(object):
 			if self.name:
 				if content:
 					content = pad_string(content, profile['indent'] and 1 or 0)
-				elif not self.is_empty():
+				elif not is_empty:
 					start_tag += cursor
 		
 		# repeat tag by lines count
@@ -745,5 +901,7 @@ setup_profile('html', {'self_closing_tag': False});
 setup_profile('xml', {'self_closing_tag': True, 'tag_nl': True});
 setup_profile('plain', {'tag_nl': False, 'indent': False, 'place_cursor': False});
 
-# init settings
-#zen_settings = stparser.get_settings()
+# This method call explicity loads default settings from zen_settings.py on start up
+# Comment this line if you want to load data from other resources (like editor's 
+# native snippet) 
+update_settings(stparser.get_settings())
