@@ -21,7 +21,7 @@ from zencoding import settings_loader
 from zencoding import zen_core as zen
 
 class ZenEditor():
-	def __init__(self):
+	def __init__(self, context):
 		self._context = None
 		self.zen_settings = settings_loader.load_settings()
 		zen.update_settings(self.zen_settings)
@@ -32,6 +32,9 @@ class ZenEditor():
 			point_ix[0] += 1
 			return '$%s' % point_ix[0]
 		zen.insertion_point = place_ins_point
+
+		if context:
+			self.set_context(context)
 
 	def set_context(self, context):
 		"""
@@ -130,8 +133,8 @@ class ZenEditor():
 		if start is None: start = 0
 		if end is None: end = len(self.get_content())
 		rng = tea.new_range(start, end - start)
-		tea.insert_text_over_range(self._context, value, rng, undo_name)
-			
+		tea.insert_snippet_over_range(self._context, value, rng, undo_name)
+
 
 	def get_content(self):
 		"""
@@ -158,7 +161,13 @@ class ZenEditor():
 		Returns current output profile name (@see zen_coding#setup_profile)
 		@return {String}
 		"""
-		return 'xhtml'
+		close_string = tea.get_tag_closestring(self._context)
+		if close_string == '/':
+			return 'xml'
+		elif close_string != ' /':
+			return 'html'
+		else:
+			return 'xhtml'
 
 	def safe_str(self, text):
 		"""

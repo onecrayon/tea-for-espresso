@@ -26,7 +26,7 @@ def find_abbreviation(editor):
 	
 	# search for new abbreviation from current caret position
 	cur_line_start, cur_line_end = editor.get_current_line_range()
-	return zen.extract_abbreviation(editor.get_content()[cur_line_start, start])
+	return zen.extract_abbreviation(editor.get_content()[cur_line_start:start])
 
 def expand_abbreviation(editor, syntax, profile_name='xhtml'):
 	"""
@@ -89,20 +89,19 @@ def match_pair(editor, direction='out'):
 		if not old_close_tag:
 #			unary tag was selected, can't move inward
 			return False
-		elif old_open_tag['start'] == range_start:
-			raise Exception, 'search inward'
-			if content[old_open_tag['end']] == '<':
+		elif old_open_tag.start == range_start:
+			if content[old_open_tag.end] == '<':
 #				test if the first inward tag matches the entire parent tag's content
-				_r = html_matcher.find(content, old_open_tag['end'] + 1)
-				if _r[0] == old_open_tag['end'] and _r[1] == old_close_tag['start']:
-					range = html_matcher.match(content, old_open_tag['end'] + 1)
+				_r = html_matcher.find(content, old_open_tag.end + 1)
+				if _r[0] == old_open_tag.end and _r[1] == old_close_tag.start:
+					range = html_matcher.match(content, old_open_tag.end + 1)
 				else:
-					range = (old_open_tag['end'], old_close_tag['start'])
+					range = (old_open_tag.end, old_close_tag.start)
 			else:
-				range = (old_open_tag['end'], old_close_tag['start'])
+				range = (old_open_tag.end, old_close_tag.start)
 		else:
-			new_cursor = content[0, old_close_tag['start']].find('<', old_open_tag['end'])
-			search_pos = new_cursor + 1 if new_cursor != -1 else old_open_tag['end']
+			new_cursor = content[0:old_close_tag.start].find('<', old_open_tag.end)
+			search_pos = new_cursor + 1 if new_cursor != -1 else old_open_tag.end
 			range = html_matcher.match(content, search_pos)
 	else:
 		range = html_matcher.match(content, cursor)
@@ -330,7 +329,7 @@ def merge_lines(editor):
 	
 	if start != end:
 		# got range, merge lines
-		text = editor.get_content()[start, end]
+		text = editor.get_content()[start:end]
 		lines = map(lambda s: re.sub(r'^\s+', '', s), zen.split_by_lines(text))
 		text = re.sub(r'\s{2,}', ' ', ''.join(lines))
 		editor.replace_content(text, start, end)

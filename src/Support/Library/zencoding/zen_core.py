@@ -500,11 +500,11 @@ def extract_abbreviation(text):
 		
 		ch = text[cur_offset]
 		
-		if not is_allowed_char(ch) or (ch == '>' and is_ends_with_tag(text[0, cur_offset + 1])):
+		if not is_allowed_char(ch) or (ch == '>' and is_ends_with_tag(text[0:cur_offset + 1])):
 			start_index = cur_offset + 1
 			break
 	
-	return text[start_index] if start_index != -1 else ''
+	return text[start_index:] if start_index != -1 else ''
 
 def is_inside_tag(html, cursor_pos):
 	re_tag = re.compile(r'^<\/?\w[\w\:\-]*.*?>')
