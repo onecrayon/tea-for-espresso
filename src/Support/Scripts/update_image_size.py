@@ -6,6 +6,7 @@ import urllib
 import os
 import re
 from zencoding.zen_editor import ZenEditor
+import tea_actions as tea
 
 def replace_or_append(img_tag, attr_name, attr_value):
 	"""
@@ -63,7 +64,7 @@ def find_image(editor):
 	
 	return None
 
-def get_image_size(img):
+def get_image_size(editor, img):
 	"""
 	Returns size of image in <img>; tag
  	@param img: Image tag
@@ -71,7 +72,7 @@ def get_image_size(img):
 	"""
 	m = re.search(r'src=(["\'])(.+?)\1', img, re.IGNORECASE)
 	if m:
-		src = get_absolute_uri(m.group(2))
+		src = get_absolute_uri(editor, m.group(2))
 		if not src:
 			return None
 		try:
@@ -85,8 +86,12 @@ def get_image_size(img):
 		
 	return None
 
-def get_absolute_uri(img_path):
-	file_uri = os.getenv('TM_FILEPATH', None)
+def get_absolute_uri(editor, img_path):
+	path = '%s' % editor._context.documentContext().fileURL()
+	file_uri = urllib.unquote(path or '')
+	# remove protocol
+	file_uri = re.sub(r'^\w+://\w+', '', file_uri)
+	
 	if not file_uri: return None
 	
 	if img_path[0] == '/':
@@ -109,10 +114,14 @@ def get_absolute_uri(img_path):
 def act(context):
 	editor = ZenEditor(context)
 	image = find_image(editor)
+	
 	if image:
-		size = get_image_size(image['tag'])
+		size = get_image_size(editor, image['tag'])
 		if size:
 			new_tag = replace_or_append(image['tag'], 'width', size['width'])
 			new_tag = replace_or_append(new_tag, 'height', size['height'])
 			
 			editor.replace_content(new_tag, image['start'], image['end'])
+			return True
+		
+	return False

@@ -191,14 +191,14 @@
 		</setup>
 	</action>
 	
-	<!--<action id="com.onecrayon.TextActions.UpdateImage" category="actions.text.HTML/tea.insertion">
+	<action id="com.onecrayon.TextActions.UpdateImage" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Update &lt;img&gt; size</title>
 		<key-equivalent>control i</key-equivalent>
 		<setup>
 			<action>update_image_size</action>
 		</setup>
-	</action>-->
+	</action>
 	
 	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAUserInput</class>
