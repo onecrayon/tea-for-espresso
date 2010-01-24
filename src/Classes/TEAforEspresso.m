@@ -16,7 +16,13 @@
 @property (readwrite,copy) NSString* action;
 @property (readwrite,retain) NSDictionary* options;
 @property (readwrite) BOOL passActionObject;
+
+- (void) execTEALoaderClass;
 @end
+
+// It's possible the Python interpreter was setup by another plugin compiled with PyObjc (bash.sugar, for instance)
+// If this was the case, we have to check to see if we've run basic init code, and do it even if we aren't starting the interpreter
+static BOOL TEAinitPythonComplete = NO;
 
 // The actual implementation of the class
 @implementation TEAforEspresso
@@ -88,21 +94,29 @@
 		Py_SetProgramName("/usr/bin/env python");
 		Py_Initialize();
 		
-		// Execute the Python loader class file to make sure it's in memory
-		// This stuff is straight out of the Python app Xcode template
-		NSString *mainPath = [[self teaPath] stringByAppendingPathComponent:@"Support/Library/TEAPythonLoader.py"];
-		
-		const char *mainPathPtr = [mainPath UTF8String];
-		FILE *mainFile = fopen(mainPathPtr, "r");
-		if (mainFile == NULL)
-			return;
-		
-		int result = PyRun_SimpleFile(mainFile, (char *)[[mainPath lastPathComponent] UTF8String]);
-		fclose(mainFile);
-		if ( result != 0 )
-			[NSException raise: NSInternalInconsistencyException
-						format: @"%s:%lu main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, (unsigned long)__LINE__, mainPath];
+		[self execTEALoaderClass];
+	} else if (!TEAinitPythonComplete) {
+		[self execTEALoaderClass];
 	}
+}
+
+- (void) execTEALoaderClass {
+	// Execute the Python loader class file to make sure it's in memory
+	// This stuff is straight out of the Python app Xcode template
+	NSString *mainPath = [[self teaPath] stringByAppendingPathComponent:@"Support/Library/TEAPythonLoader.py"];
+	
+	const char *mainPathPtr = [mainPath UTF8String];
+	FILE *mainFile = fopen(mainPathPtr, "r");
+	if (mainFile == NULL)
+		return;
+	
+	int result = PyRun_SimpleFile(mainFile, (char *)[[mainPath lastPathComponent] UTF8String]);
+	fclose(mainFile);
+	if ( result != 0 )
+		[NSException raise: NSInternalInconsistencyException
+					format: @"%s:%lu main() PyRun_SimpleFile failed with file '%@'.  See console for errors.", __FILE__, (unsigned long)__LINE__, mainPath];
+	else
+		TEAinitPythonComplete = YES;
 }
 
 @end
