@@ -153,7 +153,8 @@ class ZenEditor():
 		zones = {
 			'css, css *': 'css',
 			'xsl, xsl *': 'xsl',
-			'xml, xml *': 'xml'
+			'xml, xml *': 'xml',
+			'haml, haml *': 'haml'
 		}
 		rng = tea.get_first_range(self._context)
 		return tea.select_from_zones(self._context, rng, 'html', **zones)
