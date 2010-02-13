@@ -19,6 +19,7 @@ zen_editor.get_selection_range();
 import tea_actions as tea
 from zencoding import settings_loader
 from zencoding import zen_core as zen
+import re
 
 class ZenEditor():
 	def __init__(self, context):
@@ -133,6 +134,7 @@ class ZenEditor():
 		if start is None: start = 0
 		if end is None: end = len(self.get_content())
 		rng = tea.new_range(start, end - start)
+		value = self.add_placeholders(value)
 		tea.insert_snippet_over_range(self._context, value, rng, undo_name)
 
 
@@ -174,3 +176,13 @@ class ZenEditor():
 		Creates safe string representation to deal with Python's encoding issues
 		"""
 		return text.encode('utf-8')
+	
+	def add_placeholders(self, text):
+		_ix = [0]
+		
+		def get_ix(m):
+			_ix[0] += 1
+			return '$%s' % _ix[0]
+		
+		text = re.sub(r'\$', '\\$', text)
+		return re.sub(zen.get_caret_placeholder(), get_ix, text)

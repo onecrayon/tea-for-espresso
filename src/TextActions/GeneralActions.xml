@@ -122,7 +122,7 @@
 			<options>
 				<dict>
 					<key>action_name</key>
-					<string>balance_out</string>
+					<string>match_pair_outward</string>
 				</dict>
 			</options>
 		</setup>
@@ -137,7 +137,7 @@
 			<options>
 				<dict>
 					<key>action_name</key>
-					<string>balance_in</string>
+					<string>match_pair_inward</string>
 				</dict>
 			</options>
 		</setup>
