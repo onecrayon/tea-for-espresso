@@ -17,7 +17,7 @@ from Foundation import NSValue
 import tea_actions as tea
 
 from zencoding import zen_core as zen_coding
-from zencoding.zen_editor import ZenEditor
+from zen_editor import ZenEditor
 
 def act(context, direction='out', mode='auto'):
     zen_target = 'html, html *, xml, xml *'

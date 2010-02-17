@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from zencoding.zen_editor import ZenEditor
+from zen_editor import ZenEditor
 from zencoding import zen_core as zen_coding
 
 # This is a special variable; if it exists in a module, the module will be

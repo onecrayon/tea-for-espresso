@@ -5,8 +5,7 @@ from subprocess import Popen, PIPE
 import urllib
 import os
 import re
-from zencoding.zen_editor import ZenEditor
-import tea_actions as tea
+from zen_editor import ZenEditor
 
 def replace_or_append(img_tag, attr_name, attr_value):
 	"""

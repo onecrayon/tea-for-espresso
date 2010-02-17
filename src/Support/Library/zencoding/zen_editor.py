@@ -27,13 +27,6 @@ class ZenEditor():
 		self.zen_settings = settings_loader.load_settings()
 		zen.update_settings(self.zen_settings)
 
-		# This allows us to use smart incrementing tab stops in zen snippets
-		point_ix = [0]
-		def place_ins_point(text):
-			point_ix[0] += 1
-			return '$%s' % point_ix[0]
-		zen.insertion_point = place_ins_point
-
 		if context:
 			self.set_context(context)
 
