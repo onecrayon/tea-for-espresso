@@ -152,7 +152,7 @@
 			<options>
 				<dict>
 					<key>action_name</key>
-					<string>next_point</string>
+					<string>next_edit_point</string>
 				</dict>
 			</options>
 		</setup>
@@ -167,7 +167,7 @@
 			<options>
 				<dict>
 					<key>action_name</key>
-					<string>prev_point</string>
+					<string>prev_edit_point</string>
 				</dict>
 			</options>
 		</setup>
