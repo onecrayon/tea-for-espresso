@@ -16,19 +16,9 @@ zen_editor.get_selection_range();
 @author Sergey Chikuyonok (serge.che@gmail.com)
 @link http://chikuyonok.ru
 '''
-import tea_actions as tea
-from zencoding import settings_loader
-from zencoding import zen_core as zen
-import re
-
 class ZenEditor():
-	def __init__(self, context):
-		self._context = None
-		self.zen_settings = settings_loader.load_settings()
-		zen.update_settings(self.zen_settings)
-
-		if context:
-			self.set_context(context)
+	def __init__(self):
+		pass
 
 	def set_context(self, context):
 		"""
@@ -36,9 +26,7 @@ class ZenEditor():
 		<code>before</code> using any Zen Coding action.
 		@param context: context object
 		"""
-		self._context = context
-		zen.newline = self.safe_str(tea.get_line_ending(context))
-		self.zen_settings['variables']['indentation'] = self.safe_str(tea.get_indentation_string(context))
+		pass
 
 	def get_selection_range(self):
 		"""
@@ -48,8 +36,7 @@ class ZenEditor():
 		start, end = zen_editor.get_selection_range();
 		print('%s, %s' % (start, end))
 		"""
-		rng = tea.get_first_range(self._context)
-		return rng.location, rng.location + rng.length
+		return 0, 0
 
 
 	def create_selection(self, start, end=None):
@@ -64,9 +51,7 @@ class ZenEditor():
 		# move caret to 15th character
 		zen_editor.create_selection(15)
 		"""
-		if end is None: end = start
-		new_range = tea.new_range(start, end - start)
-		tea.set_selected_range(self._context, new_range)
+		pass
 
 	def get_current_line_range(self):
 		"""
@@ -76,32 +61,27 @@ class ZenEditor():
 		start, end = zen_editor.get_current_line_range();
 		print('%s, %s' % (start, end))
 		"""
-		rng = tea.get_ranges(self._context)[0]
-		text, rng = tea.get_line(self._context, rng)
-		return rng.location, rng.location + rng.length
+		return 0, 0
 
 	def get_caret_pos(self):
 		""" Returns current caret position """
-		range = tea.get_ranges(self._context)[0]
-		return range.location
+		return 0
 
 	def set_caret_pos(self, pos):
 		"""
 		Set new caret position
 		@type pos: int
 		"""
-		self.create_selection(pos)
+		pass
 
 	def get_current_line(self):
 		"""
 		Returns content of current line
 		@return: str
 		"""
-		rng = tea.get_ranges(self._context)[0]
-		text, rng = tea.get_line(self._context, rng)
-		return text
+		return ''
 
-	def replace_content(self, value, start=None, end=None, undo_name = 'Replace content'):
+	def replace_content(self, value, start=None, end=None):
 		"""
 		Replace editor's content or it's part (from <code>start</code> to
 		<code>end</code> index). If <code>value</code> contains
@@ -124,59 +104,25 @@ class ZenEditor():
 		@param end: End index of editor's content
 		@type end: int
 		"""
-		if start is None: start = 0
-		if end is None: end = len(self.get_content())
-		rng = tea.new_range(start, end - start)
-		value = self.add_placeholders(value)
-		tea.insert_snippet_over_range(self._context, value, rng, undo_name)
-
+		pass
 
 	def get_content(self):
 		"""
 		Returns editor's content
 		@return: str
 		"""
-		return self._context.string()
+		return ''
 
 	def get_syntax(self):
 		"""
 		Returns current editor's syntax mode
 		@return: str
 		"""
-		zones = {
-			'css, css *': 'css',
-			'xsl, xsl *': 'xsl',
-			'xml, xml *': 'xml',
-			'haml, haml *': 'haml'
-		}
-		rng = tea.get_first_range(self._context)
-		return tea.select_from_zones(self._context, rng, 'html', **zones)
+		return 'html'
 
 	def get_profile_name(self):
 		"""
 		Returns current output profile name (@see zen_coding#setup_profile)
 		@return {String}
 		"""
-		close_string = tea.get_tag_closestring(self._context)
-		if close_string == '/':
-			return 'xml'
-		elif close_string != ' /':
-			return 'html'
-		else:
-			return 'xhtml'
-
-	def safe_str(self, text):
-		"""
-		Creates safe string representation to deal with Python's encoding issues
-		"""
-		return text.encode('utf-8')
-	
-	def add_placeholders(self, text):
-		_ix = [0]
-		
-		def get_ix(m):
-			_ix[0] += 1
-			return '$%s' % _ix[0]
-		
-		text = re.sub(r'\$', '\\$', text)
-		return re.sub(zen.get_caret_placeholder(), get_ix, text)
+		return 'xhtml'
