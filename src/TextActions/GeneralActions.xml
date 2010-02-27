@@ -116,22 +116,28 @@
 	<action id="com.onecrayon.TextActions.Balance" category="actions.text.generic/actions.text.selection/tea.balance">
 		<class>TEAforEspresso</class>
 		<title>Balance</title>
-		<key-equivalent>control b</key-equivalent>
+		<key-equivalent>command d</key-equivalent>
 		<setup>
-			<action>balance</action>
+			<action>espresso_zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>match_pair_outward</string>
+				</dict>
+			</options>
 		</setup>
 	</action>
 	
 	<action id="com.onecrayon.TextActions.BalanceIn" category="actions.text.generic/actions.text.selection/tea.balance">
 		<class>TEAforEspresso</class>
 		<title>Balance Inward</title>
-		<key-equivalent>control B</key-equivalent>
+		<key-equivalent>command D</key-equivalent>
 		<setup>
-			<action>balance</action>
+			<action>espresso_zen_actions</action>
 			<options>
 				<dict>
-					<key>direction</key>
-					<string>in</string>
+					<key>action_name</key>
+					<string>match_pair_inward</string>
 				</dict>
 			</options>
 		</setup>

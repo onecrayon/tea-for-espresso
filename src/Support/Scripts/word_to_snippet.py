@@ -43,6 +43,7 @@ def act(context, default=None, alpha_numeric=True, extra_characters='',
     # We've got some extra work if the mode is HTML or zen
     # This is a really hacky solution, but I can't think of a concise way to
     # represent this functionality via XML
+    # TODO remove it
     if mode == 'zen' and fullword.find(' ') < 0:
         # Explicitly load zen settings
         zen_settings = settings_loader.load_settings()
