@@ -118,7 +118,7 @@
 		<title>Balance</title>
 		<key-equivalent>control b</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -133,7 +133,7 @@
 		<title>Balance Inward</title>
 		<key-equivalent>control shift B</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>

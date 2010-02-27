@@ -130,7 +130,7 @@
 		<title>Expand Abbreviation</title>
 		<key-equivalent>control ,</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -148,7 +148,7 @@
 		<title>Next Edit Point</title>
 		<key-equivalent>control option arrow-right</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -163,7 +163,7 @@
 		<title>Previous Edit Point</title>
 		<key-equivalent>control option arrow-left</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -178,7 +178,7 @@
 		<title>Merge Lines</title>
 		<key-equivalent>command M</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -196,7 +196,7 @@
 		<title>Toggle comment</title>
 		<key-equivalent>command \</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -211,7 +211,7 @@
 		<title>Remove tag</title>
 		<key-equivalent>command k</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -226,7 +226,7 @@
 		<title>Split/Join tag</title>
 		<key-equivalent>command shift k</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
@@ -241,7 +241,7 @@
 		<title>Wrap With Abbreviation</title>
 		<key-equivalent>control shift a</key-equivalent>
 		<setup>
-			<action>espresso_zen_actions</action>
+			<action>zen_actions</action>
 			<options>
 				<dict>
 					<key>action_name</key>
