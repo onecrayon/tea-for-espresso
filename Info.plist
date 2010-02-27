@@ -13,9 +13,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.2</string>
+	<string>1.2b1</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>(c) 2009 Ian Beck under the MIT license</string>
+	<string>(c) 2009-2010 Ian Beck under the MIT license</string>
 	<key>NSPrincipalClass</key>
 	<string>TEAforEspresso</string>
 	<key>PluginPreferencesNibName</key>

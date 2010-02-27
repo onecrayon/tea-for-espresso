@@ -25,9 +25,6 @@ def act(context, direction='out', mode='auto'):
        mode.lower() == 'zen':
         # HTML or XML, so use Zen-coding's excellent balancing commands
         
-        # Using this method rather than tea.get_single_range() is better
-        # because it won't cause the action to fail if there's more than
-        # one selection
         editor = ZenEditor(context)
         action_name = 'match_pair_inward' if direction == 'in' else 'match_pair_outward'
         return zen_coding.run_action(action_name, editor)

@@ -128,7 +128,7 @@
 	<action id="com.onecrayon.TextActions.ExpandAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Expand Abbreviation</title>
-		<key-equivalent>f1</key-equivalent>
+		<key-equivalent>control ,</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>
@@ -146,7 +146,7 @@
 	<action id="com.onecrayon.TextActions.NextEditPoint" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Next Edit Point</title>
-		<key-equivalent>control alt arrow-right</key-equivalent>
+		<key-equivalent>control option arrow-right</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>
@@ -161,7 +161,7 @@
 	<action id="com.onecrayon.TextActions.PrevEditPoint" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Previous Edit Point</title>
-		<key-equivalent>control alt arrow-left</key-equivalent>
+		<key-equivalent>control option arrow-left</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>
@@ -191,16 +191,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.UpdateImage" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Update &lt;img&gt; size</title>
-		<key-equivalent>control i</key-equivalent>
-		<setup>
-			<action>update_image_size</action>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.ToggleComment" category="actions.text.HTML/tea.insertion">
+	<!--<action id="com.onecrayon.TextActions.ToggleComment" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
 		<title>Toggle comment</title>
 		<key-equivalent>command \</key-equivalent>
@@ -213,7 +204,7 @@
 				</dict>
 			</options>
 		</setup>
-	</action>
+	</action>-->
 	
 	<action id="com.onecrayon.TextActions.RemoveTag" category="actions.text.HTML/tea.insertion">
 		<class>TEAforEspresso</class>
@@ -248,7 +239,7 @@
 	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.insertion">
 		<class>TEAUserInput</class>
 		<title>Wrap With Abbreviation</title>
-		<key-equivalent>command shift a</key-equivalent>
+		<key-equivalent>control shift a</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>

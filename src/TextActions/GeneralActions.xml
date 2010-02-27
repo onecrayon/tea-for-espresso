@@ -116,7 +116,7 @@
 	<action id="com.onecrayon.TextActions.Balance" category="actions.text.generic/actions.text.selection/tea.balance">
 		<class>TEAforEspresso</class>
 		<title>Balance</title>
-		<key-equivalent>command d</key-equivalent>
+		<key-equivalent>control b</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>
@@ -131,7 +131,7 @@
 	<action id="com.onecrayon.TextActions.BalanceIn" category="actions.text.generic/actions.text.selection/tea.balance">
 		<class>TEAforEspresso</class>
 		<title>Balance Inward</title>
-		<key-equivalent>command D</key-equivalent>
+		<key-equivalent>control shift B</key-equivalent>
 		<setup>
 			<action>espresso_zen_actions</action>
 			<options>
