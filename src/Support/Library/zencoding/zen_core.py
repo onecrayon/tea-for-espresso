@@ -559,6 +559,7 @@ def rollout_tree(tree, parent=None):
 		for j in range(how_many):
 			tag = ZenNode(child)
 			parent.add_child(tag)
+			tag.counter = j + 1
 			
 			if child.children:
 				rollout_tree(child, tag)
@@ -611,7 +612,7 @@ def abbr_to_primary_tree(abbr, doc_type='html'):
 	@return: Tag
 	"""
 	root = Tag('', 1, doc_type)
-	token = re.compile(r'([\+>])?([a-z@\!\#\.][a-z0-9:\-]*)((?:(?:[#\.][\w\-\$]+)|(?:\[[^\]]+\]))+)?(\*(\d*))?(\+$)?', re.IGNORECASE)
+	token = re.compile(r'([\+>])?([a-z@\!\#\.][\w:\-]*)((?:(?:[#\.][\w\-\$]+)|(?:\[[^\]]+\]))+)?(\*(\d*))?(\+$)?', re.IGNORECASE)
 	
 	if not abbr:
 		return None
@@ -1111,6 +1112,7 @@ class ZenNode(object):
 		self.name = tag.name
 		self.attributes = tag.attributes
 		self.children = [];
+		self.counter = 1
 		
 		self.source = tag
 		"Source element from which current tag was created"

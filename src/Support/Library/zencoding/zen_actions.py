@@ -569,7 +569,7 @@ def split_join_tag(editor, profile_name=None):
 				
 			new_content = re.sub(r'\s*>$', closing_slash + '>', new_content)
 			
-			# add place caret placeholder
+			# add caret placeholder
 			if len(new_content) + pair[0].start < caret_pos:
 				new_content += caret
 			else:
