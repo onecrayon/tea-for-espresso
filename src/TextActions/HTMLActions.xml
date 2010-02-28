@@ -125,7 +125,7 @@
 	
 	<!-- Zen actions -->
 	
-	<action id="com.onecrayon.TextActions.ExpandAbbreviation" category="actions.text.HTML/tea.insertion">
+	<action id="com.onecrayon.TextActions.ExpandAbbreviation" category="actions.text.HTML/tea.zen/1">
 		<class>TEAforEspresso</class>
 		<title>Expand Abbreviation</title>
 		<key-equivalent>control ,</key-equivalent>
@@ -143,100 +143,7 @@
 		</setup>
 	</action>
 	
-	<action id="com.onecrayon.TextActions.NextEditPoint" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Next Edit Point</title>
-		<key-equivalent>control option arrow-right</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>next_edit_point</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.PrevEditPoint" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Previous Edit Point</title>
-		<key-equivalent>control option arrow-left</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>prev_edit_point</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.MergeLines" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Merge Lines</title>
-		<key-equivalent>command M</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>merge_lines</string>
-					
-					<key>undo_name</key>
-					<string>Expand Abbreviation</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<!--<action id="com.onecrayon.TextActions.ToggleComment" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Toggle comment</title>
-		<key-equivalent>command \</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>toggle_comment</string>
-				</dict>
-			</options>
-		</setup>
-	</action>-->
-	
-	<action id="com.onecrayon.TextActions.RemoveTag" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Remove tag</title>
-		<key-equivalent>command k</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>remove_tag</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.SplitJoinTag" category="actions.text.HTML/tea.insertion">
-		<class>TEAforEspresso</class>
-		<title>Split/Join tag</title>
-		<key-equivalent>command shift k</key-equivalent>
-		<setup>
-			<action>zen_actions</action>
-			<options>
-				<dict>
-					<key>action_name</key>
-					<string>split_join_tag</string>
-				</dict>
-			</options>
-		</setup>
-	</action>
-	
-	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.insertion">
+	<action id="com.onecrayon.TextActions.WrapWithAbbreviation" category="actions.text.HTML/tea.zen/2">
 		<class>TEAUserInput</class>
 		<title>Wrap With Abbreviation</title>
 		<key-equivalent>control shift a</key-equivalent>
@@ -253,6 +160,81 @@
 			</options>
 			<nib>TEAEnterAbbreviationSheet</nib>
 			<default_input>div</default_input>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.NextEditPoint" category="actions.text.HTML/tea.zen/tea.tagmanipulation/tea.balance">
+		<class>TEAforEspresso</class>
+		<title>Next Edit Point</title>
+		<key-equivalent>control option arrow-right</key-equivalent>
+		<setup>
+			<action>zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>next_edit_point</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.PrevEditPoint" category="actions.text.HTML/tea.zen/tea.tagmanipulation/tea.balance">
+		<class>TEAforEspresso</class>
+		<title>Previous Edit Point</title>
+		<key-equivalent>control option arrow-left</key-equivalent>
+		<setup>
+			<action>zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>prev_edit_point</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.ToggleComment" category="actions.text.HTML/tea.zen/tea.tagmanipulation">
+		<class>TEAforEspresso</class>
+		<title>Un/Comment Tag or Selection</title>
+		<key-equivalent>command option /</key-equivalent>
+		<setup>
+			<action>zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>toggle_comment</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.RemoveTag" category="actions.text.HTML/tea.zen/tea.tagmanipulation">
+		<class>TEAforEspresso</class>
+		<title>Remove tag</title>
+		<key-equivalent>command k</key-equivalent>
+		<setup>
+			<action>zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>remove_tag</string>
+				</dict>
+			</options>
+		</setup>
+	</action>
+	
+	<action id="com.onecrayon.TextActions.SplitJoinTag" category="actions.text.HTML/tea.zen/tea.tagmanipulation">
+		<class>TEAforEspresso</class>
+		<title>Split/Join tag</title>
+		<key-equivalent>command shift k</key-equivalent>
+		<setup>
+			<action>zen_actions</action>
+			<options>
+				<dict>
+					<key>action_name</key>
+					<string>split_join_tag</string>
+				</dict>
+			</options>
 		</setup>
 	</action>
 	

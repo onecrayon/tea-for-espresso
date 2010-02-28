@@ -15,9 +15,10 @@
 	</category>
 	<category id="actions.text.whitespace" show="inline"></category>
 	<category id="actions.text.generic" show="inline separated"></category>
-	<category id="actions.text.sorting" show="sub">
-		<title>Sorting</title>
+	<category id="actions.text.lines" show="sub">
+		<title>Lines</title>
 	</category>
+	<category id="actions.text.sorting" show="inline separated"></category>
 	<category id="actions.text.selection" show="sub">
 		<title>Select</title>
 	</category>
@@ -26,6 +27,10 @@
 	<category id="tea.balance" show="inline separated"></category>
 	<category id="tea.conversion" show="inline separated"></category>
 	<category id="tea.insertion" show="inline separated"></category>
+	<category id="tea.zen" show="inline separated"></category>
+	<category id="tea.tagmanipulation" show="sub">
+		<title>Tag Manipulation</title>
+	</category>
 	<category id="tea.wrapping" show="inline separated"></category>
 	<category id="tea.footer" show="inline"></category>
 </action-categories>
