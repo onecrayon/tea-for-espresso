@@ -8,7 +8,7 @@ import pickle
 
 from Foundation import NSUserDefaults, NSLog
 
-import stparser
+from zencoding import stparser
 
 plist_path = os.path.expanduser('~/Library/Preferences/com.macrabbit.Espresso.plist')
 cache_folder = os.path.expanduser(

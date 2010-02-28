@@ -17,14 +17,14 @@ zen_editor.get_selection_range();
 @link http://chikuyonok.ru
 '''
 import tea_actions as tea
-from zencoding import settings_loader
+import zen_settings_loader
 from zencoding import zen_core as zen
 import re
 
 class ZenEditor():
     def __init__(self, context):
         self._context = None
-        self.zen_settings = settings_loader.load_settings()
+        self.zen_settings = zen_settings_loader.load_settings()
         zen.update_settings(self.zen_settings)
 
         if context:
