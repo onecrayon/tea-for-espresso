@@ -85,12 +85,12 @@
 // Usage: NSRange my_range; [self getWordAtIndex:index inContext:context forRange:&my_range];
 - (NSString *)getWordAtIndex:(NSUInteger)cursor inContext:(id)context forRange:(NSRange *)range {
 	NSMutableString *word = [NSMutableString stringWithString:@""];
-	NSUInteger maxlength = [[context string] length];
+	NSUInteger maxindex = [[context string] length] - 1;
 	unichar character;
 	BOOL inword = NO;
-	NSUInteger index = cursor;
+	NSInteger index = cursor;
 	NSUInteger firstindex, lastindex;
-	if (index != maxlength) {
+	if (index != maxindex) {
 		// Check if index is mid-word
 		character = [[context string] characterAtIndex:index+1];
 		if ([self isWordCharacter:character]) {
@@ -106,7 +106,7 @@
 				}
 				index = index + 1;
 				// End it if we're at the document end
-				if (index == maxlength) {
+				if (index == maxindex) {
 					inword = NO;
 				}
 			}
@@ -117,7 +117,7 @@
 		}
 	}
 	// Set the last index of the word
-	if (index < maxlength) {
+	if (index <= maxindex) {
 		lastindex = index - 1;
 	} else {
 		lastindex = index;
