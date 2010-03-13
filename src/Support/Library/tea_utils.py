@@ -95,3 +95,16 @@ def refresh_symlinks(bundle_path, rebuild=False):
                 if os.path.islink(loc):
                     os.remove(loc)
             break
+
+def nsdict_to_pydict(nsdict):
+    '''Recursively converts an NSDictionary into a Python dict'''
+    pydict = dict()
+    for arg, value in nsdict.iteritems():
+        classname = value.className()
+        if classname == 'NSCFDictionary' or classname == 'NSDictionary':
+            pydict[str(arg)] = nsdict_to_pydict(value)
+        elif classname == 'NSCFString' or classname == 'NSString':
+            pydict[str(arg)] = str(value)
+        else:
+            pydict[str(arg)] = value
+    return pydict

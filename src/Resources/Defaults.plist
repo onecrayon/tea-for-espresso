@@ -10,6 +10,20 @@
 	<false/>
 	<key>TEAConvertUserSnippetsToZen</key>
 	<false/>
+	<key>TEAZenAddSpaceCSSProperties</key>
+	<false/>
+	<key>TEAZenSettings</key>
+	<dict>
+		<key>variables</key>
+		<dict>
+			<key>lang</key>
+			<string>en</string>
+			<key>locale</key>
+			<string>en-US</string>
+			<key>charset</key>
+			<string>UTF-8</string>
+		</dict>
+	</dict>
 	<key>TEAShellVariables</key>
 	<array>
 		<dict>

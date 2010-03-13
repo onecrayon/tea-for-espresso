@@ -8,6 +8,8 @@ import pickle
 
 from Foundation import NSUserDefaults, NSLog
 
+import tea_utils
+
 from zencoding import stparser
 
 plist_path = os.path.expanduser('~/Library/Preferences/com.macrabbit.Espresso.plist')
@@ -18,9 +20,7 @@ cache_file = os.path.join(cache_folder, 'zen_user_snippets.cache')
 
 re_full_tag = re.compile(r'^<([\w\-]+(?:\:\w+)?)((?:\s+[\w\-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>\s]+))?)*)\s*(\/?)>(?:</\1>)?')
 
-_prev_settings = None
-
-def _read_settings_from_app():
+def _convert_user_snippets_to_zen_settings():
     defaults = NSUserDefaults.standardUserDefaults()
     snippets = defaults.objectForKey_('UserSnippets1.0')
     
@@ -46,13 +46,25 @@ def load_settings():
     """
     Load zen coding's settings, combined with user-defined snippets
     """
-    # First, check if the user even wants this to happen
     defaults = NSUserDefaults.standardUserDefaults()
+    
+    # Construct our initial settings dictionary
+    objc_dict = defaults.objectForKey_('TEAZenSettings')
+    if objc_dict is not None:
+        user_settings = tea_utils.nsdict_to_pydict(objc_dict)
+    else:
+        user_settings = dict()
+    
+    # Add the CSS filter if we're adding a space after properties
+    if defaults.boolForKey_('TEAZenAddSpaceCSSProperties'):
+        user_settings['css'] = {'filters': 'html, fc'}
+    
+    # Check to see if we're converting user snippets to zen abbreviations
     convert_to_zen = defaults.boolForKey_('TEAConvertUserSnippetsToZen')
     if convert_to_zen:
         orig_date = os.path.getmtime(plist_path)
         
-        need_reload = globals()['_prev_settings'] is None
+        need_reload = True
         
         # Does our cache path exist and is writable?
         cache_dir_exists = os.path.isdir(cache_folder)
@@ -73,26 +85,26 @@ def load_settings():
         if cache_dir_exists and (not os.path.exists(cache_file) or \
            os.path.getmtime(cache_file) < orig_date):
             # need to reparse and cache data
-            _data = _read_settings_from_app()
+            _data = _convert_user_snippets_to_zen_settings()
             try:
                 fp = open(cache_file, 'wb')
                 pickle.dump(_data, fp)
                 fp.close()
             except IOError:
                 NSLog('TEA Error: Zen user snippets cache file is not writable')
-            need_reload = True
+            need_reload = False
         
         if need_reload:
             try:
                 fp = open(cache_file, 'rb')
-                user_settings = pickle.load(fp)
+                _data = pickle.load(fp)
                 fp.close()
             except IOError:
                 NSLog('TEA Error: Zen user snippets cache file is not readable')
-                user_settings = _data
-            globals()['_prev_settings'] = stparser.get_settings(user_settings)
-            
-        return globals()['_prev_settings']
-    else:
-        # They don't want to load in user snippets as zen snippets
-        return stparser.get_settings()
+        
+        if _data is not None:
+            # Add the settings to the user_settings dict
+            user_settings.update(_data)
+    
+    # The settings dictionary is setup, return the full zen settings
+    return stparser.get_settings(user_settings)

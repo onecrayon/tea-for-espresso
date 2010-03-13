@@ -9,13 +9,13 @@ from zencoding import zen_core as zen_coding
 req_action_object = True
 
 def act(context, actionObject, action_name, undo_name=None):
-	zen_editor = ZenEditor(context)
-	
-	if action_name == 'wrap_with_abbreviation':
-		abbr = actionObject.userInput().stringValue()
-		if abbr:
-			return zen_coding.run_action(action_name, zen_editor, abbr)
-	else:
-		return zen_coding.run_action(action_name, zen_editor)
-			
-	return False
+    zen_editor = ZenEditor(context)
+    
+    if action_name == 'wrap_with_abbreviation':
+        abbr = actionObject.userInput().stringValue()
+        if abbr:
+            return zen_coding.run_action(action_name, zen_editor, abbr)
+    else:
+        return zen_coding.run_action(action_name, zen_editor)
+            
+    return False

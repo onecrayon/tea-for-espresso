@@ -231,12 +231,14 @@ def get_elements_collection(resource, type):
 	else:
 		return {}
 	
-def replace_variables(text, vars=zen_settings['variables']):
+def replace_variables(text, vars=None):
 	"""
 	Replace variables like ${var} in string
 	@param text: str
 	@return: str
 	"""
+	if vars is None:
+	    vars = zen_settings['variables']
 	return re.sub(r'\$\{([\w\-]+)\}', lambda m: m.group(1) in vars and vars[m.group(1)] or m.group(0), text)
 
 def get_abbreviation(res_type, abbr):
