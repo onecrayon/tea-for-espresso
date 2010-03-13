@@ -37,9 +37,9 @@ def act(context, default=None, undo_name=None, **syntaxes):
         insertion = tea.select_from_zones(context, range, default, **syntaxes)
         text = tea.get_selection(context, range)
         # DEPRECATED: $SELECTED_TEXT will go away in future; don't use it
-        text = insertion.replace('$SELECTED_TEXT', text)
-        text = insertion.replace('$EDITOR_SELECTION', text)
-        insertions.addReplacementString_forRange_(text, range)
+        insertion = insertion.replace('$SELECTED_TEXT', text)
+        insertion = insertion.replace('$EDITOR_SELECTION', text)
+        insertions.addReplacementString_forRange_(insertion, range)
     if undo_name is not None:
         insertions.setUndoActionName_(undo_name)
     return context.applyTextRecipe_(insertions)
