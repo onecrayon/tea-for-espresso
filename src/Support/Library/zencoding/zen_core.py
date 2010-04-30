@@ -60,6 +60,9 @@ default_profile = {
 basic_filters = 'html';
 "Filters that will be applied for unknown syntax"
 
+max_tabstop = 0
+"Maximum tabstop index for current session"
+
 def char_at(text, pos):
 	"""
 	Returns character at specified index of text.
@@ -559,6 +562,7 @@ def rollout_tree(tree, parent=None):
 		for j in range(how_many):
 			tag = ZenNode(child)
 			parent.add_child(tag)
+			tag.counter = j + 1
 			
 			if child.children:
 				rollout_tree(child, tag)
@@ -611,7 +615,7 @@ def abbr_to_primary_tree(abbr, doc_type='html'):
 	@return: Tag
 	"""
 	root = Tag('', 1, doc_type)
-	token = re.compile(r'([\+>])?([a-z@\!\#\.][a-z0-9:\-]*)((?:(?:[#\.][\w\-\$]+)|(?:\[[^\]]+\]))+)?(\*(\d*))?(\+$)?', re.IGNORECASE)
+	token = re.compile(r'([\+>])?([a-z@\!\#\.][\w:\-]*)((?:(?:[#\.][\w\-\$]+)|(?:\[[^\]]+\]))+)?(\*(\d*))?(\+$)?', re.IGNORECASE)
 	
 	if not abbr:
 		return None
@@ -961,16 +965,50 @@ def replace_counter(text, value):
 	value = str(value)
 	
 	def replace_func(tx, symbol, pos, match_num):
-		if tx[pos + 1] == '{':
+		if char_at(tx, pos + 1) == '{' or char_at(tx, pos + 1).isdigit():
 			# it's a variable, skip it
 			return False
 		
 		# replace sequense of $ symbols with padded number  
 		j = pos + 1
-		while tx[j] == '$' and char_at(tx, j + 1) != '{': j += 1
+		if j < len(text):
+			while tx[j] == '$' and char_at(tx, j + 1) != '{': j += 1
+		
 		return (tx[pos:j], value.zfill(j - pos))
 	
 	return replace_unescaped_symbol(text, symbol, replace_func)
+
+def upgrade_tabstops(node):
+	"""
+	Upgrades tabstops in zen node in order to prevent naming conflicts
+	@type node: ZenNode
+	@param offset: Tab index offset
+	@type offset: int
+	@returns Maximum tabstop index in element
+	"""
+	max_num = [0]
+	props = ('start', 'end', 'content')
+	
+	def _replace(m):
+		num = int(m.group(1) or m.group(2))
+		if num > max_num[0]: max_num[0] = num
+		return re.sub(r'\d+', str(num + max_tabstop), m.group(0), 1)
+	
+	for prop in props:
+		node.__setattr__(prop, re.sub(r'\$(\d+)|\$\{(\d+):[^\}]+\}', _replace, node.__getattribute__(prop)))
+		
+	globals()['max_tabstop'] += max_num[0]
+		
+	return max_num[0]
+
+def unescape_text(text):
+	"""
+	Unescapes special characters used in Zen Coding, like '$', '|', etc.
+	@type text: str
+	@return: str
+	"""
+	return re.sub(r'\\(.)', r'\1', text)
+
 
 def get_profile(name):
 	"""
@@ -1111,6 +1149,7 @@ class ZenNode(object):
 		self.name = tag.name
 		self.attributes = tag.attributes
 		self.children = [];
+		self.counter = 1
 		
 		self.source = tag
 		"Source element from which current tag was created"
