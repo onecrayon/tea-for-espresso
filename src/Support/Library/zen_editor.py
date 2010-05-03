@@ -17,7 +17,7 @@ zen_editor.get_selection_range();
 @link http://chikuyonok.ru
 '''
 import tea_actions as tea
-from zencoding import settings_loader
+from zencoding import settings_loader, zen_core
 from zencoding import zen_core as zen
 import re
 
@@ -157,6 +157,10 @@ class ZenEditor():
 		Returns current output profile name (@see zen_coding#setup_profile)
 		@return {String}
 		"""
+		forced_profile = zen.get_variable('profile')
+		if forced_profile:
+			return forced_profile
+		
 		close_string = tea.get_tag_closestring(self._context)
 		if close_string == '/':
 			return 'xml'
