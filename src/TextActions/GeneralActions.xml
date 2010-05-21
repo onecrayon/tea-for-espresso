@@ -156,7 +156,7 @@
 	<action id="com.onecrayon.TextActions.SelectWord" category="actions.text.generic/actions.text.selection/1">
 		<class>TEAforEspresso</class>
 		<title>Word</title>
-		<key-equivalent>command shift W</key-equivalent>
+		<key-equivalent>command options w</key-equivalent>
 		<setup>
 			<action>goto</action>
 			<options>
