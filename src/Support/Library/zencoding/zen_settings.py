@@ -723,6 +723,10 @@ zen_settings = {
 		}
 	},
 	
+	'xml': {
+		'extends': 'common'
+	},
+	
 	'haml': {
 		'filters': 'haml',
 		'extends': 'html'

@@ -18,7 +18,7 @@ zen_editor.get_selection_range();
 '''
 import tea_actions as tea
 import zen_settings_loader as settings_loader
-from zencoding import zen_core
+from zencoding import zen_core as zen
 import re
 
 class ZenEditor():
