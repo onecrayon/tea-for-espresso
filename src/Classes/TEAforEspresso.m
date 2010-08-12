@@ -91,7 +91,7 @@ static BOOL TEAinitPythonComplete = NO;
 		setenv("PYTHONPATH", [[pythonPathArray componentsJoinedByString:@":"] UTF8String], 1);
 		
 		// Initialize the Python interpreter
-		Py_SetProgramName("/usr/bin/env python");
+		Py_SetProgramName("/usr/bin/python");
 		Py_Initialize();
 		
 		[self execTEALoaderClass];
