@@ -1,6 +1,10 @@
 Text Editor Actions for Espresso
 --------------------------------
 
+**This version of TEA for Espresso is officially deprecated as of
+[Espresso 2.0](http://macrabbit.com/espresso/2/).** If you are interested
+in leveraging TEA, please email MacRabbit for more information.
+
 Text Editor Actions (TEA) for Espresso is an [Espresso][1] plugin that 
 provides numerous bundled actions and an infrastructure for easily creating 
 more, whether you are a Sugar developer or not.
